@@ -2,8 +2,8 @@ import { announcementMessages } from "@/lib/data";
 
 export function AnnouncementBar() {
   const messages = announcementMessages;
-  // Triple the array so the marquee never shows a gap
-  const repeated = [...messages, ...messages, ...messages];
+  // Duplicate so the marquee loops seamlessly (-50% = exactly one copy width)
+  const repeated = [...messages, ...messages];
 
   return (
     <div

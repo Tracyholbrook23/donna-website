@@ -210,15 +210,16 @@ select.field {
 }
 
 /* ── Marquee ─────────────────────────────────────── */
-@keyframes marquee {
+@keyframes marquee-ltr {
   from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
+  to   { transform: translateX(0%); }
 }
 .marquee-track {
   display: flex;
   gap: 64px;
-  animation: marquee 38s linear infinite;
+  animation: marquee-ltr 38s linear infinite;
   width: max-content;
+  will-change: transform;
 }
 
 /* ── Scroll reveal ───────────────────────────────── */
@@ -701,7 +702,7 @@ select.field {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .marquee-track { animation: none !important; }
+  .marquee-track { animation: none !important; transform: translateX(0) !important; }
   .live-dot::after { display: none; }
   .idle-drift { animation: none !important; }
 }
