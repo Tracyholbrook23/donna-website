@@ -23,178 +23,176 @@ export default async function HomePage() {
   return (
     <main className="page-enter">
       <HomeHero />
-      <HomeMarqueeStrip />
-      <HomeTwoTiles />
       <HomeVideoShowcase />
+      <HomeMarqueeStrip />
       <HomeBestsellers products={products} />
+      <HomePhotoGrid />
+      <HomeTwoTiles />
       <HomeOccasions />
       <HomeCustomizerTeaser />
-      <HomePhotoGrid />
       <HomeCustomCTA />
     </main>
   );
 }
 
-/* ── HERO ───────────────────────────────────────────────── */
+/* ── HERO — full-bleed background image ─────────────────────── */
 function HomeHero() {
   return (
-    <section style={{ position: "relative", padding: "40px 0 80px" }}>
-      <div className="container">
-        <div className="layout-hero">
-          {/* Left — headline */}
-          <div style={{ position: "relative", padding: "40px 0" }}>
-            <p className="eyebrow reveal" style={{ marginBottom: 28 }}>
-              Woman Owned &amp; Operated · Custom Laser Engraving
-            </p>
-            <h1
-              className="display reveal reveal-delay-1"
+    <section
+      style={{
+        position: "relative",
+        minHeight: "92vh",
+        display: "flex",
+        alignItems: "center",
+        overflow: "hidden",
+      }}
+    >
+      {/* Background photo — tumbler (top seller) */}
+      <Image
+        src="/photos/prod-tumbler-40oz.jpg"
+        alt="Custom engraved 40oz tumbler — Out of Jersey"
+        fill
+        style={{ objectFit: "cover", objectPosition: "center center" }}
+        priority
+        sizes="100vw"
+      />
+
+      {/* Dark gradient overlay for text legibility */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(105deg, rgba(10,6,4,0.78) 0%, rgba(10,6,4,0.55) 55%, rgba(10,6,4,0.2) 100%)",
+        }}
+      />
+
+      {/* Terracotta accent strip on left edge */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          bottom: 0,
+          width: 6,
+          background: "var(--terracotta)",
+        }}
+      />
+
+      <div className="container" style={{ position: "relative", zIndex: 2, padding: "80px 28px" }}>
+        <div style={{ maxWidth: 740 }}>
+          <p
+            className="eyebrow reveal"
+            style={{
+              marginBottom: 24,
+              color: "var(--terracotta)",
+              letterSpacing: "0.18em",
+            }}
+          >
+            Woman Owned &amp; Operated · New Jersey
+          </p>
+
+          <h1
+            className="display reveal reveal-delay-1"
+            style={{
+              fontSize: "clamp(60px, 9vw, 130px)",
+              margin: "0 0 16px",
+              fontWeight: 400,
+              lineHeight: 0.9,
+              color: "var(--cream)",
+            }}
+          >
+            Gifts that
+            <br />
+            <em
               style={{
-                fontSize: "clamp(56px,7.5vw,116px)",
-                margin: "0 0 12px",
-                fontWeight: 400,
-                lineHeight: 0.95,
+                fontStyle: "italic",
+                color: "var(--terracotta)",
               }}
             >
-              Gifts that
-              <br />
-              <em
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontStyle: "italic",
-                  fontWeight: 300,
-                  color: "var(--terracotta)",
-                }}
-              >
-                mean&nbsp;
-              </em>
-              something.
-            </h1>
+              mean&nbsp;
+            </em>
+            <span style={{ color: "#fff" }}>something.</span>
+          </h1>
 
-            <p
-              className="reveal reveal-delay-2"
-              style={{
-                fontSize: 17,
-                lineHeight: 1.6,
-                color: "var(--muted)",
-                maxWidth: 440,
-                margin: "24px 0 36px",
-              }}
-            >
-              Out of Jersey — custom laser engraving on tumblers, boards,
-              knives, wallets, and one-of-a-kind commissions.
-            </p>
+          <p
+            className="reveal reveal-delay-2"
+            style={{
+              fontSize: 18,
+              lineHeight: 1.65,
+              color: "rgba(255,255,255,0.8)",
+              maxWidth: 480,
+              margin: "28px 0 40px",
+            }}
+          >
+            Custom laser engraving on tumblers, boards, knives, wallets &amp; more.
+            Every piece, made personal — right here in New Jersey.
+          </p>
 
-            <div
-              className="reveal reveal-delay-3"
-              style={{ display: "flex", gap: 12, flexWrap: "wrap" }}
-            >
-              <Link href="/shop" className="btn btn-primary">
-                Shop the collection <ArrowIcon />
-              </Link>
-              <Link href="/custom" className="btn btn-secondary">
-                Start a custom piece
-              </Link>
-            </div>
-
-            {/* Stats row */}
-            <div
-              className="reveal reveal-delay-4"
-              style={{
-                display: "flex",
-                gap: 40,
-                marginTop: 56,
-                paddingTop: 28,
-                borderTop: "1px solid var(--line)",
-                flexWrap: "wrap",
-              }}
-            >
-              <HeroStat label="5-star reviews" value="1,840+" />
-              <HeroStat label="Pieces engraved" value="14,200+" />
-              <HeroStat label="Based in" value="New Jersey" />
-              <HeroStat label="Ownership" value="Woman Owned" />
-            </div>
-          </div>
-
-          {/* Right — two stacked real product photos */}
           <div
-            className="reveal reveal-delay-2 hero-right"
-            style={{ position: "relative", minHeight: 560 }}
+            className="reveal reveal-delay-3"
+            style={{ display: "flex", gap: 14, flexWrap: "wrap", alignItems: "center" }}
           >
-            {/* Main large photo */}
-            <div
+            <Link
+              href="/shop"
+              className="btn btn-primary"
+              style={{ fontSize: 15, padding: "16px 32px" }}
+            >
+              Shop the collection <ArrowIcon />
+            </Link>
+            <Link
+              href="/custom"
+              className="btn"
               style={{
-                position: "absolute",
-                right: 0,
-                top: 0,
-                bottom: 0,
-                width: "88%",
-                borderRadius: "var(--r-lg)",
-                overflow: "hidden",
+                background: "transparent",
+                border: "1.5px solid rgba(255,255,255,0.5)",
+                color: "#fff",
+                fontSize: 15,
+                padding: "16px 32px",
               }}
             >
-              <Image
-                src="/photos/bff-tumblers.jpg"
-                alt="Custom engraved tumblers"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 90vw, 45vw"
-                priority
-              />
-            </div>
+              Start a custom piece
+            </Link>
+          </div>
 
-            {/* Floating inset — wedding board */}
-            <div
-              className="hero-floating"
-              style={{
-                position: "absolute",
-                left: 0,
-                bottom: "15%",
-                width: 156,
-                height: 190,
-                borderRadius: "var(--r-md)",
-                overflow: "hidden",
-                boxShadow: "var(--shadow-xl)",
-                zIndex: 2,
-                border: "4px solid var(--cream)",
-              }}
-            >
-              <Image
-                src="/photos/wedding-board-couple.jpg"
-                alt="Custom engraved wedding board"
-                fill
-                className="object-cover"
-                sizes="156px"
-              />
-            </div>
-
-            {/* Woman Owned badge — real, not fake */}
-            <div
-              className="idle-drift hero-floating"
-              style={{
-                position: "absolute",
-                left: "-2%",
-                top: "18%",
-                background: "var(--ink)",
-                color: "var(--cream)",
-                borderRadius: "var(--r-pill)",
-                padding: "10px 16px",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                boxShadow: "var(--shadow-lg)",
-                zIndex: 3,
-                fontSize: 12,
-                fontWeight: 600,
-                letterSpacing: "0.06em",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <span style={{
-                width: 8, height: 8, borderRadius: "50%",
-                background: "var(--terracotta)", flexShrink: 0,
-              }} />
-              WOMAN OWNED &amp; OPERATED
-            </div>
+          {/* Stats row */}
+          <div
+            className="reveal reveal-delay-4"
+            style={{
+              display: "flex",
+              gap: 40,
+              marginTop: 60,
+              paddingTop: 28,
+              borderTop: "1px solid rgba(255,255,255,0.15)",
+              flexWrap: "wrap",
+            }}
+          >
+            {[
+              { value: "1,840+", label: "5-star reviews" },
+              { value: "14,200+", label: "Pieces engraved" },
+              { value: "Woman Owned", label: "& operated" },
+            ].map((s) => (
+              <div key={s.label}>
+                <div
+                  className="serif"
+                  style={{ fontSize: 24, lineHeight: 1, marginBottom: 4, fontWeight: 600, color: "#fff" }}
+                >
+                  {s.value}
+                </div>
+                <div
+                  style={{
+                    fontSize: 11,
+                    color: "rgba(255,255,255,0.55)",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {s.label}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -202,137 +200,7 @@ function HomeHero() {
   );
 }
 
-function HeroStat({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <div className="serif" style={{ fontSize: 22, lineHeight: 1, marginBottom: 4, fontWeight: 600 }}>
-        {value}
-      </div>
-      <div style={{ fontSize: 11, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
-        {label}
-      </div>
-    </div>
-  );
-}
-
-/* ── MARQUEE STRIP ──────────────────────────────────────── */
-function HomeMarqueeStrip() {
-  const items = [
-    "Custom laser engraving — woman owned & operated",
-    "Free US shipping over $125",
-    "1,840+ five-star reviews",
-    "Tumblers · Boards · Knives · Wallets · More",
-    "Live engraving preview",
-    "24-hour custom-order replies",
-    "Gift-ready packaging on every order",
-  ];
-  const repeated = [...items, ...items, ...items];
-
-  return (
-    <section style={{ borderTop: "1px solid var(--line)", borderBottom: "1px solid var(--line)", padding: "18px 0", overflow: "hidden" }}>
-      <div className="marquee-track" style={{ animationDuration: "46s" }}>
-        {repeated.map((it, i) => (
-          <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 64, fontSize: 13, color: "var(--ink-soft)", fontFamily: "var(--font-display)", fontStyle: "italic" }}>
-            {it} <span style={{ color: "var(--brass)" }}>✦</span>
-          </span>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ── TWO TILES (RTIC-style) ─────────────────────────────── */
-function HomeTwoTiles() {
-  return (
-    <section style={{ padding: "60px 0 0" }}>
-      <div className="container">
-        <div className="layout-2col">
-          {/* Tile 1 — Corporate & Bulk */}
-          <Link
-            href="/shop?collection=corporate"
-            className="card-hover tile-card"
-            style={{
-              position: "relative",
-              borderRadius: "var(--r-lg)",
-              overflow: "hidden",
-              height: 480,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              textDecoration: "none",
-              color: "var(--cream)",
-            }}
-          >
-            <Image
-              src="/photos/keychain-business.jpg"
-              alt="Corporate and bulk engraving orders"
-              fill
-              className="object-cover card-media"
-              sizes="50vw"
-            />
-            <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.72) 100%)" }} />
-            <div style={{ position: "relative", zIndex: 1, padding: "32px 36px" }}>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.7, margin: "0 0 10px" }}>
-                Bulk orders welcome
-              </p>
-              <h2 className="display" style={{ fontSize: "clamp(28px,3vw,40px)", margin: "0 0 20px", fontWeight: 400 }}>
-                Corporate Teams &amp; Gifting
-              </h2>
-              <p style={{ fontSize: 14, opacity: 0.8, margin: "0 0 24px", lineHeight: 1.55, maxWidth: 360 }}>
-                Brand awareness, client gifts, employee recognition — at any quantity.
-              </p>
-              <span className="btn" style={{ background: "var(--cream)", color: "var(--ink)", fontSize: 13, padding: "12px 22px", display: "inline-flex", alignItems: "center", gap: 8 }}>
-                START YOUR QUOTE <ArrowIcon size={13} />
-              </span>
-            </div>
-          </Link>
-
-          {/* Tile 2 — Custom Commissions */}
-          <Link
-            href="/custom"
-            className="card-hover tile-card"
-            style={{
-              position: "relative",
-              borderRadius: "var(--r-lg)",
-              overflow: "hidden",
-              height: 480,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              textDecoration: "none",
-              color: "var(--cream)",
-            }}
-          >
-            <Image
-              src="/photos/wedding-board-couple.jpg"
-              alt="Custom commission engraving orders"
-              fill
-              className="object-cover card-media"
-              sizes="50vw"
-            />
-            <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.72) 100%)" }} />
-            <div style={{ position: "relative", zIndex: 1, padding: "32px 36px" }}>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.7, margin: "0 0 10px" }}>
-                One-of-a-kind pieces
-              </p>
-              <h2 className="display" style={{ fontSize: "clamp(28px,3vw,40px)", margin: "0 0 20px", fontWeight: 400 }}>
-                Custom Commissions
-              </h2>
-              <p style={{ fontSize: 14, opacity: 0.8, margin: "0 0 24px", lineHeight: 1.55, maxWidth: 360 }}>
-                Wedding gifts, family heirlooms, personal artwork — send a brief, get a quote in 24 hours.
-              </p>
-              <span className="btn" style={{ background: "var(--cream)", color: "var(--ink)", fontSize: 13, padding: "12px 22px", display: "inline-flex", alignItems: "center", gap: 8 }}>
-                START YOUR QUOTE <ArrowIcon size={13} />
-              </span>
-            </div>
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── VIDEO SHOWCASE ─────────────────────────────────────── */
+/* ── VIDEO SHOWCASE — moved up, right after hero ─────────────── */
 function HomeVideoShowcase() {
   const videos = [
     { src: "/videos/laser-engraving-02.mp4", label: "Custom tumbler" },
@@ -353,15 +221,25 @@ function HomeVideoShowcase() {
   ];
 
   return (
-    <section style={{ padding: "100px 0 80px", overflow: "hidden" }}>
+    <section style={{ padding: "80px 0 60px", overflow: "hidden" }}>
       <div className="container">
         <div
           className="reveal"
-          style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 48, flexWrap: "wrap", gap: 20 }}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            marginBottom: 40,
+            flexWrap: "wrap",
+            gap: 20,
+          }}
         >
           <div>
             <p className="eyebrow">Watch us work</p>
-            <h2 className="display" style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}>
+            <h2
+              className="display"
+              style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}
+            >
               The craft,{" "}
               <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>up close.</em>
             </h2>
@@ -393,7 +271,7 @@ function HomeVideoShowcase() {
               borderRadius: "var(--r-md)",
               overflow: "hidden",
               aspectRatio: "9/16",
-              height: 420,
+              height: 440,
               flexShrink: 0,
               background: "var(--ink)",
             }}
@@ -406,18 +284,74 @@ function HomeVideoShowcase() {
               style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
               src={v.src}
             />
-            <div style={{
-              position: "absolute",
-              bottom: 0, left: 0, right: 0,
-              background: "linear-gradient(transparent, rgba(0,0,0,0.65))",
-              padding: "24px 14px 14px",
-              color: "var(--cream)",
-            }}>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", margin: 0 }}>
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                background: "linear-gradient(transparent, rgba(0,0,0,0.65))",
+                padding: "24px 14px 14px",
+                color: "var(--cream)",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  margin: 0,
+                }}
+              >
                 {v.label}
               </p>
             </div>
           </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ── MARQUEE STRIP ──────────────────────────────────────── */
+function HomeMarqueeStrip() {
+  const items = [
+    "Custom laser engraving — woman owned & operated",
+    "Free US shipping over $125",
+    "1,840+ five-star reviews",
+    "Tumblers · Boards · Knives · Wallets · More",
+    "Live engraving preview",
+    "24-hour custom-order replies",
+    "Gift-ready packaging on every order",
+  ];
+  const repeated = [...items, ...items];
+
+  return (
+    <section
+      style={{
+        borderTop: "1px solid var(--line)",
+        borderBottom: "1px solid var(--line)",
+        padding: "18px 0",
+        overflow: "hidden",
+      }}
+    >
+      <div className="marquee-track" style={{ animationDuration: "46s" }}>
+        {repeated.map((it, i) => (
+          <span
+            key={i}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 64,
+              fontSize: 13,
+              color: "var(--ink-soft)",
+              fontFamily: "var(--font-display)",
+              fontStyle: "italic",
+            }}
+          >
+            {it} <span style={{ color: "var(--brass)" }}>✦</span>
+          </span>
         ))}
       </div>
     </section>
@@ -441,20 +375,45 @@ function HomeBestsellers({ products }: { products: WixProduct[] }) {
   return (
     <section style={{ padding: "80px 0 60px", background: "var(--cream-2)" }}>
       <div className="container">
-        <div className="reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 48, flexWrap: "wrap", gap: 20 }}>
+        <div
+          className="reveal"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            marginBottom: 48,
+            flexWrap: "wrap",
+            gap: 20,
+          }}
+        >
           <div>
             <p className="eyebrow">Fan favorites</p>
-            <h2 className="display" style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}>
+            <h2
+              className="display"
+              style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}
+            >
               Most{" "}
               <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>ordered.</em>
             </h2>
           </div>
-          <Link href="/shop" style={{ color: "var(--ink)", fontSize: 14, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 6, borderBottom: "1px solid var(--ink)", paddingBottom: 4, textDecoration: "none" }}>
+          <Link
+            href="/shop"
+            style={{
+              color: "var(--ink)",
+              fontSize: 14,
+              fontWeight: 500,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              borderBottom: "1px solid var(--ink)",
+              paddingBottom: 4,
+              textDecoration: "none",
+            }}
+          >
             View all <ArrowIcon size={14} />
           </Link>
         </div>
 
-        {/* 4-column grid like Everything Etched */}
         <div className="layout-4col">
           {list.slice(0, 8).map((p: WixProduct | null, i: number) => {
             const imageUrl = p?.media?.mainMedia?.image?.url ?? null;
@@ -467,35 +426,93 @@ function HomeBestsellers({ products }: { products: WixProduct[] }) {
                 key={p._id ?? i}
                 href={`/product/${slug}`}
                 className="reveal lift-on-hover"
-                style={{ background: "var(--cream)", borderRadius: "var(--r-md)", overflow: "hidden", textDecoration: "none", color: "var(--ink)", border: "1px solid var(--line-soft)", display: "block" }}
+                style={{
+                  background: "var(--cream)",
+                  borderRadius: "var(--r-md)",
+                  overflow: "hidden",
+                  textDecoration: "none",
+                  color: "var(--ink)",
+                  border: "1px solid var(--line-soft)",
+                  display: "block",
+                }}
               >
-                <div className="card-hover" style={{ aspectRatio: "1/1", background: "#f8f4ed", position: "relative", overflow: "hidden" }}>
+                <div
+                  className="card-hover"
+                  style={{
+                    aspectRatio: "1/1",
+                    background: "#f8f4ed",
+                    position: "relative",
+                    overflow: "hidden",
+                  }}
+                >
                   {imageUrl ? (
-                    <Image src={imageUrl} alt={p.name ?? "Product"} fill className="object-cover card-media" sizes="25vw" />
+                    <Image
+                      src={imageUrl}
+                      alt={p.name ?? "Product"}
+                      fill
+                      className="object-cover card-media"
+                      sizes="25vw"
+                    />
                   ) : (
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+                    <div
+                      style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}
+                    >
                       <ProductGlyph type={glyphType} size={160} />
                     </div>
                   )}
                 </div>
                 <div style={{ padding: "14px 16px 16px" }}>
-                  <h3 className="serif" style={{ fontSize: 15, margin: "0 0 6px", fontWeight: 500, lineHeight: 1.3 }}>
+                  <h3
+                    className="serif"
+                    style={{ fontSize: 15, margin: "0 0 6px", fontWeight: 500, lineHeight: 1.3 }}
+                  >
                     {p.name ?? "Product"}
                   </h3>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                  >
                     {price && <span style={{ fontSize: 15, fontWeight: 600 }}>{price}</span>}
-                    <span style={{ fontSize: 12, color: "var(--terracotta)", fontWeight: 500 }}>Personalize →</span>
+                    <span style={{ fontSize: 12, color: "var(--terracotta)", fontWeight: 500 }}>
+                      Personalize →
+                    </span>
                   </div>
                 </div>
               </Link>
             ) : (
-              <div key={i} className="reveal" style={{ background: "var(--cream)", borderRadius: "var(--r-md)", overflow: "hidden", border: "1px solid var(--line-soft)" }}>
-                <div style={{ aspectRatio: "1/1", background: "#f8f4ed", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div
+                key={i}
+                className="reveal"
+                style={{
+                  background: "var(--cream)",
+                  borderRadius: "var(--r-md)",
+                  overflow: "hidden",
+                  border: "1px solid var(--line-soft)",
+                }}
+              >
+                <div
+                  style={{
+                    aspectRatio: "1/1",
+                    background: "#f8f4ed",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <ProductGlyph type={glyphType} size={160} />
                 </div>
                 <div style={{ padding: "14px 16px 16px" }}>
-                  <div style={{ height: 14, width: "65%", background: "var(--cream-3)", borderRadius: 4, marginBottom: 8 }} />
-                  <div style={{ height: 13, width: "35%", background: "var(--cream-3)", borderRadius: 4 }} />
+                  <div
+                    style={{
+                      height: 14,
+                      width: "65%",
+                      background: "var(--cream-3)",
+                      borderRadius: 4,
+                      marginBottom: 8,
+                    }}
+                  />
+                  <div
+                    style={{ height: 13, width: "35%", background: "var(--cream-3)", borderRadius: 4 }}
+                  />
                 </div>
               </div>
             );
@@ -506,71 +523,55 @@ function HomeBestsellers({ products }: { products: WixProduct[] }) {
   );
 }
 
-/* ── OCCASIONS ──────────────────────────────────────────── */
-function HomeOccasions() {
-  return (
-    <section style={{ padding: "100px 0 80px" }}>
-      <div className="container">
-        <div className="reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 48, flexWrap: "wrap", gap: 20 }}>
-          <div>
-            <p className="eyebrow">Gift by occasion</p>
-            <h2 className="display" style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}>
-              Shop the{" "}
-              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>moment.</em>
-            </h2>
-          </div>
-          <p style={{ fontSize: 15, color: "var(--muted)", maxWidth: 320, lineHeight: 1.6, margin: 0 }}>
-            Engraved gifts are always for a reason. Find yours.
-          </p>
-        </div>
-
-        <div className="reveal occasions-grid">
-          {giftOccasions.map((occ, i) => (
-            <Link
-              key={occ.id}
-              href={occ.href}
-              className="card-hover"
-              style={{ position: "relative", borderRadius: "var(--r-md)", overflow: "hidden", aspectRatio: "3/4", display: "flex", flexDirection: "column", justifyContent: "flex-end", textDecoration: "none", color: "var(--cream)" }}
-            >
-              <Image src={occ.src} alt={occ.label} fill className="object-cover card-media" sizes="20vw" />
-              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%)", pointerEvents: "none" }} />
-              <div style={{ position: "relative", zIndex: 1, padding: "14px 16px 18px" }}>
-                <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.16em", opacity: 0.7, margin: "0 0 4px", textTransform: "uppercase" }}>{occ.kicker}</p>
-                <h3 className="serif" style={{ fontSize: 15, margin: 0, lineHeight: 1.25, fontWeight: 600 }}>{occ.label}</h3>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── PHOTO GRID (real photos only) ──────────────────────── */
+/* ── PHOTO GRID — all real product photography ───────────────── */
 function HomePhotoGrid() {
-  // All real product photos — no stock, no Unsplash
   const photos = [
-    { src: "/photos/bff-tumblers.jpg",          alt: "Custom engraved BFF tumblers" },
-    { src: "/photos/wedding-board-couple.jpg",   alt: "Personalized wedding board" },
-    { src: "/photos/cutting-boards-family.jpg",  alt: "Engraved family cutting boards" },
-    { src: "/photos/whiskey-glasses-bar.jpg",    alt: "Monogrammed whiskey glasses" },
-    { src: "/photos/knife-engraved.jpg",         alt: "Custom engraved knife" },
-    { src: "/photos/custom-artwork-tumbler.jpg", alt: "Custom artwork tumbler" },
-    { src: "/photos/leather-wallet.jpg",         alt: "Personalized leather wallet" },
-    { src: "/photos/decanter-set-gift.jpg",      alt: "Engraved decanter gift set" },
-    { src: "/photos/keychain-business.jpg",      alt: "Custom engraved business keychains" },
-    { src: "/photos/whiskey-glasses-monogram.jpg", alt: "Monogrammed whiskey glasses set" },
-    { src: "/photos/knife-trail.jpg",            alt: "Personalized trail knife" },
-    { src: "/photos/dad-keychain.jpg",           alt: "Engraved dad keychain" },
+    { src: "/photos/prod-tumbler-40oz.jpg",            alt: "Custom engraved 40oz tumbler" },
+    { src: "/photos/bff-tumblers.jpg",                 alt: "Custom engraved BFF tumblers" },
+    { src: "/photos/prod-decanter-premium.jpg",        alt: "Personalized whiskey decanter set" },
+    { src: "/photos/prod-cutting-board-wedding.jpg",   alt: "Personalized wedding cutting board" },
+    { src: "/photos/prod-whiskey-glasses-colchester.jpg", alt: "Personalized whiskey glasses" },
+    { src: "/photos/prod-leather-wallet.jpg",          alt: "Custom engraved leather wallet" },
+    { src: "/photos/prod-knife-cupid.jpg",             alt: "Engraved knife — Cupid style" },
+    { src: "/photos/prod-keychain-dad.jpg",            alt: "Engraved dad keychain" },
+    { src: "/photos/prod-decanter-glasses-etsy.jpg",   alt: "Custom whiskey decanter and glasses" },
+    { src: "/photos/prod-cutting-board-custom.jpg",    alt: "Custom engraved cutting board" },
+    { src: "/photos/prod-whiskey-glasses-classic.jpg", alt: "Classic engraved whiskey glasses" },
+    { src: "/photos/prod-passport-wallet.jpg",         alt: "Engraved leather passport wallet" },
+    { src: "/photos/prod-knife-elk-ridge.jpg",         alt: "Personalized Elk Ridge trail knife" },
+    { src: "/photos/prod-whiskey-gift-set-box.jpg",    alt: "Personalized whiskey gift set with box" },
+    { src: "/photos/prod-keychain-family.jpg",         alt: "Custom family keychain" },
+    { src: "/photos/prod-decanter-dad.jpg",            alt: "Personalized whiskey decanter for dad" },
+    { src: "/photos/prod-hammer.jpg",                  alt: "Custom engraved hammer" },
+    { src: "/photos/prod-knife-collection.jpg",        alt: "Personalized engraved knife collection" },
+    { src: "/photos/prod-unique-artwork.jpg",          alt: "Unique custom artwork engraving" },
+    { src: "/photos/cutting-boards-family.jpg",        alt: "Engraved family cutting boards" },
+    { src: "/photos/whiskey-glasses-bar.jpg",          alt: "Monogrammed whiskey glasses" },
+    { src: "/photos/knife-engraved.jpg",               alt: "Custom engraved knife" },
+    { src: "/photos/leather-wallet.jpg",               alt: "Personalized leather wallet" },
+    { src: "/photos/decanter-set-gift.jpg",            alt: "Engraved decanter gift set" },
   ];
 
   return (
-    <section style={{ padding: "80px 0 60px", background: "var(--cream-2)" }}>
+    <section style={{ padding: "80px 0 60px" }}>
       <div className="container">
-        <div className="reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 40, flexWrap: "wrap", gap: 16 }}>
+        <div
+          className="reveal"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            marginBottom: 40,
+            flexWrap: "wrap",
+            gap: 16,
+          }}
+        >
           <div>
             <p className="eyebrow">@outofjersey.engraving</p>
-            <h2 className="display" style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}>
+            <h2
+              className="display"
+              style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}
+            >
               The work,{" "}
               <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>up close.</em>
             </h2>
@@ -579,22 +580,321 @@ function HomePhotoGrid() {
             href="https://www.instagram.com/mamalaserengraver"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--ink)", fontSize: 14, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 6, borderBottom: "1px solid var(--ink)", paddingBottom: 4, textDecoration: "none" }}
+            style={{
+              color: "var(--ink)",
+              fontSize: 14,
+              fontWeight: 500,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              borderBottom: "1px solid var(--ink)",
+              paddingBottom: 4,
+              textDecoration: "none",
+            }}
           >
             Follow on Instagram <ArrowIcon size={14} />
           </a>
         </div>
 
-        {/* Clean 6-column grid, 2 rows — like Everything Etched */}
-        <div className="layout-6col">
-          {photos.map((p, i) => (
+        {/* Masonry-style grid — 6 cols, varying row spans */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(6, 1fr)",
+            gridAutoRows: "200px",
+            gap: 8,
+          }}
+        >
+          {photos.map((p, i) => {
+            // Make every 7th and 13th photo taller to break the grid up
+            const tall = i === 0 || i === 6 || i === 13 || i === 19;
+            const wide = i === 3 || i === 10 || i === 17;
+            return (
+              <div
+                key={i}
+                className="reveal card-hover"
+                style={{
+                  borderRadius: "var(--r-sm)",
+                  overflow: "hidden",
+                  position: "relative",
+                  background: "var(--cream-3)",
+                  gridRow: tall ? "span 2" : "span 1",
+                  gridColumn: wide ? "span 2" : "span 1",
+                }}
+              >
+                <Image
+                  src={p.src}
+                  alt={p.alt}
+                  fill
+                  className="object-cover card-media"
+                  sizes="(max-width: 768px) 50vw, 16vw"
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── TWO TILES ──────────────────────────────────────────── */
+function HomeTwoTiles() {
+  return (
+    <section style={{ padding: "60px 0 0", background: "var(--cream-2)" }}>
+      <div className="container">
+        <div className="layout-2col">
+          <Link
+            href="/shop?collection=corporate"
+            className="card-hover tile-card"
+            style={{
+              position: "relative",
+              borderRadius: "var(--r-lg)",
+              overflow: "hidden",
+              height: 480,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              textDecoration: "none",
+              color: "var(--cream)",
+            }}
+          >
+            <Image
+              src="/photos/keychain-business.jpg"
+              alt="Corporate and bulk engraving orders"
+              fill
+              className="object-cover card-media"
+              sizes="50vw"
+            />
             <div
-              key={i}
-              className="reveal card-hover"
-              style={{ borderRadius: "var(--r-sm)", overflow: "hidden", aspectRatio: "1/1", position: "relative", background: "var(--cream-3)" }}
-            >
-              <Image src={p.src} alt={p.alt} fill className="object-cover card-media" sizes="16vw" />
+              aria-hidden
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(180deg, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.72) 100%)",
+              }}
+            />
+            <div style={{ position: "relative", zIndex: 1, padding: "32px 36px" }}>
+              <p
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  opacity: 0.7,
+                  margin: "0 0 10px",
+                }}
+              >
+                Bulk orders welcome
+              </p>
+              <h2
+                className="display"
+                style={{ fontSize: "clamp(28px,3vw,40px)", margin: "0 0 20px", fontWeight: 400 }}
+              >
+                Corporate Teams &amp; Gifting
+              </h2>
+              <p
+                style={{
+                  fontSize: 14,
+                  opacity: 0.8,
+                  margin: "0 0 24px",
+                  lineHeight: 1.55,
+                  maxWidth: 360,
+                }}
+              >
+                Brand awareness, client gifts, employee recognition — at any quantity.
+              </p>
+              <span
+                className="btn"
+                style={{
+                  background: "var(--cream)",
+                  color: "var(--ink)",
+                  fontSize: 13,
+                  padding: "12px 22px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+              >
+                START YOUR QUOTE <ArrowIcon size={13} />
+              </span>
             </div>
+          </Link>
+
+          <Link
+            href="/custom"
+            className="card-hover tile-card"
+            style={{
+              position: "relative",
+              borderRadius: "var(--r-lg)",
+              overflow: "hidden",
+              height: 480,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              textDecoration: "none",
+              color: "var(--cream)",
+            }}
+          >
+            <Image
+              src="/photos/prod-cutting-board-wedding.jpg"
+              alt="Custom commission engraving orders"
+              fill
+              className="object-cover card-media"
+              sizes="50vw"
+            />
+            <div
+              aria-hidden
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(180deg, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.72) 100%)",
+              }}
+            />
+            <div style={{ position: "relative", zIndex: 1, padding: "32px 36px" }}>
+              <p
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  opacity: 0.7,
+                  margin: "0 0 10px",
+                }}
+              >
+                One-of-a-kind pieces
+              </p>
+              <h2
+                className="display"
+                style={{ fontSize: "clamp(28px,3vw,40px)", margin: "0 0 20px", fontWeight: 400 }}
+              >
+                Custom Commissions
+              </h2>
+              <p
+                style={{
+                  fontSize: 14,
+                  opacity: 0.8,
+                  margin: "0 0 24px",
+                  lineHeight: 1.55,
+                  maxWidth: 360,
+                }}
+              >
+                Wedding gifts, family heirlooms, personal artwork — send a brief, get a quote in 24
+                hours.
+              </p>
+              <span
+                className="btn"
+                style={{
+                  background: "var(--cream)",
+                  color: "var(--ink)",
+                  fontSize: 13,
+                  padding: "12px 22px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+              >
+                START YOUR QUOTE <ArrowIcon size={13} />
+              </span>
+            </div>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── OCCASIONS ──────────────────────────────────────────── */
+function HomeOccasions() {
+  return (
+    <section style={{ padding: "100px 0 80px", background: "var(--cream-2)" }}>
+      <div className="container">
+        <div
+          className="reveal"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            marginBottom: 48,
+            flexWrap: "wrap",
+            gap: 20,
+          }}
+        >
+          <div>
+            <p className="eyebrow">Gift by occasion</p>
+            <h2
+              className="display"
+              style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}
+            >
+              Shop the{" "}
+              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>moment.</em>
+            </h2>
+          </div>
+          <p
+            style={{ fontSize: 15, color: "var(--muted)", maxWidth: 320, lineHeight: 1.6, margin: 0 }}
+          >
+            Engraved gifts are always for a reason. Find yours.
+          </p>
+        </div>
+
+        <div className="reveal occasions-grid">
+          {giftOccasions.map((occ) => (
+            <Link
+              key={occ.id}
+              href={occ.href}
+              className="card-hover"
+              style={{
+                position: "relative",
+                borderRadius: "var(--r-md)",
+                overflow: "hidden",
+                aspectRatio: "3/4",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+                textDecoration: "none",
+                color: "var(--cream)",
+              }}
+            >
+              <Image
+                src={occ.src}
+                alt={occ.label}
+                fill
+                className="object-cover card-media"
+                sizes="20vw"
+              />
+              <div
+                aria-hidden
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%)",
+                  pointerEvents: "none",
+                }}
+              />
+              <div style={{ position: "relative", zIndex: 1, padding: "14px 16px 18px" }}>
+                <p
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    letterSpacing: "0.16em",
+                    opacity: 0.7,
+                    margin: "0 0 4px",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {occ.kicker}
+                </p>
+                <h3
+                  className="serif"
+                  style={{ fontSize: 15, margin: 0, lineHeight: 1.25, fontWeight: 600 }}
+                >
+                  {occ.label}
+                </h3>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -605,35 +905,92 @@ function HomePhotoGrid() {
 /* ── CUSTOM CTA ─────────────────────────────────────────── */
 function HomeCustomCTA() {
   return (
-    <section style={{ padding: "100px 0 60px" }}>
+    <section style={{ padding: "100px 0 80px" }}>
       <div className="container">
         <div
           className="reveal"
-          style={{ background: "var(--terracotta)", color: "var(--cream)", borderRadius: "var(--r-xl)", padding: "clamp(48px,6vw,96px)", position: "relative", overflow: "hidden" }}
+          style={{
+            background: "var(--terracotta)",
+            color: "var(--cream)",
+            borderRadius: "var(--r-xl)",
+            padding: "clamp(48px,6vw,96px)",
+            position: "relative",
+            overflow: "hidden",
+          }}
         >
-          <div aria-hidden style={{ position: "absolute", right: -120, top: -80, fontSize: "clamp(280px,36vw,480px)", fontFamily: "var(--font-display)", fontStyle: "italic", color: "rgba(255,255,255,0.07)", lineHeight: 0.8, pointerEvents: "none", userSelect: "none", whiteSpace: "nowrap" }}>
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              right: -120,
+              top: -80,
+              fontSize: "clamp(280px,36vw,480px)",
+              fontFamily: "var(--font-display)",
+              fontStyle: "italic",
+              color: "rgba(255,255,255,0.07)",
+              lineHeight: 0.8,
+              pointerEvents: "none",
+              userSelect: "none",
+              whiteSpace: "nowrap",
+            }}
+          >
             custom
           </div>
 
-          {/* Faint real product photo tease */}
-          <div style={{ position: "absolute", right: "4%", top: 0, bottom: 0, width: "28%", opacity: 0.15, overflow: "hidden", borderRadius: "0 var(--r-xl) var(--r-xl) 0" }} aria-hidden>
-            <Image src="/photos/decanter-set-gift.jpg" alt="" fill style={{ objectFit: "cover" }} sizes="28vw" />
+          <div
+            style={{
+              position: "absolute",
+              right: "4%",
+              top: 0,
+              bottom: 0,
+              width: "28%",
+              opacity: 0.15,
+              overflow: "hidden",
+              borderRadius: "0 var(--r-xl) var(--r-xl) 0",
+            }}
+            aria-hidden
+          >
+            <Image
+              src="/photos/decanter-set-gift.jpg"
+              alt=""
+              fill
+              style={{ objectFit: "cover" }}
+              sizes="28vw"
+            />
           </div>
 
           <div style={{ position: "relative", zIndex: 1, maxWidth: 680 }}>
-            <p className="eyebrow" style={{ color: "var(--blush)" }}>By commission</p>
-            <h2 className="display" style={{ fontSize: "clamp(40px,6vw,88px)", margin: "20px 0 24px", fontWeight: 400 }}>
+            <p className="eyebrow" style={{ color: "var(--blush)" }}>
+              By commission
+            </p>
+            <h2
+              className="display"
+              style={{ fontSize: "clamp(40px,6vw,88px)", margin: "20px 0 24px", fontWeight: 400 }}
+            >
               Have something{" "}
               <em style={{ fontStyle: "italic" }}>specific</em> in mind?
             </h2>
             <p style={{ fontSize: 17, opacity: 0.85, lineHeight: 1.6, maxWidth: 520 }}>
-              Send a brief, get a quote within 24 hours, and a digital proof before we touch the laser.
+              Send a brief, get a quote within 24 hours, and a digital proof before we touch the
+              laser.
             </p>
             <div style={{ display: "flex", gap: 12, marginTop: 36, flexWrap: "wrap" }}>
-              <Link href="/custom" className="btn" style={{ background: "var(--cream)", color: "var(--ink)" }}>
+              <Link
+                href="/custom"
+                className="btn"
+                style={{ background: "var(--cream)", color: "var(--ink)" }}
+              >
                 Start a custom request <ArrowIcon size={14} />
               </Link>
-              <Link href="/contact" className="btn" style={{ background: "transparent", color: "var(--cream)", border: "1px solid rgba(255,255,255,0.4)" }}>
+              <Link
+                href="/contact"
+                className="btn"
+                style={{
+                  background: "transparent",
+                  color: "var(--cream)",
+                  border: "1px solid rgba(255,255,255,0.4)",
+                }}
+              >
                 Get in touch
               </Link>
             </div>

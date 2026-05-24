@@ -45,6 +45,7 @@ export function Nav() {
   };
 
   const navLinks = [
+    { label: "Home", href: "/" },
     { label: "Shop", href: "/shop", hasMega: true },
     { label: "Custom Orders", href: "/custom" },
     { label: "About", href: "/about" },
