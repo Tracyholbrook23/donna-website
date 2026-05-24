@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { collections } from "@/lib/data";
@@ -17,6 +17,7 @@ export interface WixProduct {
   priceData?: { formatted?: { price?: string | null } | null; price?: number | null } | null;
   media?: { mainMedia?: { image?: { url?: string | null } | null } | null } | null;
   productPageUrl?: { base?: string | null; path?: string | null } | null;
+  collectionIds?: string[] | null;
 }
 
 type SortKey = "featured" | "price-low" | "price-high";
@@ -98,51 +99,78 @@ export function ShopClient({ initialProducts }: Props) {
   const [sort, setSort] = useState<SortKey>("featured");
   const [maxPrice, setMaxPrice] = useState(200);
   const [filtersOpen, setFiltersOpen] = useState(true);
-  const [products, setProducts] = useState<WixProduct[]>(initialProducts);
-  const [loading, setLoading] = useState(false);
 
-  const allCollections = [
-    { id: "all", name: "Everything", count: initialProducts.length, kicker: "Every piece in the studio, ready to engrave." },
-    ...collections,
-  ];
+  const pillsRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
 
-  const fetchByCollection = useCallback(async (collectionId: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/products?collection=${collectionId}`);
-      const data = await res.json();
-      setProducts(data);
-    } catch {
-      setProducts([]);
-    } finally {
-      setLoading(false);
-    }
+  const updateArrows = useCallback(() => {
+    const el = pillsRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
   }, []);
 
   useEffect(() => {
-    if (activeCollection === "all") {
-      setProducts(initialProducts);
-    } else {
-      fetchByCollection(activeCollection);
-    }
-  }, [activeCollection, initialProducts, fetchByCollection]);
+    const el = pillsRef.current;
+    if (!el) return;
+    updateArrows();
+    el.addEventListener("scroll", updateArrows, { passive: true });
+    window.addEventListener("resize", updateArrows, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", updateArrows);
+      window.removeEventListener("resize", updateArrows);
+    };
+  }, [updateArrows, allCollections]);
+
+  const scrollPills = (dir: "left" | "right") => {
+    const el = pillsRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir === "right" ? 240 : -240, behavior: "smooth" });
+  };
 
   const handleCollectionChange = (id: string) => {
     setActiveCollection(id);
     setMaxPrice(200); // reset price filter on collection change
   };
 
+  // Build collection tabs — derive live counts from actual product data
+  const allCollections = useMemo(() => {
+    return [
+      { id: "all", name: "Everything", wixId: "", count: initialProducts.length, kicker: "Every piece in the studio, ready to engrave." },
+      ...collections.map((c) => ({
+        ...c,
+        count: c.wixId
+          ? initialProducts.filter((p) => (p.collectionIds ?? []).includes(c.wixId)).length
+          : 0,
+      })),
+    ];
+  }, [initialProducts]);
+
   const filtered = useMemo(() => {
-    let items = [...products];
+    let items = [...initialProducts];
+
+    // Filter by collection client-side using the product's collectionIds array
+    if (activeCollection !== "all") {
+      const match = collections.find((c) => c.id === activeCollection);
+      const wixId = match?.wixId;
+      if (wixId) {
+        items = items.filter((p) => (p.collectionIds ?? []).includes(wixId));
+      } else {
+        items = []; // category exists in Wix but has no products assigned yet
+      }
+    }
+
     if (maxPrice < 200) {
       items = items.filter((p) => (p.priceData?.price ?? 0) <= maxPrice);
     }
     if (sort === "price-low") items.sort((a, b) => (a.priceData?.price ?? 0) - (b.priceData?.price ?? 0));
     if (sort === "price-high") items.sort((a, b) => (b.priceData?.price ?? 0) - (a.priceData?.price ?? 0));
     return items;
-  }, [products, sort, maxPrice]);
+  }, [initialProducts, activeCollection, sort, maxPrice]);
 
   const currentCollection = allCollections.find((c) => c.id === activeCollection);
+
 
   return (
     <main className="page-enter">
@@ -218,16 +246,93 @@ export function ShopClient({ initialProducts }: Props) {
           </div>
 
           {/* Collection tabs */}
-          <div
-            style={{
-              display: "flex",
-              gap: 8,
-              marginTop: 36,
-              overflowX: "auto",
-              paddingBottom: 4,
-              scrollbarWidth: "none",
-            }}
-          >
+          <div style={{ position: "relative", marginTop: 36 }}>
+            {/* Left arrow */}
+            {canScrollLeft && (
+              <button
+                onClick={() => scrollPills("left")}
+                aria-label="Scroll categories left"
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  zIndex: 2,
+                  width: 32,
+                  height: 32,
+                  borderRadius: "50%",
+                  border: "1px solid var(--line)",
+                  background: "var(--cream)",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 14,
+                  color: "var(--ink)",
+                }}
+              >
+                ‹
+              </button>
+            )}
+
+            {/* Right arrow */}
+            {canScrollRight && (
+              <button
+                onClick={() => scrollPills("right")}
+                aria-label="Scroll categories right"
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  zIndex: 2,
+                  width: 32,
+                  height: 32,
+                  borderRadius: "50%",
+                  border: "1px solid var(--line)",
+                  background: "var(--cream)",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 14,
+                  color: "var(--ink)",
+                }}
+              >
+                ›
+              </button>
+            )}
+
+            {/* Fade edges */}
+            {canScrollLeft && (
+              <div aria-hidden style={{
+                position: "absolute", left: 0, top: 0, bottom: 4, width: 48, zIndex: 1,
+                background: "linear-gradient(to right, var(--cream) 40%, transparent)",
+                pointerEvents: "none",
+              }} />
+            )}
+            {canScrollRight && (
+              <div aria-hidden style={{
+                position: "absolute", right: 0, top: 0, bottom: 4, width: 48, zIndex: 1,
+                background: "linear-gradient(to left, var(--cream) 40%, transparent)",
+                pointerEvents: "none",
+              }} />
+            )}
+
+            <div
+              ref={pillsRef}
+              style={{
+                display: "flex",
+                gap: 8,
+                overflowX: "auto",
+                paddingBottom: 4,
+                scrollbarWidth: "none",
+                paddingLeft: canScrollLeft ? 40 : 0,
+                paddingRight: canScrollRight ? 40 : 0,
+              }}
+            >
             {allCollections.map((c) => (
               <button
                 key={c.id}
@@ -442,17 +547,7 @@ export function ShopClient({ initialProducts }: Props) {
                 </button>
               )}
 
-              {loading ? (
-                <div
-                  style={{
-                    textAlign: "center",
-                    padding: "80px 0",
-                    color: "var(--muted)",
-                  }}
-                >
-                  <p style={{ fontSize: 15 }}>Loading…</p>
-                </div>
-              ) : filtered.length === 0 ? (
+              {filtered.length === 0 ? (
                 <div
                   style={{
                     textAlign: "center",
