@@ -59,10 +59,10 @@ export function Nav() {
           position: "sticky",
           top: 0,
           zIndex: 60,
-          background: "var(--cream)",
+          background: "#1a3028",
           backdropFilter: "none",
           WebkitBackdropFilter: "none",
-          borderBottom: "1px solid var(--line-soft)",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
           transition: "all .3s var(--ease)",
         }}
       >
@@ -95,11 +95,11 @@ export function Nav() {
                   style={{
                     fontSize: 13,
                     fontWeight: 500,
-                    color: "var(--ink)",
+                    color: "#fff",
                     textDecoration: "none",
                     letterSpacing: "0.02em",
                     paddingBottom: 4,
-                    borderBottom: `1px solid ${pathname === l.href ? "var(--ink)" : "transparent"}`,
+                    borderBottom: `1px solid ${pathname === l.href ? "#fff" : "transparent"}`,
                     transition: "border-color .25s var(--ease)",
                   }}
                 >
@@ -110,11 +110,11 @@ export function Nav() {
           </nav>
 
           {/* Right icons */}
-          <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 4, color: "#fff" }}>
             <button
               className="btn btn-ghost"
               onClick={() => setSearchOpen(true)}
-              style={{ padding: "10px 12px" }}
+              style={{ padding: "10px 12px", color: "#fff" }}
               aria-label="Search"
             >
               <SearchIcon />
@@ -122,7 +122,7 @@ export function Nav() {
             <Link
               href="/account"
               className="btn btn-ghost desktop-only"
-              style={{ padding: "10px 12px" }}
+              style={{ padding: "10px 12px", color: "#fff" }}
               aria-label="Account"
             >
               <AccountIcon />
@@ -130,7 +130,7 @@ export function Nav() {
             <Link
               href="/cart"
               className="btn btn-ghost"
-              style={{ padding: "10px 12px", position: "relative" }}
+              style={{ padding: "10px 12px", position: "relative", color: "#fff" }}
               aria-label="Cart"
             >
               <CartIcon />
@@ -138,7 +138,7 @@ export function Nav() {
             <button
               className="btn btn-ghost mobile-only"
               onClick={() => setMobileOpen((v) => !v)}
-              style={{ padding: "10px 12px" }}
+              style={{ padding: "10px 12px", color: "#fff" }}
               aria-label="Menu"
             >
               {mobileOpen ? <CloseIcon /> : <MenuIcon />}
