@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { collections } from "@/lib/data";
 import { NewsletterForm } from "@/components/NewsletterForm";
 
@@ -14,7 +15,7 @@ export function Footer() {
     {
       title: "Studio",
       items: [
-        { label: "About Donna", href: "/about" },
+        { label: "About Us", href: "/about" },
         { label: "Custom Orders", href: "/custom" },
         { label: "Corporate & Bulk", href: "/custom" },
         { label: "Contact", href: "/contact" },
@@ -43,26 +44,27 @@ export function Footer() {
         overflow: "hidden",
       }}
     >
-      {/* Large italic wordmark in bg */}
+      {/* Large ghost logo mark in bg */}
       <div
         aria-hidden
         style={{
           position: "absolute",
           left: "50%",
-          bottom: -80,
+          bottom: -60,
           transform: "translateX(-50%)",
-          fontSize: "clamp(280px, 38vw, 540px)",
-          fontFamily: "var(--font-display)",
-          fontStyle: "italic",
-          color: "rgba(255,255,255,0.04)",
-          lineHeight: 0.85,
-          letterSpacing: "-0.03em",
+          width: "clamp(400px, 55vw, 700px)",
+          opacity: 0.04,
           pointerEvents: "none",
           userSelect: "none",
-          whiteSpace: "nowrap",
         }}
       >
-        Donna
+        <Image
+          src="/logo.png"
+          alt=""
+          width={700}
+          height={700}
+          style={{ objectFit: "contain", width: "100%", height: "auto" }}
+        />
       </div>
 
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
@@ -91,16 +93,16 @@ export function Footer() {
                 maxWidth: 480,
               }}
             >
-              Letters from{" "}
+              New drops,{" "}
               <em
                 style={{
                   fontFamily: "var(--font-display)",
                   fontStyle: "italic",
                 }}
               >
-                my hands
+                behind the scenes,
               </em>{" "}
-              to yours.
+              early access.
             </h3>
             <p
               style={{
@@ -110,8 +112,8 @@ export function Footer() {
                 fontSize: 14,
               }}
             >
-              New pieces, behind-the-scenes from the studio, holiday lead times,
-              and the occasional early-access drop. No spam, I promise.
+              New pieces, holiday lead times, and early-access drops straight
+              from the engraving table. No spam, ever.
             </p>
           </div>
 
@@ -132,19 +134,19 @@ export function Footer() {
             <p
               style={{
                 color: "rgba(255,255,255,0.55)",
-                maxWidth: 320,
+                maxWidth: 300,
                 marginTop: 20,
                 fontSize: 14,
                 lineHeight: 1.7,
               }}
             >
-              Engraved goods and personalized commissions, made by hand in
-              Charlotte, NC. A small Black-owned studio building heirlooms one
-              piece at a time.
+              Custom laser engraving — woman owned &amp; operated. Tumblers,
+              boards, knives, wallets, and one-of-a-kind commissions made with
+              precision and care.
             </p>
             <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
               {[
-                { label: "IG", href: "#" },
+                { label: "IG", href: "https://www.instagram.com/mamalaserengraver" },
                 { label: "TT", href: "#" },
                 { label: "PT", href: "#" },
                 { label: "FB", href: "#" },
@@ -152,6 +154,8 @@ export function Footer() {
                 <a
                   key={s.label}
                   href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={s.label}
                   style={{
                     width: 38,
@@ -225,8 +229,8 @@ export function Footer() {
           }}
         >
           <div>
-            &copy; {new Date().getFullYear()} Donna &amp; Co. &middot;
-            Black-owned, hand-engraved.
+            &copy; {new Date().getFullYear()} Out of Jersey Custom Laser Engraving &middot;
+            Woman Owned &amp; Operated.
           </div>
           <div style={{ display: "flex", gap: 24 }}>
             <Link
@@ -260,32 +264,18 @@ function FooterWordmark() {
       href="/"
       style={{
         textDecoration: "none",
-        color: "var(--cream)",
-        display: "inline-flex",
-        alignItems: "baseline",
-        gap: 10,
+        display: "inline-block",
       }}
+      aria-label="Out of Jersey — Home"
     >
-      <span
-        className="display-italic"
-        style={{ fontSize: 36, lineHeight: 0.9, letterSpacing: "-0.02em" }}
-      >
-        Donna
-      </span>
-      <span
-        style={{
-          fontSize: 9,
-          letterSpacing: "0.24em",
-          textTransform: "uppercase",
-          opacity: 0.55,
-          fontWeight: 600,
-          position: "relative",
-          top: -4,
-        }}
-      >
-        &amp; co.
-      </span>
+      {/* On the dark footer the logo renders perfectly as-is */}
+      <Image
+        src="/logo.png"
+        alt="Out of Jersey Custom Laser Engraving"
+        width={180}
+        height={90}
+        style={{ objectFit: "contain", display: "block" }}
+      />
     </Link>
   );
 }
-

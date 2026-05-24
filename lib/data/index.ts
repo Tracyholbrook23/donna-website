@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────
-// Donna & Co. — Static catalog and content data
+// Out of Jersey — Static catalog and content data
 // ─────────────────────────────────────────────
 
 export const collections = [
@@ -16,14 +16,14 @@ export type CollectionId = typeof collections[number]["id"];
 export const testimonials = [
   {
     quote:
-      "I cried when I opened my mom's anniversary box. Donna engraved my parents' first dance lyrics around the lid and it's the most thoughtful gift I've ever given.",
+      "I cried when I opened my mom's anniversary box. They engraved my parents' first dance lyrics around the lid and it's the most thoughtful gift I've ever given.",
     name: "Imani K.",
     role: "Atlanta, GA · Anniversary gift",
     rating: 5,
   },
   {
     quote:
-      "We ordered 80 monogrammed tumblers for our bridesmaids and corporate gifts and Donna handled every single one personally. Real human, real craft.",
+      "We ordered 80 monogrammed tumblers for our bridesmaids and corporate gifts and every single one was handled personally. Real human, real craft.",
     name: "Sydney & Marcus",
     role: "Brooklyn, NY · Wedding party",
     rating: 5,
@@ -37,9 +37,9 @@ export const testimonials = [
   },
   {
     quote:
-      "Donna designed a charcuterie board with our family tree etched into the back. It sits at every Sunday dinner. Generational.",
+      "They designed a charcuterie board with our family tree etched into the back. It sits at every Sunday dinner. Generational.",
     name: "The Whitfield Family",
-    role: "Charlotte, NC · Custom commission",
+    role: "New Jersey · Custom commission",
     rating: 5,
   },
 ] as const;
@@ -47,7 +47,7 @@ export const testimonials = [
 export const faqs = [
   {
     q: "How does personalization work?",
-    a: "On every product page, you'll see a 'Make it yours' panel. Type your text, choose a font and a placement, and watch a live preview update in real time. Want something more complex — a family crest, a hand-drawn sketch, a logo? Send a custom request and Donna replies within 24 hours.",
+    a: "On every product page, you'll see a 'Make it yours' panel. Type your text, choose a font and a placement, and watch a live preview update in real time. Want something more complex — a family crest, a hand-drawn sketch, a logo? Send a custom request and replies within 24 hours.",
   },
   {
     q: "How long does an order take?",
@@ -122,7 +122,7 @@ export const policies = [
       },
       {
         h: "Tracking and insurance",
-        p: "Every order ships tracked. Fragile pieces (glass, decanters, ceramic) ship insured by default. If something arrives damaged, send photos within 48 hours and I'll replace it.",
+        p: "Every order ships tracked. Fragile pieces (glass, decanters, ceramic) ship insured by default. If something arrives damaged, send photos within 48 hours and we'll replace it.",
       },
     ],
   },
@@ -133,7 +133,7 @@ export const policies = [
     sections: [
       {
         h: "Stock items",
-        p: "Unused, in original packaging — return within 30 days for a full refund minus return shipping. Email hello@donnas.co for a return label.",
+        p: "Unused, in original packaging — return within 30 days for a full refund minus return shipping. Email hello@outofjersey.com for a return label.",
       },
       {
         h: "Personalized & custom",
@@ -182,10 +182,10 @@ export const announcementMessages = [
   "Free US shipping on orders over $125",
   "Holiday lead times: order by Dec 12 for Christmas",
   "Custom commissions open — 2 slots left in November",
-  "Black-owned, hand-engraved in Charlotte, NC",
+  "Woman owned & operated · Custom laser engraving out of New Jersey",
 ];
 
-// Lifestyle photos — real Donna product photography
+// Lifestyle photos — real Out of Jersey product photography
 export const lifestyleScenes = [
   {
     id: "ls-bff",
@@ -275,5 +275,5 @@ export const customOrderTypes = [
   { id: "family",    label: "Family heirloom",           desc: "One-off piece. Family tree, crest, custom artwork." },
   { id: "logo",      label: "Logo or brand engraving",   desc: "Your business mark on tumblers, boards, leather." },
   { id: "sketch",    label: "From a sketch",             desc: "You draw it, I engrave it. Kids' art, signatures, handwriting." },
-  { id: "other",     label: "Something else",            desc: "Describe it in the brief. Donna replies within 24 hours." },
+  { id: "other",     label: "Something else",            desc: "Describe it in the brief. replies within 24 hours." },
 ] as const;

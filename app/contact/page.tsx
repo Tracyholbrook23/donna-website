@@ -62,7 +62,7 @@ export default function ContactPage() {
               }}
             >
               Questions, commissions, wholesale — use the form or reach out
-              directly. Donna or a studio member replies within 24 hours.
+              directly. We reply within 24 hours.
             </p>
           </div>
         </div>
@@ -91,25 +91,25 @@ export default function ContactPage() {
                 {[
                   {
                     label: "Email",
-                    value: "hello@donnas.co",
-                    href: "mailto:hello@donnas.co",
+                    value: "hello@outofjersey.com",
+                    href: "mailto:hello@outofjersey.com",
                     note: "General questions & orders",
                   },
                   {
                     label: "Custom commissions",
-                    value: "custom@donnas.co",
-                    href: "mailto:custom@donnas.co",
+                    value: "custom@outofjersey.com",
+                    href: "mailto:custom@outofjersey.com",
                     note: "For all commission briefs",
                   },
                   {
                     label: "Instagram",
-                    value: "@donnaandco",
+                    value: "@outofjersey.engraving",
                     href: "#",
                     note: "DMs open · usually fastest",
                   },
                   {
                     label: "WhatsApp",
-                    value: "+1 (704) 555-0177",
+                    value: "+1 (555) 555-0177",
                     href: "#",
                     note: "Business hours EST",
                   },

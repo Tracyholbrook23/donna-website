@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { collections } from "@/lib/data";
 import {
@@ -181,7 +182,7 @@ export function Nav() {
                     className="display"
                     style={{ fontSize: 36, margin: 0 }}
                   >
-                    Every piece, made for the moment it&rsquo;s for.
+                    Every piece, laser-engraved for the moment it&rsquo;s for.
                   </h3>
                 </div>
 
@@ -315,37 +316,40 @@ export function Nav() {
   );
 }
 
-function Wordmark({ size = 28 }: { size?: number }) {
+function Wordmark() {
   return (
     <Link
       href="/"
       style={{
         textDecoration: "none",
-        color: "var(--ink)",
         display: "inline-flex",
-        alignItems: "baseline",
-        gap: 10,
+        alignItems: "center",
+        flexShrink: 0,
       }}
+      aria-label="Out of Jersey — Home"
     >
-      <span
-        className="display-italic"
-        style={{ fontSize: size, lineHeight: 0.9, letterSpacing: "-0.02em" }}
-      >
-        Donna
-      </span>
-      <span
+      {/* Logo badge: black background is intentional — like a stamp/seal */}
+      <div
         style={{
-          fontSize: 9,
-          letterSpacing: "0.24em",
-          textTransform: "uppercase",
-          opacity: 0.55,
-          fontWeight: 600,
-          position: "relative",
-          top: -4,
+          background: "#000",
+          borderRadius: 8,
+          padding: "4px 6px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: 44,
+          width: "auto",
         }}
       >
-        &amp; co.
-      </span>
+        <Image
+          src="/logo.png"
+          alt="Out of Jersey Custom Laser Engraving"
+          width={120}
+          height={36}
+          style={{ objectFit: "contain", display: "block" }}
+          priority
+        />
+      </div>
     </Link>
   );
 }

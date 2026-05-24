@@ -15,19 +15,19 @@ const PROCESS_STEPS = [
   {
     n: "02",
     t: "Quote",
-    d: "Within 24 hours I send a quote, a recommended material, and a realistic timeline. 50% deposit reserves your studio slot.",
-    time: "24 hrs · Donna",
+    d: "Within 24 hours we send a quote, a recommended material, and a realistic timeline. 50% deposit reserves your studio slot.",
+    time: "24 hrs · studio",
   },
   {
     n: "03",
     t: "Proof",
-    d: "I sketch the engraving and send a digital proof. Two rounds of revisions included. I won't engrave until you sign off.",
+    d: "We sketch the engraving and send a digital proof. Two rounds of revisions included. We won't engrave until you sign off.",
     time: "48–72 hrs · together",
   },
   {
     n: "04",
     t: "Engrave",
-    d: "I cut the piece, photograph it, ship it gift-ready in kraft and twine, with a hand-written card.",
+    d: "We cut the piece, photograph it, ship it gift-ready in kraft and twine, with a hand-written card.",
     time: "1–3 wks · studio",
   },
 ];
@@ -56,12 +56,12 @@ const ORDER_TYPES = [
   {
     id: "sketch",
     label: "From a sketch",
-    desc: "You draw it, I engrave it. Kids' art, signatures, handwriting.",
+    desc: "You draw it, we engrave it. Kids' art, signatures, handwriting.",
   },
   {
     id: "other",
     label: "Something else",
-    desc: "Describe it in the brief. Donna replies within 24 hours.",
+    desc: "Describe it in the brief. We reply within 24 hours.",
   },
 ];
 
@@ -353,7 +353,7 @@ export default function CustomPage() {
                   Or reach me directly
                 </p>
                 <a
-                  href="mailto:custom@donnas.co"
+                  href="mailto:custom@outofjersey.com"
                   style={{
                     display: "block",
                     fontFamily: "var(--font-display)",
@@ -364,7 +364,7 @@ export default function CustomPage() {
                     marginBottom: 8,
                   }}
                 >
-                  custom@donnas.co
+                  custom@outofjersey.com
                 </a>
                 <a
                   href="#"
@@ -376,7 +376,7 @@ export default function CustomPage() {
                     marginBottom: 4,
                   }}
                 >
-                  DM @donnaandco on Instagram
+                  DM @outofjersey.engraving on Instagram
                 </a>
                 <a
                   href="#"

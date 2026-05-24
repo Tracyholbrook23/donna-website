@@ -6,7 +6,7 @@ const VALUES = [
   {
     n: "01",
     t: "The maker matters.",
-    d: "Every piece is engraved by Donna, Maya, or Renee. Their initials live on the bottom — you know who made yours.",
+    d: "Every piece that leaves our studio passes through the hands of someone who cares about it — no exceptions.",
   },
   {
     n: "02",
@@ -15,18 +15,18 @@ const VALUES = [
   },
   {
     n: "03",
-    t: "The community owns this.",
-    d: "A portion of every order funds engraver apprenticeships for Black women — three new makers trained so far.",
+    t: "Laser precision.",
+    d: "Our equipment is dialed in and our standards are high. Every mark is intentional.",
   },
   {
     n: "04",
-    t: "Local before global.",
-    d: "Walnut from the Carolinas, leather from Tennessee, glass from Pennsylvania, packaging from a recycler in Atlanta. Small chains, on purpose.",
+    t: "Quality materials.",
+    d: "Walnut, acacia, leather, steel, crystal — sourced for durability and beauty. Nothing cheap, ever.",
   },
   {
     n: "05",
     t: "Honest pricing.",
-    d: "No fake sales, no urgency timers. Materials cost what they cost. Our time is worth what it's worth. The price you see is the price.",
+    d: "No fake sales, no urgency timers. Materials cost what they cost. Our time is worth what it's worth.",
   },
   {
     n: "06",
@@ -37,22 +37,22 @@ const VALUES = [
 
 const TEAM = [
   {
-    name: "Donna Whitfield",
-    role: "Founder · lead engraver · custom commissions",
-    bio: "Started the studio in 2020. Trained on a borrowed engraver in her sister's garage. Now runs intake, design, and every custom commission. Charlotte, NC.",
-    img: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=600&q=80",
+    name: "Founder & Lead Engraver",
+    role: "Custom commissions · studio direction",
+    bio: "Started Out of Jersey with a laser, a vision, and a passion for making gifts that actually mean something. Runs intake, design, and every custom commission.",
+    img: "/photos/bff-tumblers.jpg",
   },
   {
-    name: "Maya Chen",
-    role: "Production engraver · tumblers & drinkware",
-    bio: "Joined in 2022 after Donna trained her through the studio's first apprenticeship. Specializes in drinkware and small-batch corporate runs.",
-    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80",
+    name: "Production Engraver",
+    role: "Tumblers & drinkware specialist",
+    bio: "Specializes in drinkware and small-batch corporate runs. Precision work, every time.",
+    img: "/photos/whiskey-glasses-bar.jpg",
   },
   {
-    name: "Renee Thomas",
-    role: "Production engraver · boards & keepsakes",
-    bio: "Studio's second apprentice, now two years in. Renee handles boards, boxes, and all the big pieces. Her walnut work is hard to beat.",
-    img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=80",
+    name: "Production Engraver",
+    role: "Boards & keepsakes specialist",
+    bio: "Handles boards, boxes, and all the large-format pieces. The walnut work is hard to beat.",
+    img: "/photos/cutting-boards-family.jpg",
   },
 ];
 
@@ -67,7 +67,7 @@ export default function AboutPage() {
             style={{ textAlign: "center", maxWidth: 980, margin: "0 auto" }}
           >
             <p className="eyebrow" style={{ marginBottom: 16 }}>
-              About Donna &amp; Co.
+              About Out of Jersey
             </p>
             <h1
               className="display"
@@ -78,7 +78,7 @@ export default function AboutPage() {
                 lineHeight: 0.9,
               }}
             >
-              A studio built by{" "}
+              Custom laser engraving,{" "}
               <em
                 style={{
                   fontFamily: "var(--font-display)",
@@ -86,11 +86,8 @@ export default function AboutPage() {
                   color: "var(--terracotta)",
                 }}
               >
-                one woman
+                done right.
               </em>
-              ,
-              <br />
-              for the people you love.
             </h1>
           </div>
 
@@ -102,14 +99,14 @@ export default function AboutPage() {
                 borderRadius: "var(--r-xl)",
                 overflow: "hidden",
                 background: "var(--cream-2)",
+                position: "relative",
               }}
             >
               <Image
-                src="https://images.unsplash.com/photo-1521498542256-5aeb47ba2b36?w=1400&q=80"
-                alt="Donna in the studio"
-                width={1400}
-                height={600}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                src="/photos/wedding-board-couple.jpg"
+                alt="Out of Jersey — custom engraved wedding board"
+                fill
+                style={{ objectFit: "cover", objectPosition: "center top" }}
                 priority
               />
             </div>
@@ -130,7 +127,7 @@ export default function AboutPage() {
           >
             <div className="reveal" style={{ position: "sticky", top: 100 }}>
               <p className="eyebrow" style={{ marginBottom: 16 }}>
-                A letter from Donna
+                Our story
               </p>
               <p
                 className="display-italic"
@@ -152,17 +149,17 @@ export default function AboutPage() {
                   marginTop: 24,
                 }}
               >
-                — Donna Whitfield, founder &amp; engraver
+                — Out of Jersey, woman owned &amp; operated
               </p>
 
               <div
                 style={{ marginTop: 32, borderTop: "1px solid var(--line)" }}
               >
                 {[
-                  { label: "Year founded", value: "2020" },
+                  { label: "Based in", value: "New Jersey" },
                   { label: "Pieces engraved", value: "14,200+" },
-                  { label: "Studio", value: "Charlotte, NC" },
                   { label: "5-star reviews", value: "1,840+" },
+                  { label: "Ownership", value: "Woman Owned" },
                 ].map((s) => (
                   <div
                     key={s.label}
@@ -203,48 +200,34 @@ export default function AboutPage() {
                 }}
               >
                 <p style={{ marginTop: 0 }}>
-                  The first piece I ever engraved was a walnut box for my baby
-                  sister Jasmine&rsquo;s high school graduation. I bought a
-                  small laser engraver off a Black-woman maker in Atlanta,
-                  watched her run through three boards with me on a Saturday,
-                  and brought it home that night.
+                  Out of Jersey started with a laser and a clear vision: make
+                  personalized gifts that are actually worth giving. Not the
+                  kind you wrap in a bag and forget — the kind that sit on a
+                  shelf for thirty years because they mean something.
                 </p>
                 <p>
-                  I burned three boards in two weeks figuring out feed rates.
-                  The fourth one was the box. It said{" "}
-                  <em style={{ color: "var(--terracotta)" }}>
-                    Jasmine · May 2020
-                  </em>{" "}
-                  and on the underside I etched a single line my grandmother
-                  used to say to us before bed.
-                </p>
-                <p>
-                  She still has it. So do the next forty people who saw it on
-                  Instagram and asked me to make them one too.
+                  We specialize in custom laser engraving on tumblers, boards,
+                  knives, wallets, glass, leather, and more. Every piece is
+                  handled personally, from the first proof to the final pass.
                 </p>
                 <p>
                   <strong style={{ color: "var(--ink)", fontWeight: 600 }}>
-                    Donna &amp; Co. exists for a simple reason:
+                    Out of Jersey exists for a simple reason:
                   </strong>{" "}
-                  a gift with your name on it is different. A gift made by a
-                  person who knows what your mom calls you, what your
-                  grandfather used to drive, what your wedding date is, the
-                  lyrics of the song you danced to — that gift outlasts the
-                  holiday it was given for.
+                  a gift with your name on it is different. A gift that carries
+                  a name, a date, initials, a quote — something just for that
+                  person — outlasts the holiday it was given for.
                 </p>
                 <p>
-                  The studio is bigger now. Two engravers I trained personally
-                  — Maya and Renee — work alongside me. We ship pieces to all
-                  50 states and ten countries. Some weeks we engrave eighty
-                  pieces, some weeks we engrave eight. Every single one of them
-                  passes through my hands or theirs.
+                  We ship across the US and internationally. Some weeks we
+                  engrave eighty pieces, some weeks we engrave eight. Every
+                  single one is treated the same way — with care.
                 </p>
                 <p>
-                  I&rsquo;m a Black woman who built something for the people I
-                  came from and the people I&rsquo;ve met since. I am proud of
-                  every piece that leaves the studio.
+                  Woman owned and operated. We are proud of every piece that
+                  leaves the studio.
                 </p>
-                <p>I hope your gift is here for a long time.</p>
+                <p>We hope your gift lasts a long time.</p>
                 <p
                   className="display-italic"
                   style={{
@@ -254,7 +237,7 @@ export default function AboutPage() {
                     lineHeight: 1,
                   }}
                 >
-                  — Donna
+                  — Out of Jersey
                 </p>
               </div>
             </div>
@@ -360,7 +343,7 @@ export default function AboutPage() {
                 fontWeight: 400,
               }}
             >
-              Three women, one bench, every piece.
+              Every piece, personal.
             </h2>
           </div>
 
@@ -371,8 +354,8 @@ export default function AboutPage() {
               gap: 32,
             }}
           >
-            {TEAM.map((m) => (
-              <div key={m.name} className="reveal">
+            {TEAM.map((m, i) => (
+              <div key={i} className="reveal">
                 <div
                   style={{
                     aspectRatio: "3/4",
@@ -380,18 +363,14 @@ export default function AboutPage() {
                     overflow: "hidden",
                     background: "var(--cream-2)",
                     marginBottom: 20,
+                    position: "relative",
                   }}
                 >
                   <Image
                     src={m.img}
                     alt={m.name}
-                    width={600}
-                    height={800}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
+                    fill
+                    style={{ objectFit: "cover" }}
                   />
                 </div>
                 <p

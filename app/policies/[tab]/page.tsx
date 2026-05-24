@@ -138,7 +138,7 @@ export default async function PoliciesPage({ params }: PageProps) {
                   color: "var(--ink)",
                 }}
               >
-                Donna reads every message herself.
+                We read every message personally.
               </p>
             </div>
             <Link href="/contact" className="btn btn-primary">

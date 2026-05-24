@@ -55,7 +55,7 @@ function HomeHero() {
           {/* Left — headline */}
           <div style={{ position: "relative", padding: "40px 0" }}>
             <p className="eyebrow reveal" style={{ marginBottom: 28 }}>
-              Hand-engraved in Charlotte, NC
+              Woman Owned &amp; Operated · Custom Laser Engraving
             </p>
             <h1
               className="display reveal reveal-delay-1"
@@ -90,9 +90,9 @@ function HomeHero() {
                 margin: "24px 0 36px",
               }}
             >
-              A small Black-owned studio engraving tumblers, boards, wallets,
-              and one-off commissions — for the moments that deserve more than a
-              card.
+              Out of Jersey — custom laser engraving on tumblers, boards, knives,
+              wallets, and one-of-a-kind commissions. For the moments that deserve
+              more than a card.
             </p>
 
             <div
@@ -122,7 +122,7 @@ function HomeHero() {
               <HeroStat label="Pieces in the catalog" value="117" counter={117} />
               <HeroStat label="Five-star reviews" value="1,840+" counter={1840} suffix="+" />
               <HeroStat label="Engraved this year" value="6,200" counter={6200} />
-              <HeroStat label="Studio" value="Charlotte, NC" />
+              <HeroStat label="Based in" value="New Jersey" />
             </div>
           </div>
 
@@ -264,8 +264,8 @@ function HomeHero() {
                 zIndex: 3,
               }}
             >
-              <p className="display-italic" style={{ fontSize: 24, margin: 0, lineHeight: 1 }}>
-                — Donna
+              <p className="display-italic" style={{ fontSize: 22, margin: 0, lineHeight: 1 }}>
+                Out of Jersey
               </p>
               <p
                 style={{
@@ -275,7 +275,7 @@ function HomeHero() {
                   letterSpacing: "0.08em",
                 }}
               >
-                Owner · engraver · she/her
+                Custom Laser Engraving · Woman Owned
               </p>
             </div>
 
@@ -320,7 +320,7 @@ function HomeHero() {
                   letterSpacing="3"
                 >
                   <textPath href="#badge-circ">
-                    BLACK OWNED · HAND ENGRAVED · BLACK OWNED · HAND ENGRAVED ·
+                    WOMAN OWNED · LASER ENGRAVED · WOMAN OWNED · LASER ENGRAVED ·
                   </textPath>
                 </text>
               </svg>
@@ -371,10 +371,10 @@ function HeroStat({
 /* ── MARQUEE STRIP ──────────────────────────────────────── */
 function HomeMarqueeStrip() {
   const items = [
-    "Hand-engraved in Charlotte, NC",
+    "Custom laser engraving — woman owned & operated",
     "Free US shipping over $125",
     "1,840+ five-star reviews",
-    "Black-owned, woman-owned",
+    "Tumblers · Boards · Knives · Wallets · More",
     "Live engraving preview",
     "24-hour custom-order replies",
     "Gift-ready packaging on every order",
@@ -495,7 +495,7 @@ function HomeVideoStrip() {
               margin: "0 0 32px",
             }}
           >
-            Laser precision, human care. Every piece is reviewed by Donna
+            Laser precision, human care. Every piece is reviewed personally
             before it leaves the studio — no exceptions.
           </p>
           <Link
@@ -526,7 +526,7 @@ function HomeVideoStrip() {
           fontWeight: 600,
         }}
       >
-        Charlotte, NC · Est. 2018
+        Out of Jersey · Woman Owned &amp; Operated
       </div>
     </section>
   );
@@ -725,10 +725,10 @@ function HomeCategories() {
 /* ── STUDIO STORY ───────────────────────────────────────── */
 function HomeStudioStory() {
   const values = [
-    { n: "01", t: "Hand-engraved", d: "Every piece passes through my hands or my team's — no exceptions." },
-    { n: "02", t: "Small batches",  d: "I cap intake so each order gets the attention I'd want for my mother." },
-    { n: "03", t: "Local sourced",  d: "Walnut from Carolina, leather from Tennessee, glass from Pennsylvania." },
-    { n: "04", t: "Family first",   d: "A Black-owned, woman-owned, mother-run, sister-built studio." },
+    { n: "01", t: "Laser precision", d: "Every mark is intentional — our equipment is dialed in, our standards are high." },
+    { n: "02", t: "Small batches",   d: "We cap intake so each order gets the attention it deserves." },
+    { n: "03", t: "Quality materials", d: "Walnut, acacia, leather, steel, crystal — sourced for what lasts." },
+    { n: "04", t: "Woman owned",    d: "Built, run, and operated by women who care about every detail." },
   ];
 
   return (
@@ -792,7 +792,7 @@ function HomeStudioStory() {
           </div>
 
           <div className="reveal reveal-delay-1">
-            <p className="eyebrow">Meet Donna</p>
+            <p className="eyebrow">Our Story</p>
             <h2
               className="display"
               style={{
@@ -801,9 +801,9 @@ function HomeStudioStory() {
                 fontWeight: 400,
               }}
             >
-              I started this{" "}
+              Built on{" "}
               <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>
-                at the kitchen table.
+                precision and heart.
               </em>
             </h2>
 
@@ -811,15 +811,14 @@ function HomeStudioStory() {
               style={{ fontSize: 17, lineHeight: 1.7, color: "var(--ink-soft)", maxWidth: 520 }}
             >
               <p style={{ marginTop: 0 }}>
-                For my sister&rsquo;s graduation. A walnut box with her name and
-                the date she walked across that stage. I made one — then
-                everyone in our family wanted one.
+                Out of Jersey started with a laser, a vision, and a passion for
+                making gifts that actually mean something. Every piece we engrave
+                carries a name, a date, a memory — something worth keeping.
               </p>
               <p>
-                Six years later it&rsquo;s a studio in Charlotte. Still small.
-                Still mine. Every piece is engraved by my hand or one of two
-                women I&rsquo;ve trained personally. Nothing leaves here unless
-                I&rsquo;d give it to my own mother.
+                Woman owned and operated. We handle every order personally —
+                from the first proof to the final pass. Nothing ships unless
+                we&rsquo;d be proud to give it ourselves.
               </p>
             </div>
 
@@ -1265,7 +1264,7 @@ function HomeInTheirHands() {
           }}
         >
           <div>
-            <p className="eyebrow">@mamalaserengraver</p>
+            <p className="eyebrow">@outofjersey.engraving</p>
             <h2
               className="display"
               style={{
@@ -1281,7 +1280,7 @@ function HomeInTheirHands() {
               </em>
             </h2>
             <p style={{ fontSize: 16, color: "var(--muted)", marginTop: 14, maxWidth: 540 }}>
-              Real pieces, real people. Tag us on Instagram to be featured.
+              Real pieces, real people. Tag <strong>@outofjersey.engraving</strong> to be featured.
             </p>
           </div>
           <a
@@ -1477,7 +1476,7 @@ function HomeCustomCTA() {
                   border: "1px solid rgba(255,255,255,0.4)",
                 }}
               >
-                Talk to Donna directly
+                Talk to us directly
               </Link>
             </div>
           </div>

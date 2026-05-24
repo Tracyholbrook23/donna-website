@@ -20,13 +20,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Donna & Co. | Custom Engraving & Personalized Gifts",
+  title: "Out of Jersey | Custom Laser Engraving — Woman Owned & Operated",
   description:
-    "Hand-engraved tumblers, boards, wallets, and custom commissions — made by a Black woman-owned studio in Charlotte, NC. Personalized gifts that outlast the holiday.",
+    "Custom laser engraving on tumblers, boards, knives, wallets, and one-of-a-kind commissions. Woman-owned & operated. Personalized gifts done with precision and care.",
   openGraph: {
-    title: "Donna & Co. | Custom Engraving & Personalized Gifts",
+    title: "Out of Jersey | Custom Laser Engraving",
     description:
-      "Hand-engraved tumblers, boards, wallets, and custom commissions. Black-owned, hand-engraved in Charlotte, NC.",
+      "Custom laser engraving on tumblers, boards, knives, wallets, and commissions. Woman-owned & operated.",
     type: "website",
   },
 };
