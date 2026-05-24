@@ -121,7 +121,7 @@ export function ShopClient({ initialProducts }: Props) {
       el.removeEventListener("scroll", updateArrows);
       window.removeEventListener("resize", updateArrows);
     };
-  }, [updateArrows, allCollections]);
+  }, [updateArrows]);
 
   const scrollPills = (dir: "left" | "right") => {
     const el = pillsRef.current;
@@ -358,8 +358,9 @@ export function ShopClient({ initialProducts }: Props) {
                 <span style={{ fontSize: 11, opacity: 0.55 }}>{c.count}</span>
               </button>
             ))}
-          </div>
-        </div>
+            </div>{/* end scrollable pills */}
+          </div>{/* end pills wrapper */}
+        </div>{/* end container */}
       </section>
 
       {/* Body: sidebar + grid */}
