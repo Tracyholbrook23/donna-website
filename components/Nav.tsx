@@ -59,14 +59,10 @@ export function Nav() {
           position: "sticky",
           top: 0,
           zIndex: 60,
-          background: scrolled ? "rgba(251,245,236,0.88)" : "transparent",
-          backdropFilter: scrolled ? "blur(20px) saturate(150%)" : "none",
-          WebkitBackdropFilter: scrolled
-            ? "blur(20px) saturate(150%)"
-            : "none",
-          borderBottom: scrolled
-            ? "1px solid var(--line-soft)"
-            : "1px solid transparent",
+          background: "var(--cream)",
+          backdropFilter: "none",
+          WebkitBackdropFilter: "none",
+          borderBottom: "1px solid var(--line-soft)",
           transition: "all .3s var(--ease)",
         }}
       >
