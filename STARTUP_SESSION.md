@@ -1,6 +1,6 @@
 # STARTUP_SESSION.md
 ### Out of Jersey — Master Session Handoff & Active Task Tracker
-_Last updated: 2026-05-24 (session 5) | Updated by: Claude (Cowork session)_
+_Last updated: 2026-05-24 (session 6) | Updated by: Claude (Cowork session)_
 
 ---
 
@@ -73,9 +73,15 @@ _Last updated: 2026-05-24 (session 5) | Updated by: Claude (Cowork session)_
   - Price slider remains and works
   - ⚠️ NOTE: Filter counts show 0 for categories where Wix products haven't been assigned yet — Wix dashboard work still needed
 
-- [ ] **[HIGH] Fix cart/checkout button functionality**
-  - The BuyBox (`components/BuyBox.tsx`) renders an Add to Cart button, but Wix cart integration needs verification — confirm cart state is actually updating and Wix checkout flow is reachable
-  - Test end-to-end: add to cart → view cart → checkout
+- [x] **[HIGH] Fix cart/checkout button functionality** ✅ (2026-05-24)
+  - Full Wix Headless cart flow built end-to-end
+  - `lib/cartContext.tsx` — CartProvider with visitor token persistence (localStorage), site-wide cart state
+  - `app/cart/page.tsx` — cart page with line items, qty controls, remove, order summary, checkout button
+  - `components/Nav.tsx` — live cart count badge on cart icon
+  - `components/BuyBox.tsx` — "Add to Cart" wired to context (badge updates live) + new "Buy it now" button
+  - `lib/wixClient.ts` — added `@wix/redirects`, `createBrowserWixClient()` factory
+  - Checkout flow: `currentCart.createCheckoutFromCurrentCart()` → `redirects.createRedirectSession()` → redirect to Wix checkout URL
+  - ⚠️ NOTE: Needs at least one product with a real price in Wix to test checkout (all products currently $0.00)
 
 - [ ] **[HIGH] Remove all placeholder/unapproved product categories**
   - `lib/data/index.ts` collections: confirm with Donna that all 6 are real: tumblers, boards, home, accessories, wedding, corporate
@@ -121,6 +127,12 @@ _Last updated: 2026-05-24 (session 5) | Updated by: Claude (Cowork session)_
   - Customers need ability to upload inspiration images for custom orders
   - Should accept: JPG, PNG, PDF (sketch uploads)
   - Wire to: email attachment via the inquiry API, or a Wix media upload endpoint
+
+- [x] **[MEDIUM] Rephrase homepage photo grid section** ✅ (2026-05-24)
+  - Photos are Pinterest/inspiration images, not Donna's own work
+  - Eyebrow changed from `@outofjersey.engraving` → `what we can make`
+  - Heading changed from "The work, up close." → "The possibilities, up close."
+  - Added honest subtitle: "Every piece is made to order. These are examples of styles and products we engrave…"
 
 - [x] **[MEDIUM] Footer: remove unused social media links** ✅ (2026-05-24)
   - Removed TT, PT, FB — Instagram only remains
@@ -268,7 +280,7 @@ _Last updated: 2026-05-24 (session 5) | Updated by: Claude (Cowork session)_
 | 8 Wix categories missing | ❌ Need manual creation | Wix dashboard |
 | Shop category filter buttons | ✅ Working (client-side via collectionIds) | `components/ShopClient.tsx` |
 | Custom inquiry email delivery | ❌ Not wired (⏳ waiting on Donna's email) | `app/api/custom-inquiry/route.ts` |
-| Cart / checkout flow | ⚠️ Unverified | `components/BuyBox.tsx` + Wix |
+| Cart / checkout flow | ✅ Built — cart page, badge, Buy Now, Wix checkout redirect | `lib/cartContext.tsx`, `app/cart/page.tsx`, `components/BuyBox.tsx` |
 | Desktop hero animations | ⚠️ Not firing | `app/globals.css` |
 | Image lightbox / click-to-enlarge | ⚠️ Partial — homepage photo grid ✅, product page ❌, custom page ❌ | `components/HomePhotoGrid.tsx` done; others pending |
 | File upload on custom order form | ❌ Missing | `app/custom/page.tsx` |
@@ -335,7 +347,13 @@ Right now the code does **both** — it tries Wix first, falls back to a local k
 
 ---
 
-## 15. Future Enhancements (Post-Launch)
+## 15. Misc Completed This Session
+
+- [x] **Favicon** ✅ (2026-05-24) — `app/icon.png` created from `public/logo.png` (64×64). Next.js picks it up automatically.
+
+---
+
+## 16. Future Enhancements (Post-Launch)
 
 - [ ] User account system with saved carts and order history (Wix member auth)
 - [ ] Real-time engraving preview reimagined (only if Donna approves a different approach)

@@ -96,6 +96,7 @@ function HomeHero() {
 
           <h1
             className="display reveal reveal-delay-1"
+            data-parallax="-0.04"
             style={{
               fontSize: "clamp(60px, 9vw, 130px)",
               margin: "0 0 16px",
@@ -138,6 +139,7 @@ function HomeHero() {
             <Link
               href="/shop"
               className="btn btn-primary"
+              data-magnetic="60"
               style={{ fontSize: 15, padding: "16px 32px" }}
             >
               Shop the collection <ArrowIcon />
@@ -145,6 +147,7 @@ function HomeHero() {
             <Link
               href="/custom"
               className="btn"
+              data-magnetic="60"
               style={{
                 background: "transparent",
                 border: "1.5px solid rgba(255,255,255,0.5)",
@@ -261,7 +264,6 @@ function HomeBestsellers({ products }: { products: WixProduct[] }) {
     <section style={{ padding: "80px 0 60px", background: "var(--cream-2)" }}>
       <div className="container">
         <div
-          className="reveal"
           style={{
             display: "flex",
             justifyContent: "space-between",
@@ -271,7 +273,7 @@ function HomeBestsellers({ products }: { products: WixProduct[] }) {
             gap: 20,
           }}
         >
-          <div>
+          <div className="reveal-left">
             <p className="eyebrow">Fan favorites</p>
             <h2
               className="display"
@@ -310,7 +312,8 @@ function HomeBestsellers({ products }: { products: WixProduct[] }) {
               <Link
                 key={p._id ?? i}
                 href={`/product/${slug}`}
-                className="reveal lift-on-hover"
+                className="reveal-scale lift-on-hover spring-press"
+                data-tilt="5"
                 style={{
                   background: "var(--cream)",
                   borderRadius: "var(--r-md)",
@@ -319,6 +322,7 @@ function HomeBestsellers({ products }: { products: WixProduct[] }) {
                   color: "var(--ink)",
                   border: "1px solid var(--line-soft)",
                   display: "block",
+                  transitionDelay: `${i * 0.05}s`,
                 }}
               >
                 <div
@@ -418,7 +422,7 @@ function HomeTwoTiles() {
         <div className="layout-2col">
           <Link
             href="/shop?collection=corporate"
-            className="card-hover tile-card"
+            className="card-hover tile-card reveal-left hover-float"
             style={{
               position: "relative",
               borderRadius: "var(--r-lg)",
@@ -496,7 +500,7 @@ function HomeTwoTiles() {
 
           <Link
             href="/custom"
-            className="card-hover tile-card"
+            className="card-hover tile-card reveal-right hover-float"
             style={{
               position: "relative",
               borderRadius: "var(--r-lg)",
@@ -584,7 +588,6 @@ function HomeOccasions() {
     <section style={{ padding: "100px 0 80px", background: "var(--cream-2)" }}>
       <div className="container">
         <div
-          className="reveal"
           style={{
             display: "flex",
             justifyContent: "space-between",
@@ -594,7 +597,7 @@ function HomeOccasions() {
             gap: 20,
           }}
         >
-          <div>
+          <div className="reveal-left">
             <p className="eyebrow">Gift by occasion</p>
             <h2
               className="display"
@@ -605,18 +608,19 @@ function HomeOccasions() {
             </h2>
           </div>
           <p
+            className="reveal-right"
             style={{ fontSize: 15, color: "var(--muted)", maxWidth: 320, lineHeight: 1.6, margin: 0 }}
           >
             Engraved gifts are always for a reason. Find yours.
           </p>
         </div>
 
-        <div className="reveal occasions-grid">
-          {giftOccasions.map((occ) => (
+        <div className="occasions-grid">
+          {giftOccasions.map((occ, i) => (
             <Link
               key={occ.id}
               href={occ.href}
-              className="card-hover"
+              className="card-hover reveal-scale spring-press"
               style={{
                 position: "relative",
                 borderRadius: "var(--r-md)",
@@ -627,6 +631,7 @@ function HomeOccasions() {
                 justifyContent: "flex-end",
                 textDecoration: "none",
                 color: "var(--cream)",
+                transitionDelay: `${i * 0.06}s`,
               }}
             >
               <Image
@@ -680,7 +685,7 @@ function HomeCustomCTA() {
     <section style={{ padding: "100px 0 80px" }}>
       <div className="container">
         <div
-          className="reveal"
+          className="reveal-scale"
           style={{
             background: "var(--terracotta)",
             color: "var(--cream)",
@@ -750,6 +755,8 @@ function HomeCustomCTA() {
               <Link
                 href="/custom"
                 className="btn"
+                data-magnetic="70"
+                data-burst
                 style={{ background: "var(--cream)", color: "var(--ink)" }}
               >
                 Start a custom request <ArrowIcon size={14} />
@@ -757,6 +764,7 @@ function HomeCustomCTA() {
               <Link
                 href="/contact"
                 className="btn"
+                data-magnetic="70"
                 style={{
                   background: "transparent",
                   color: "var(--cream)",
