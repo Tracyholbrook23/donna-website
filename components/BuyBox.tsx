@@ -29,47 +29,166 @@ interface BuyBoxProps {
   product: WixProduct;
 }
 
+// ─── Color swatch map ─────────────────────────────────────────────────────────
+// Covers all colors in this catalog: PCT, Laserette, wood boxes, pendants, knives
 const SWATCH_COLORS: Record<string, string> = {
-  black: "#1F1410",
-  "midnight black": "#1F1410",
-  white: "#F5F0E8",
-  silver: "#C0C0C0",
-  "rose gold": "#B76E79",
-  gold: "#C8985A",
-  terracotta: "#B9533A",
-  "forest green": "#3D5848",
-  navy: "#1C2B4A",
-  red: "#B03A2E",
+  // Neutrals
+  "black": "#1a1a1a",
+  "matte black": "#1a1a1a",
+  "midnight black": "#1a1a1a",
+  "glossy black": "#1a1a1a",
+  "black metal": "#2a2a2a",
+  "white": "#f5f0e8",
+  "matte white": "#f5f0e8",
+  "silver": "#c0c0c0",
+  "gunmetal": "#4a4e54",
+  "stainless": "#c8c8c8",
+  // Metallics
+  "gold": "#c8985a",
+  "rose gold": "#b76e79",
+  "copper": "#b55a2a",
+  "bronze": "#8c6239",
+  "brass": "#b5a642",
+  // Blues
+  "navy": "#1c2b4a",
+  "navy blue": "#1c2b4a",
+  "blue": "#2a5fa8",
+  "royal blue": "#2456a4",
+  "light blue": "#6aafe6",
+  "sky blue": "#87ceeb",
+  "baby blue": "#89cff0",
+  "dark blue": "#1c3050",
+  "teal": "#2a8b8b",
+  "turquoise": "#40e0d0",
+  "aqua": "#00c8c8",
+  // Reds / Pinks
+  "red": "#b03a2e",
+  "dark red": "#8b0000",
+  "maroon": "#6b0f1a",
+  "burgundy": "#7c2036",
+  "wine": "#7c1b34",
+  "pink": "#e8789b",
+  "hot pink": "#d4006a",
+  "blush": "#f0b8c4",
+  "rose": "#c8697a",
+  "mauve": "#b07080",
+  "coral": "#e07055",
+  "terracotta": "#b9533a",
+  // Greens
+  "green": "#3d7a4e",
+  "forest green": "#3d5848",
+  "army green": "#4b5320",
+  "olive": "#6b6b28",
+  "hunter green": "#355e3b",
+  "sage": "#87a878",
+  "mint": "#98d8c8",
+  // Warm tones
+  "orange": "#d4602a",
+  "burnt orange": "#b84800",
+  "yellow": "#e0c040",
+  "mustard": "#c8a800",
+  "sand": "#c8b88a",
+  "tan": "#c8a87a",
+  "khaki": "#b8a878",
+  "caramel": "#9c6830",
+  "mocha": "#7a4e38",
+  "brown": "#6b4226",
+  "chestnut": "#7b3f2a",
+  // Purples
+  "purple": "#6a3d8f",
+  "lavender": "#a080c0",
+  "plum": "#5a2d5a",
+  "violet": "#7a30c0",
+  // Leather / Laserette tones
+  "rawhide": "#c8a06a",
+  "natural": "#d4b878",
+  "gray": "#9a9a9a",
+  "grey": "#9a9a9a",
+  // Wood tones (boxes, pendants, knives)
+  "rosewood": "#7a3030",
+  "walnut": "#5a3820",
+  "dark walnut": "#3a2015",
+  "cherry": "#8b2a2a",
+  "burl": "#6a4a30",
+  // Electro / split finishes
+  "black / gold": "linear-gradient(135deg, #1a1a1a 50%, #c8985a 50%)",
+  "white / gold": "linear-gradient(135deg, #f5f0e8 50%, #c8985a 50%)",
+  "black/gold": "linear-gradient(135deg, #1a1a1a 50%, #c8985a 50%)",
+  "white/gold": "linear-gradient(135deg, #f5f0e8 50%, #c8985a 50%)",
+  "black / rainbow": "linear-gradient(135deg, #1a1a1a 35%, #e55 50%, #f90 65%, #5c5 80%, #48f 100%)",
+  "white / rainbow": "linear-gradient(135deg, #f5f0e8 35%, #e55 50%, #f90 65%, #5c5 80%, #48f 100%)",
+  "black/rainbow": "linear-gradient(135deg, #1a1a1a 35%, #e55 50%, #f90 65%, #5c5 80%, #48f 100%)",
+  "white/rainbow": "linear-gradient(135deg, #f5f0e8 35%, #e55 50%, #f90 65%, #5c5 80%, #48f 100%)",
 };
 
 function colorForChoice(name: string): string {
-  const key = name.toLowerCase();
-  return SWATCH_COLORS[key] ?? "#888";
+  const key = (name ?? "").toLowerCase().trim();
+  return SWATCH_COLORS[key] ?? "#aaa";
+}
+
+// Show swatches when the option is named "Color" or similar
+function isColorOption(opt: NonNullable<WixProduct["productOptions"]>[0]): boolean {
+  const name = (opt?.name ?? "").toLowerCase().trim();
+  return (
+    opt?.optionType === "color" ||
+    name === "color" ||
+    name === "colour" ||
+    name === "finish color" ||
+    name === "color / finish"
+  );
 }
 
 export function BuyBox({ product }: BuyBoxProps) {
   const { addToCart, buyNow, loading: cartLoading } = useCart();
+
+  // One entry per option name, initialised to first visible choice
+  const [selections, setSelections] = useState<Record<string, string>>(() => {
+    const init: Record<string, string> = {};
+    for (const opt of product.productOptions ?? []) {
+      if (!opt.name) continue;
+      const first = opt.choices?.find((c) => c.visible !== false);
+      if (first) init[opt.name] = first.value ?? first.description ?? "";
+    }
+    return init;
+  });
+
   const [qty, setQty] = useState(1);
   const [engraveOn, setEngraveOn] = useState(true);
   const [engText, setEngText] = useState("");
   const [engPlacement, setEngPlacement] = useState("front-center");
-  const [variantIdx, setVariantIdx] = useState(0);
   const [adding, setAdding] = useState(false);
   const [buyingNow, setBuyingNow] = useState(false);
   const [added, setAdded] = useState(false);
   const [error, setError] = useState("");
 
-  // Color options from Wix product
-  const colorOption = product.productOptions?.find(
-    (o) => o.optionType === "color" || o.name?.toLowerCase() === "color"
+  const visibleOptions = (product.productOptions ?? []).filter(
+    (opt) => (opt.choices?.filter((c) => c.visible !== false).length ?? 0) > 0
   );
-  const choices = colorOption?.choices ?? [];
+
+  function selectChoice(optName: string, value: string) {
+    setSelections((prev) => ({ ...prev, [optName]: value }));
+  }
 
   const cartParams = () => ({
     productId: product._id ?? "",
     quantity: qty,
+    selectedOptions: Object.keys(selections).length > 0 ? selections : undefined,
     ...(engraveOn && engText ? { engravingText: engText, engravingPlacement: engPlacement } : {}),
   });
+
+  function pillStyle(active: boolean): React.CSSProperties {
+    return {
+      padding: "7px 16px",
+      borderRadius: "var(--r-pill)",
+      border: `1.5px solid ${active ? "var(--ink)" : "var(--line)"}`,
+      background: active ? "var(--ink)" : "transparent",
+      color: active ? "var(--cream)" : "var(--ink)",
+      fontSize: 13,
+      fontWeight: active ? 600 : 400,
+      cursor: "pointer",
+      transition: "all .18s",
+    };
+  }
 
   const handleAddToCart = async () => {
     if (!product._id) return;
@@ -104,58 +223,33 @@ export function BuyBox({ product }: BuyBoxProps) {
   return (
     <div style={{ position: "sticky", top: 100 }}>
       {/* Rating row */}
-      <div
-        style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}
-      >
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
         <div style={{ display: "flex", gap: 3 }}>
           {Array.from({ length: 5 }).map((_, i) => (
             <StarIcon key={i} size={14} filled />
           ))}
         </div>
-        <span style={{ fontSize: 13, color: "var(--muted)" }}>
-          4.9 · 128 reviews
-        </span>
+        <span style={{ fontSize: 13, color: "var(--muted)" }}>4.9 · 128 reviews</span>
       </div>
 
-      {/* Name + price */}
+      {/* Name */}
       <h1
         className="display"
-        style={{
-          fontSize: "clamp(36px, 4.5vw, 56px)",
-          margin: "0 0 8px",
-          fontWeight: 400,
-          lineHeight: 1,
-        }}
+        style={{ fontSize: "clamp(30px, 4vw, 50px)", margin: "0 0 8px", fontWeight: 400, lineHeight: 1.05 }}
       >
         {product.name}
       </h1>
 
       {product.description && (
         <p
-          style={{
-            fontSize: 15,
-            color: "var(--muted)",
-            margin: "0 0 20px",
-            lineHeight: 1.6,
-          }}
-          dangerouslySetInnerHTML={{
-            __html: product.description.replace(/<[^>]+>/g, ""),
-          }}
+          style={{ fontSize: 14, color: "var(--muted)", margin: "0 0 18px", lineHeight: 1.65 }}
+          dangerouslySetInnerHTML={{ __html: product.description.replace(/<[^>]+>/g, "") }}
         />
       )}
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "baseline",
-          gap: 14,
-          marginBottom: 28,
-        }}
-      >
-        <span
-          className="serif"
-          style={{ fontSize: 30, fontWeight: 500 }}
-        >
+      {/* Price */}
+      <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 28 }}>
+        <span className="serif" style={{ fontSize: 30, fontWeight: 500 }}>
           {product.priceData?.formatted?.price ?? "—"}
         </span>
         <span
@@ -173,59 +267,106 @@ export function BuyBox({ product }: BuyBoxProps) {
         </span>
       </div>
 
-      {/* Color swatches */}
-      {choices.length > 0 && (
-        <div style={{ marginBottom: 28 }}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: 12,
-            }}
-          >
-            <span
-              style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}
-            >
-              Color ·{" "}
-              <span style={{ fontWeight: 400, color: "var(--muted)" }}>
-                {choices[variantIdx]?.description ?? choices[variantIdx]?.value}
-              </span>
-            </span>
-            <span style={{ fontSize: 11, color: "var(--muted-soft)" }}>
-              {choices.length} options
-            </span>
-          </div>
-          <div style={{ display: "flex", gap: 10 }}>
-            {choices.map((c, i) => (
-              <button
-                key={i}
-                onClick={() => setVariantIdx(i)}
-                aria-label={c.description ?? c.value ?? `Option ${i + 1}`}
-                title={c.description ?? c.value ?? ""}
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: "50%",
-                  background: colorForChoice(c.value ?? c.description ?? ""),
-                  border: `2px solid ${i === variantIdx ? "var(--ink)" : "transparent"}`,
-                  boxShadow: "0 0 0 1px var(--line) inset, 0 0 0 3px var(--cream) inset",
-                  cursor: "pointer",
-                  padding: 0,
-                  transition: "border-color .2s",
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      )}
+      {/* ── Product options ───────────────────────────────────────────────────── */}
+      {visibleOptions.map((opt) => {
+        if (!opt.name) return null;
+        const choices = (opt.choices ?? []).filter((c) => c.visible !== false);
+        const isColor = isColorOption(opt);
+        const currentVal = selections[opt.name] ?? "";
 
-      {/* Engraving panel */}
+        return (
+          <div key={opt.name} style={{ marginBottom: 24 }}>
+            {/* Option label row */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+                marginBottom: 10,
+              }}
+            >
+              <span style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>
+                {opt.name}
+                {currentVal && (
+                  <span style={{ fontWeight: 400, color: "var(--muted)" }}> · {currentVal}</span>
+                )}
+              </span>
+              <span style={{ fontSize: 11, color: "var(--muted-soft)" }}>
+                {choices.length} option{choices.length !== 1 ? "s" : ""}
+              </span>
+            </div>
+
+            {/* Color swatches */}
+            {isColor ? (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                {choices.map((c, i) => {
+                  const label = c.description ?? c.value ?? `Option ${i + 1}`;
+                  const val = c.value ?? c.description ?? "";
+                  const active = currentVal === val;
+                  const bg = colorForChoice(label);
+                  const isGradient = bg.startsWith("linear-gradient");
+
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => selectChoice(opt.name!, val)}
+                      aria-label={label}
+                      title={label}
+                      style={{
+                        width: 34,
+                        height: 34,
+                        borderRadius: "50%",
+                        background: bg,
+                        border: `2.5px solid ${active ? "var(--ink)" : "transparent"}`,
+                        boxShadow: isGradient
+                          ? "0 0 0 1px var(--line)"
+                          : "0 0 0 1px var(--line) inset, 0 0 0 3.5px var(--cream) inset",
+                        cursor: c.inStock === false ? "not-allowed" : "pointer",
+                        opacity: c.inStock === false ? 0.35 : 1,
+                        padding: 0,
+                        flexShrink: 0,
+                        transition: "border-color .15s, transform .15s",
+                        transform: active ? "scale(1.12)" : "scale(1)",
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              /* Text pill buttons for size, finish, wood type, etc. */
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                {choices.map((c, i) => {
+                  const val = c.value ?? c.description ?? `Option ${i + 1}`;
+                  const label = c.description ?? c.value ?? val;
+                  const active = currentVal === val;
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => selectChoice(opt.name!, val)}
+                      disabled={c.inStock === false}
+                      style={{
+                        ...pillStyle(active),
+                        opacity: c.inStock === false ? 0.38 : 1,
+                        cursor: c.inStock === false ? "not-allowed" : "pointer",
+                      }}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      {/* ── Engraving panel ──────────────────────────────────────────────────── */}
       <div
         style={{
           marginBottom: 28,
           background: "var(--cream-2)",
           borderRadius: "var(--r-md)",
-          padding: 24,
+          padding: 22,
           border: "1px solid var(--line-soft)",
         }}
       >
@@ -245,11 +386,8 @@ export function BuyBox({ product }: BuyBoxProps) {
             <h3 className="serif" style={{ fontSize: 18, margin: "0 0 2px" }}>
               Personalize your engraving
             </h3>
-            <p style={{ fontSize: 12, color: "var(--muted)", margin: 0 }}>
-              Included with your order
-            </p>
+            <p style={{ fontSize: 12, color: "var(--muted)", margin: 0 }}>Included with your order</p>
           </div>
-          {/* Toggle */}
           <button
             onClick={() => setEngraveOn((v) => !v)}
             aria-label={engraveOn ? "Skip engraving" : "Add engraving"}
@@ -282,7 +420,6 @@ export function BuyBox({ product }: BuyBoxProps) {
 
         {engraveOn && (
           <>
-            {/* Text input */}
             <div
               style={{
                 borderBottom: "1px solid var(--line)",
@@ -309,14 +446,11 @@ export function BuyBox({ product }: BuyBoxProps) {
                   color: "var(--ink)",
                 }}
               />
-              <span
-                style={{ fontSize: 11, color: "var(--muted-soft)", flexShrink: 0 }}
-              >
+              <span style={{ fontSize: 11, color: "var(--muted-soft)", flexShrink: 0 }}>
                 {engText.length}/40
               </span>
             </div>
 
-            {/* Placement */}
             <div>
               <p
                 style={{
@@ -332,36 +466,18 @@ export function BuyBox({ product }: BuyBoxProps) {
               </p>
               <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                 {engravingPlacements.map((p) => (
-                  <button
-                    key={p.id}
-                    onClick={() => setEngPlacement(p.id)}
-                    style={{
-                      padding: "6px 12px",
-                      borderRadius: "var(--r-pill)",
-                      border: `1px solid ${engPlacement === p.id ? "var(--ink)" : "var(--line)"}`,
-                      background:
-                        engPlacement === p.id ? "var(--ink)" : "transparent",
-                      color: engPlacement === p.id ? "var(--cream)" : "var(--ink)",
-                      fontSize: 12,
-                      cursor: "pointer",
-                      transition: "all .2s",
-                    }}
-                  >
+                  <button key={p.id} onClick={() => setEngPlacement(p.id)} style={pillStyle(engPlacement === p.id)}>
                     {p.label}
                   </button>
                 ))}
               </div>
             </div>
-
           </>
         )}
       </div>
 
-      {/* Qty + Add to cart */}
-      <div
-        style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 12 }}
-      >
-        {/* Qty */}
+      {/* ── Qty + Add to cart ─────────────────────────────────────────────────── */}
+      <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 12 }}>
         <div
           style={{
             display: "flex",
@@ -373,46 +489,21 @@ export function BuyBox({ product }: BuyBoxProps) {
         >
           <button
             onClick={() => setQty((q) => Math.max(1, q - 1))}
-            style={{
-              width: 44,
-              height: 52,
-              border: 0,
-              background: "transparent",
-              cursor: "pointer",
-              fontSize: 18,
-              color: "var(--ink)",
-            }}
+            style={{ width: 44, height: 52, border: 0, background: "transparent", cursor: "pointer", fontSize: 18, color: "var(--ink)" }}
             aria-label="Decrease quantity"
           >
             −
           </button>
-          <span
-            style={{
-              width: 36,
-              textAlign: "center",
-              fontSize: 15,
-              fontWeight: 600,
-            }}
-          >
-            {qty}
-          </span>
+          <span style={{ width: 36, textAlign: "center", fontSize: 15, fontWeight: 600 }}>{qty}</span>
           <button
             onClick={() => setQty((q) => q + 1)}
-            style={{
-              width: 44,
-              height: 52,
-              border: 0,
-              background: "transparent",
-              cursor: "pointer",
-              color: "var(--ink)",
-            }}
+            style={{ width: 44, height: 52, border: 0, background: "transparent", cursor: "pointer", color: "var(--ink)" }}
             aria-label="Increase quantity"
           >
             <PlusIcon size={16} />
           </button>
         </div>
 
-        {/* Add to cart */}
         <button
           onClick={handleAddToCart}
           disabled={adding || cartLoading}
@@ -431,29 +522,19 @@ export function BuyBox({ product }: BuyBoxProps) {
         </button>
       </div>
 
-      {/* Buy Now */}
       <button
         onClick={handleBuyNow}
         disabled={buyingNow || cartLoading}
         className="btn btn-secondary"
-        style={{
-          width: "100%",
-          justifyContent: "center",
-          fontSize: 15,
-          marginBottom: 4,
-          opacity: buyingNow || cartLoading ? 0.7 : 1,
-        }}
+        style={{ width: "100%", justifyContent: "center", fontSize: 15, marginBottom: 4, opacity: buyingNow || cartLoading ? 0.7 : 1 }}
       >
         {buyingNow ? "Loading checkout…" : "Buy it now"}
       </button>
 
       {error && (
-        <p style={{ fontSize: 13, color: "var(--terracotta)", marginBottom: 12 }}>
-          {error}
-        </p>
+        <p style={{ fontSize: 13, color: "var(--terracotta)", marginBottom: 12 }}>{error}</p>
       )}
 
-      {/* Trust badges */}
       <div
         style={{
           display: "flex",
@@ -462,15 +543,13 @@ export function BuyBox({ product }: BuyBoxProps) {
           color: "var(--muted)",
           paddingTop: 16,
           borderTop: "1px solid var(--line-soft)",
+          flexWrap: "wrap",
         }}
       >
-        {["✦ Ships in 3–5 days", "✦ Free returns (stock)", "✦ Insured shipping"].map(
-          (b) => (
-            <span key={b}>{b}</span>
-          )
-        )}
+        {["✦ Ships in 3–5 days", "✦ Free returns (stock)", "✦ Insured shipping"].map((b) => (
+          <span key={b}>{b}</span>
+        ))}
       </div>
     </div>
   );
 }
-

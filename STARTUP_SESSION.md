@@ -1,6 +1,6 @@
 # STARTUP_SESSION.md
 ### Out of Jersey — Master Session Handoff & Active Task Tracker
-_Last updated: 2026-05-24 (session 7) | Updated by: Claude (Cowork session)_
+_Last updated: 2026-05-24 (session 8) | Updated by: Claude (Cowork session)_
 
 ---
 
@@ -99,6 +99,18 @@ _Last updated: 2026-05-24 (session 7) | Updated by: Claude (Cowork session)_
 
 - [x] **[HIGH] Delete `/shop-test` page** ✅ (2026-05-24)
   - `app/shop-test/` directory deleted
+
+- [x] **[HIGH] Product variant selectors — full rewrite** ✅ (2026-05-24)
+  - `components/BuyBox.tsx` — now handles ALL Wix product option types, not just color
+  - Color options (named "Color" / "Colour" / "Finish Color") → 60+ color circular swatches
+  - All other options (Size, Finish, Wood Type, Material, etc.) → pill text buttons, auto-wrapping
+  - Active swatch scales up (1.12×) and gets ink border; out-of-stock choices are 35% opacity
+  - `selections: Record<string, string>` state — one entry per option, initialized to first visible choice
+  - `lib/cartContext.tsx` — `AddToCartParams` now accepts `selectedOptions?: Record<string, string>`
+  - Cart call passes `options: { options: selections }` inside `catalogReference` to Wix
+  - Color map covers: all PCT colors (Black, White, Blue, Light Blue, Navy, Maroon, Red, Pink, Teal, Purple, Green, Yellow, Orange), all Laserette colors (Black, White, Brown, Rawhide, Gray, Navy), all electro combos (Black/Gold, White/Gold, Black/Rainbow, White/Rainbow), all wood tones (Natural, Rosewood, Walnut, Dark Walnut, Cherry, Burl), all valet box colors
+  - Images: `catalog_image_map.md` generated — maps all 441 images (page###_img##) to their products and categories
+  - Personalization: `wix_personalization_guide.md` — instructions + checklist for adding Engraving Text field to all 117 products in Wix dashboard
 
 ---
 

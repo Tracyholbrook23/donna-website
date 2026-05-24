@@ -50,6 +50,8 @@ interface CartContextValue {
 export interface AddToCartParams {
   productId: string;
   quantity?: number;
+  /** Wix product option selections, e.g. { "Color": "Black", "Size": "30oz" } */
+  selectedOptions?: Record<string, string>;
   engravingText?: string;
   engravingPlacement?: string;
 }
@@ -178,6 +180,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
             catalogReference: {
               catalogItemId: params.productId,
               appId: "215238eb-22a5-4c36-9e7b-e7c08025e04e", // Wix Stores app ID
+              // Pass selected variant options (Color, Size, Finish, etc.) to Wix
+              ...(params.selectedOptions && Object.keys(params.selectedOptions).length > 0
+                ? { options: { options: params.selectedOptions } }
+                : {}),
             },
             quantity: params.quantity ?? 1,
             ...(customTextFields.length > 0 ? { customTextFields } : {}),
