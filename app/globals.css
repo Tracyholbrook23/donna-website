@@ -469,6 +469,14 @@ select.field {
   to   { transform: rotate(360deg); }
 }
 
+/* ── Occasions grid — mobile responsive ─────────── */
+@media (max-width: 900px) {
+  .occasions-grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (max-width: 620px) {
+  .occasions-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
 /* ── Reduce motion ───────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

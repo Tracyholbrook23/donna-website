@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { collections, lifestyleScenes } from "@/lib/data";
+import { collections, lifestyleScenes, giftOccasions } from "@/lib/data";
 import { ProductGlyph } from "@/components/ProductGlyph";
 import { ArrowIcon } from "@/components/Icons";
 import { HomeCustomizerTeaser } from "@/components/home/HomeCustomizerTeaser";
@@ -25,9 +25,11 @@ export default async function HomePage() {
     <main className="page-enter">
       <HomeHero />
       <HomeMarqueeStrip />
+      <HomeVideoStrip />
       <HomeCategories />
       <HomeStudioStory />
       <HomeBestsellers products={products} />
+      <HomeOccasions />
       <HomeCustomizerTeaser />
       <HomeInTheirHands />
       <HomeTestimonials />
@@ -53,7 +55,7 @@ function HomeHero() {
           {/* Left — headline */}
           <div style={{ position: "relative", padding: "40px 0" }}>
             <p className="eyebrow reveal" style={{ marginBottom: 28 }}>
-              Volume 04 · Engraved goods, made by hand
+              Hand-engraved in Charlotte, NC
             </p>
             <h1
               className="display reveal reveal-delay-1"
@@ -124,12 +126,12 @@ function HomeHero() {
             </div>
           </div>
 
-          {/* Right — image stack */}
+          {/* Right — image stack with real product photos */}
           <div
             className="reveal reveal-delay-2"
             style={{ position: "relative", minHeight: 580 }}
           >
-            {/* Main hero image */}
+            {/* Main hero image — BFF tumblers lifestyle */}
             <div
               style={{
                 position: "absolute",
@@ -142,12 +144,37 @@ function HomeHero() {
               }}
             >
               <Image
-                src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=900&q=80"
-                alt="Donna holding a custom engraved tumbler"
+                src="/photos/bff-tumblers.jpg"
+                alt="Two friends toasting with their custom-engraved BFF tumblers"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 90vw, 45vw"
                 priority
+              />
+            </div>
+
+            {/* Secondary floating photo — wedding board */}
+            <div
+              data-tilt="4"
+              style={{
+                position: "absolute",
+                left: "4%",
+                bottom: "18%",
+                width: 148,
+                height: 180,
+                borderRadius: "var(--r-md)",
+                overflow: "hidden",
+                boxShadow: "var(--shadow-lg)",
+                zIndex: 2,
+                border: "3px solid var(--cream)",
+              }}
+            >
+              <Image
+                src="/photos/wedding-board-couple.jpg"
+                alt="Couple holding a personalized engraved wedding board"
+                fill
+                className="object-cover"
+                sizes="148px"
               />
             </div>
 
@@ -157,13 +184,13 @@ function HomeHero() {
               style={{
                 position: "absolute",
                 left: 0,
-                top: "12%",
+                top: "10%",
                 background: "var(--cream)",
                 boxShadow: "var(--shadow-lg)",
                 borderRadius: "var(--r-md)",
                 padding: 18,
                 maxWidth: 220,
-                zIndex: 2,
+                zIndex: 3,
               }}
             >
               <div
@@ -234,7 +261,7 @@ function HomeHero() {
                 borderRadius: "var(--r-md)",
                 padding: "16px 20px",
                 maxWidth: 240,
-                zIndex: 2,
+                zIndex: 3,
               }}
             >
               <p className="display-italic" style={{ fontSize: 24, margin: 0, lineHeight: 1 }}>
@@ -257,8 +284,8 @@ function HomeHero() {
               className="idle-drift"
               style={{
                 position: "absolute",
-                left: "-6%",
-                bottom: "20%",
+                left: "-4%",
+                bottom: "40%",
                 background: "var(--brass)",
                 color: "var(--ink)",
                 borderRadius: "50%",
@@ -271,7 +298,7 @@ function HomeHero() {
                 textAlign: "center",
                 boxShadow: "var(--shadow-lg)",
                 transform: "rotate(-6deg)",
-                zIndex: 2,
+                zIndex: 4,
               }}
             >
               <svg
@@ -385,14 +412,135 @@ function HomeMarqueeStrip() {
   );
 }
 
+/* ── VIDEO STRIP ────────────────────────────────────────── */
+function HomeVideoStrip() {
+  return (
+    <section
+      style={{
+        position: "relative",
+        height: "clamp(320px, 45vw, 580px)",
+        overflow: "hidden",
+        background: "var(--ink)",
+      }}
+    >
+      {/* Video — autoplay, muted, loop, no controls */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          opacity: 0.65,
+        }}
+        src="/videos/laser-engraving-01.mp4"
+      />
+
+      {/* Gradient overlay */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(90deg, rgba(31,20,16,0.75) 0%, rgba(31,20,16,0.3) 50%, rgba(31,20,16,0.6) 100%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Content */}
+      <div
+        className="container"
+        style={{
+          position: "relative",
+          zIndex: 1,
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ maxWidth: 640, color: "var(--cream)" }}>
+          <p className="eyebrow" style={{ color: "var(--brass-light)", marginBottom: 20 }}>
+            The craft
+          </p>
+          <h2
+            className="display"
+            style={{
+              fontSize: "clamp(36px, 5vw, 72px)",
+              margin: "0 0 24px",
+              fontWeight: 400,
+              lineHeight: 1.0,
+            }}
+          >
+            Every mark is{" "}
+            <em
+              style={{
+                fontStyle: "italic",
+                color: "var(--brass-light)",
+              }}
+            >
+              intentional.
+            </em>
+          </h2>
+          <p
+            style={{
+              fontSize: 17,
+              lineHeight: 1.65,
+              opacity: 0.8,
+              maxWidth: 480,
+              margin: "0 0 32px",
+            }}
+          >
+            Laser precision, human care. Every piece is reviewed by Donna
+            before it leaves the studio — no exceptions.
+          </p>
+          <Link
+            href="/about"
+            className="btn"
+            style={{
+              background: "transparent",
+              color: "var(--cream)",
+              border: "1px solid rgba(255,255,255,0.45)",
+            }}
+          >
+            Meet the studio <ArrowIcon size={14} />
+          </Link>
+        </div>
+      </div>
+
+      {/* Corner detail */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          bottom: 24,
+          right: 32,
+          fontSize: 11,
+          color: "rgba(255,255,255,0.35)",
+          letterSpacing: "0.14em",
+          textTransform: "uppercase",
+          fontWeight: 600,
+        }}
+      >
+        Charlotte, NC · Est. 2018
+      </div>
+    </section>
+  );
+}
+
 /* ── CATEGORIES GRID ────────────────────────────────────── */
 function HomeCategories() {
+  // Real product photos for each category
   const catImages = [
-    "https://images.unsplash.com/photo-1592919505780-303950717480?w=700&q=80",
-    "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80",
-    "https://images.unsplash.com/photo-1519741497674-611481863552?w=700&q=80",
-    "https://images.unsplash.com/photo-1591290619762-c5dac3a8347a?w=400&q=80",
-    "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400&q=80",
+    "/photos/bff-tumblers.jpg",
+    "/photos/cutting-boards-family.jpg",
+    "/photos/whiskey-glasses-bar.jpg",
+    "/photos/leather-wallet.jpg",
+    "/photos/wedding-board-couple.jpg",
   ];
   const bgs = [
     "var(--blush)",
@@ -479,7 +627,7 @@ function HomeCategories() {
               <Link
                 key={c.id}
                 href={`/shop?collection=${c.id}`}
-                className="reveal"
+                className="reveal card-hover"
                 style={{
                   gridColumn: `${col} / span ${cs}`,
                   gridRow: `${row} / span ${rs}`,
@@ -501,9 +649,19 @@ function HomeCategories() {
                   src={catImages[i]}
                   alt={c.name}
                   fill
-                  className="object-cover"
-                  style={{ opacity: rs === 2 ? 0.55 : 0.45 }}
+                  className="object-cover card-media"
+                  style={{ opacity: rs === 2 ? 0.55 : 0.42 }}
                   sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                {/* Gradient for readability */}
+                <div
+                  aria-hidden
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.35) 100%)",
+                    pointerEvents: "none",
+                  }}
                 />
                 <div style={{ position: "relative", zIndex: 1 }}>
                   <p
@@ -511,7 +669,7 @@ function HomeCategories() {
                       fontSize: 10,
                       letterSpacing: "0.2em",
                       textTransform: "uppercase",
-                      opacity: 0.7,
+                      opacity: 0.75,
                       margin: 0,
                     }}
                   >
@@ -534,7 +692,7 @@ function HomeCategories() {
                   <p
                     style={{
                       fontSize: 13,
-                      opacity: 0.75,
+                      opacity: 0.8,
                       margin: 0,
                       fontStyle: "italic",
                       fontFamily: "var(--font-display)",
@@ -551,7 +709,7 @@ function HomeCategories() {
                       fontSize: 12,
                     }}
                   >
-                    <span style={{ opacity: 0.7 }}>{c.count} pieces</span>
+                    <span style={{ opacity: 0.75 }}>{c.count} pieces</span>
                     <span>Shop →</span>
                   </div>
                 </div>
@@ -595,13 +753,14 @@ function HomeStudioStory() {
               }}
             >
               <Image
-                src="https://images.unsplash.com/photo-1531123414780-f74242c2b052?w=700&q=80"
-                alt="Donna at the laser engraver in her studio"
+                src="/photos/cutting-boards-family.jpg"
+                alt="Engraved family cutting boards — the Underwood and Connolly families"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 45vw"
               />
             </div>
+            {/* Floating caption badge */}
             <div
               style={{
                 position: "absolute",
@@ -625,9 +784,10 @@ function HomeStudioStory() {
                   height: 6,
                   borderRadius: "50%",
                   background: "var(--terracotta)",
+                  flexShrink: 0,
                 }}
               />
-              Studio · 6:47 AM · first cup, first cut.
+              Every name, every family — engraved with care.
             </div>
           </div>
 
@@ -735,6 +895,9 @@ const GLYPH_TYPES = [
   "tumbler-tall",
 ] as const;
 
+// Product badge labels for premium feel
+const PRODUCT_BADGES = ["BESTSELLER", "NEW", "BESTSELLER", "POPULAR", "NEW", "POPULAR"];
+
 function HomeBestsellers({ products }: { products: WixProduct[] }) {
   return (
     <section style={{ padding: "140px 0 60px" }}>
@@ -794,12 +957,13 @@ function HomeBestsellers({ products }: { products: WixProduct[] }) {
               const price = p?.priceData?.formatted?.price ?? null;
               const slug = p?.slug ?? p?._id ?? "";
               const glyphType = GLYPH_TYPES[i % GLYPH_TYPES.length];
+              const badge = PRODUCT_BADGES[i % PRODUCT_BADGES.length];
 
               return p ? (
                 <Link
                   key={p._id ?? i}
                   href={`/product/${slug}`}
-                  className="reveal"
+                  className="reveal lift-on-hover"
                   style={{
                     background: "var(--cream)",
                     borderRadius: "var(--r-md)",
@@ -809,11 +973,10 @@ function HomeBestsellers({ products }: { products: WixProduct[] }) {
                     border: "1px solid var(--line-soft)",
                     boxShadow: "var(--shadow-sm)",
                     display: "block",
-                    transition:
-                      "transform .5s var(--ease-out), box-shadow .5s var(--ease-out)",
                   }}
                 >
                   <div
+                    className="card-hover"
                     style={{
                       aspectRatio: "1/1",
                       background: "var(--cream-2)",
@@ -829,30 +992,62 @@ function HomeBestsellers({ products }: { products: WixProduct[] }) {
                         src={imageUrl}
                         alt={p.name ?? "Product"}
                         fill
-                        className="object-cover"
+                        className="object-cover card-media"
                         sizes="(max-width: 768px) 100vw, 33vw"
                       />
                     ) : (
                       <ProductGlyph type={glyphType} size={220} />
                     )}
+                    {/* Badge */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 12,
+                        left: 12,
+                        background: badge === "NEW" ? "var(--forest)" : "var(--ink)",
+                        color: "var(--cream)",
+                        fontSize: 9,
+                        fontWeight: 700,
+                        letterSpacing: "0.14em",
+                        padding: "4px 9px",
+                        borderRadius: "var(--r-pill)",
+                        zIndex: 1,
+                      }}
+                    >
+                      {badge}
+                    </div>
                   </div>
-                  <div style={{ padding: 18 }}>
+                  <div style={{ padding: "18px 18px 20px" }}>
                     <h3
                       className="serif"
                       style={{ fontSize: 17, margin: "0 0 4px", fontWeight: 500 }}
                     >
                       {p.name ?? "Unnamed"}
                     </h3>
-                    {price && (
-                      <div style={{ fontSize: 16, fontWeight: 600 }}>{price}</div>
-                    )}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 6 }}>
+                      {price && (
+                        <div style={{ fontSize: 16, fontWeight: 600 }}>{price}</div>
+                      )}
+                      <span
+                        style={{
+                          fontSize: 12,
+                          color: "var(--terracotta)",
+                          fontWeight: 500,
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 4,
+                        }}
+                      >
+                        Personalize →
+                      </span>
+                    </div>
                   </div>
                 </Link>
               ) : (
                 // Skeleton
                 <div
                   key={i}
-                  className="reveal"
+                  className="reveal lift-on-hover"
                   style={{
                     background: "var(--cream)",
                     borderRadius: "var(--r-md)",
@@ -867,11 +1062,28 @@ function HomeBestsellers({ products }: { products: WixProduct[] }) {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
+                      position: "relative",
                     }}
                   >
                     <ProductGlyph type={glyphType} size={220} />
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 12,
+                        left: 12,
+                        background: "var(--ink)",
+                        color: "var(--cream)",
+                        fontSize: 9,
+                        fontWeight: 700,
+                        letterSpacing: "0.14em",
+                        padding: "4px 9px",
+                        borderRadius: "var(--r-pill)",
+                      }}
+                    >
+                      {badge}
+                    </div>
                   </div>
-                  <div style={{ padding: 18 }}>
+                  <div style={{ padding: "18px 18px 20px" }}>
                     <div
                       style={{
                         height: 16,
@@ -900,6 +1112,142 @@ function HomeBestsellers({ products }: { products: WixProduct[] }) {
   );
 }
 
+/* ── OCCASIONS / SHOP BY MOMENT ─────────────────────────── */
+function HomeOccasions() {
+  return (
+    <section
+      style={{
+        background: "var(--cream-2)",
+        padding: "100px 0 120px",
+        overflow: "hidden",
+      }}
+    >
+      <div className="container">
+        <div
+          className="reveal"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "end",
+            marginBottom: 52,
+            flexWrap: "wrap",
+            gap: 20,
+          }}
+        >
+          <div>
+            <p className="eyebrow">Gift by occasion</p>
+            <h2
+              className="display"
+              style={{
+                fontSize: "clamp(36px,5vw,68px)",
+                margin: "12px 0 0",
+                fontWeight: 400,
+              }}
+            >
+              Shop the{" "}
+              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>
+                moment.
+              </em>
+            </h2>
+          </div>
+          <p
+            style={{
+              fontSize: 15,
+              color: "var(--muted)",
+              maxWidth: 360,
+              lineHeight: 1.6,
+              margin: 0,
+            }}
+          >
+            Engraved gifts are always for a reason. Find yours.
+          </p>
+        </div>
+
+        {/* Horizontal scroll on mobile, 5-column grid on desktop */}
+        <div
+          className="reveal occasions-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(5, 1fr)",
+            gap: 16,
+          }}
+        >
+          {giftOccasions.map((occ, i) => (
+            <Link
+              key={occ.id}
+              href={occ.href}
+              className="card-hover"
+              style={{
+                position: "relative",
+                borderRadius: "var(--r-md)",
+                overflow: "hidden",
+                aspectRatio: "3/4",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+                textDecoration: "none",
+                color: "var(--cream)",
+                animationDelay: `${i * 60}ms`,
+              }}
+            >
+              <Image
+                src={occ.src}
+                alt={occ.label}
+                fill
+                className="object-cover card-media"
+                sizes="(max-width: 768px) 60vw, 20vw"
+              />
+              {/* Gradient */}
+              <div
+                aria-hidden
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.65) 100%)",
+                  pointerEvents: "none",
+                }}
+              />
+              {/* Text */}
+              <div
+                style={{
+                  position: "relative",
+                  zIndex: 1,
+                  padding: "16px 16px 20px",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    letterSpacing: "0.16em",
+                    opacity: 0.7,
+                    margin: "0 0 5px",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {occ.kicker}
+                </p>
+                <h3
+                  className="serif"
+                  style={{
+                    fontSize: 16,
+                    margin: 0,
+                    lineHeight: 1.25,
+                    fontWeight: 600,
+                  }}
+                >
+                  {occ.label}
+                </h3>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ── IN THEIR HANDS ─────────────────────────────────────── */
 function HomeInTheirHands() {
   return (
@@ -917,7 +1265,7 @@ function HomeInTheirHands() {
           }}
         >
           <div>
-            <p className="eyebrow">@donnaandco</p>
+            <p className="eyebrow">@mamalaserengraver</p>
             <h2
               className="display"
               style={{
@@ -933,12 +1281,13 @@ function HomeInTheirHands() {
               </em>
             </h2>
             <p style={{ fontSize: 16, color: "var(--muted)", marginTop: 14, maxWidth: 540 }}>
-              Customers carrying Donna pieces into the world. Tag{" "}
-              <strong>@donnaandco</strong> to be featured.
+              Real pieces, real people. Tag us on Instagram to be featured.
             </p>
           </div>
           <a
-            href="#"
+            href="https://www.instagram.com/mamalaserengraver"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               color: "var(--ink)",
               fontSize: 14,
@@ -955,25 +1304,30 @@ function HomeInTheirHands() {
           </a>
         </div>
 
+        {/* Masonry-style grid with varying heights for editorial feel */}
         <div
-          style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 16,
+          }}
         >
-          {lifestyleScenes.slice(0, 6).map((scene) => (
+          {lifestyleScenes.slice(0, 6).map((scene, i) => (
             <div
               key={scene.id}
-              className="reveal"
+              className="reveal card-hover"
               style={{
                 position: "relative",
                 borderRadius: "var(--r-sm)",
                 overflow: "hidden",
-                aspectRatio: "4/5",
+                aspectRatio: i === 0 || i === 5 ? "4/5" : "1/1",
               }}
             >
               <Image
                 src={scene.src}
                 alt={scene.caption}
                 fill
-                className="object-cover"
+                className="object-cover card-media"
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
               <div
@@ -981,7 +1335,7 @@ function HomeInTheirHands() {
                   position: "absolute",
                   inset: 0,
                   background:
-                    "linear-gradient(180deg, transparent 60%, rgba(31,20,16,0.6) 100%)",
+                    "linear-gradient(180deg, transparent 50%, rgba(31,20,16,0.68) 100%)",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
@@ -995,9 +1349,10 @@ function HomeInTheirHands() {
                     fontWeight: 700,
                     letterSpacing: "0.18em",
                     alignSelf: "flex-start",
-                    background: "rgba(0,0,0,0.4)",
+                    background: "rgba(0,0,0,0.45)",
                     padding: "4px 8px",
                     borderRadius: 4,
+                    backdropFilter: "blur(4px)",
                   }}
                 >
                   {scene.tag}
@@ -1038,6 +1393,7 @@ function HomeCustomCTA() {
             overflow: "hidden",
           }}
         >
+          {/* Background texture word */}
           <div
             aria-hidden
             style={{
@@ -1055,6 +1411,29 @@ function HomeCustomCTA() {
             }}
           >
             custom
+          </div>
+
+          {/* Background product photo tease */}
+          <div
+            style={{
+              position: "absolute",
+              right: "5%",
+              top: 0,
+              bottom: 0,
+              width: "30%",
+              opacity: 0.18,
+              borderRadius: "0 var(--r-xl) var(--r-xl) 0",
+              overflow: "hidden",
+            }}
+            aria-hidden
+          >
+            <Image
+              src="/photos/decanter-set-gift.jpg"
+              alt=""
+              fill
+              className="object-cover"
+              sizes="30vw"
+            />
           </div>
 
           <div style={{ position: "relative", zIndex: 1, maxWidth: 720 }}>

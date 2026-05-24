@@ -185,43 +185,87 @@ export const announcementMessages = [
   "Black-owned, hand-engraved in Charlotte, NC",
 ];
 
-// Lifestyle photos (Unsplash placeholders — swap for real Donna studio shots)
+// Lifestyle photos — real Donna product photography
 export const lifestyleScenes = [
   {
-    id: "ls-hike",
-    caption: "Brielle on the Blue Ridge — Travel Cup in Terracotta",
+    id: "ls-bff",
+    caption: "BFF tumblers — because some bonds deserve a permanent mark",
     tag: "TUMBLERS",
-    src: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=600&q=80",
+    src: "/photos/bff-tumblers.jpg",
   },
   {
-    id: "ls-board",
-    caption: "Sunday dinner at the Whitfields — engraved walnut board",
-    tag: "BOARDS",
-    src: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80",
-  },
-  {
-    id: "ls-bride",
-    caption: "Sydney's bridal suite — monogrammed flute set",
+    id: "ls-wedding-board",
+    caption: "The Wilsons' first board — wedding gift, forever keepsake",
     tag: "WEDDING",
-    src: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&q=80",
+    src: "/photos/wedding-board-couple.jpg",
   },
   {
-    id: "ls-studio",
-    caption: "Donna at the laser — the moment before the first pass",
-    tag: "STUDIO",
-    src: "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=600&q=80",
+    id: "ls-family-boards",
+    caption: "Engraved family boards — Sunday dinners, made personal",
+    tag: "BOARDS",
+    src: "/photos/cutting-boards-family.jpg",
   },
   {
-    id: "ls-wallet",
-    caption: "A wallet engraved for a graduating son",
-    tag: "ACCESSORIES",
-    src: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=600&q=80",
-  },
-  {
-    id: "ls-decanter",
-    caption: "Father's Day, second pour",
+    id: "ls-whiskey-bar",
+    caption: "Monogrammed whiskey glasses — Father's Day, second pour",
     tag: "HOME",
-    src: "https://images.unsplash.com/photo-1591290619762-c5dac3a8347a?w=600&q=80",
+    src: "/photos/whiskey-glasses-bar.jpg",
+  },
+  {
+    id: "ls-knife",
+    caption: "Through Thick & Thin — a knife engraved for the journey",
+    tag: "ACCESSORIES",
+    src: "/photos/knife-engraved.jpg",
+  },
+  {
+    id: "ls-artwork-tumbler",
+    caption: "Custom artwork tumbler — your vision, laser-precise",
+    tag: "CUSTOM",
+    src: "/photos/custom-artwork-tumbler.jpg",
+  },
+] as const;
+
+// Gift occasions — for the "Shop by Moment" homepage section
+export const giftOccasions = [
+  {
+    id: "wedding",
+    label: "Wedding & Bridal",
+    kicker: "Boards, flutes, and forever pieces",
+    src: "/photos/wedding-board-couple.jpg",
+    href: "/shop?collection=wedding",
+    accent: "var(--blush)",
+  },
+  {
+    id: "fathersday",
+    label: "Gifts for Him",
+    kicker: "Whiskey sets, knives, wallets",
+    src: "/photos/whiskey-glasses-bar.jpg",
+    href: "/shop?collection=home",
+    accent: "var(--cream-3)",
+  },
+  {
+    id: "birthday",
+    label: "Birthday & Milestones",
+    kicker: "Tumblers, boards, keepsakes",
+    src: "/photos/bff-tumblers.jpg",
+    href: "/shop?collection=tumblers",
+    accent: "var(--brass-light)",
+  },
+  {
+    id: "corporate",
+    label: "Corporate & Bulk",
+    kicker: "Branded gifts at scale",
+    src: "/photos/keychain-business.jpg",
+    href: "/shop?collection=corporate",
+    accent: "var(--forest)",
+  },
+  {
+    id: "custom-art",
+    label: "Custom Artwork",
+    kicker: "Your design, laser engraved",
+    src: "/photos/custom-artwork-tumbler.jpg",
+    href: "/custom",
+    accent: "var(--terracotta)",
   },
 ] as const;
 
