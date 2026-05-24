@@ -132,9 +132,6 @@ export function Footer() {
             <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
               {[
                 { label: "IG", href: "https://www.instagram.com/outofjerseycreations" },
-                { label: "TT", href: "#" },
-                { label: "PT", href: "#" },
-                { label: "FB", href: "#" },
               ].map((s) => (
                 <a
                   key={s.label}
@@ -213,9 +210,9 @@ export function Footer() {
             flexWrap: "wrap",
           }}
         >
-          <div>
-            &copy; {new Date().getFullYear()} Out of Jersey Custom Laser Engraving &middot;
-            Woman Owned &amp; Operated.
+          <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+            <span>&copy; {new Date().getFullYear()} Out of Jersey Custom Laser Engraving &middot; Woman Owned &amp; Operated.</span>
+            <span>Site by Tracy</span>
           </div>
           <div style={{ display: "flex", gap: 24 }}>
             <Link

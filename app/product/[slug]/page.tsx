@@ -150,7 +150,7 @@ export default async function ProductPage({ params }: PageProps) {
             </div>
 
             {/* BuyBox (client component) */}
-            <BuyBox product={product} glyphType={glyphType} />
+            <BuyBox product={product} />
           </div>
         </div>
       </section>

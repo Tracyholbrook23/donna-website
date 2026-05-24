@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { collections } from "@/lib/data";
@@ -98,21 +98,49 @@ export function ShopClient({ initialProducts }: Props) {
   const [sort, setSort] = useState<SortKey>("featured");
   const [maxPrice, setMaxPrice] = useState(200);
   const [filtersOpen, setFiltersOpen] = useState(true);
+  const [products, setProducts] = useState<WixProduct[]>(initialProducts);
+  const [loading, setLoading] = useState(false);
 
   const allCollections = [
     { id: "all", name: "Everything", count: initialProducts.length, kicker: "Every piece in the studio, ready to engrave." },
     ...collections,
   ];
 
+  const fetchByCollection = useCallback(async (collectionId: string) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/products?collection=${collectionId}`);
+      const data = await res.json();
+      setProducts(data);
+    } catch {
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activeCollection === "all") {
+      setProducts(initialProducts);
+    } else {
+      fetchByCollection(activeCollection);
+    }
+  }, [activeCollection, initialProducts, fetchByCollection]);
+
+  const handleCollectionChange = (id: string) => {
+    setActiveCollection(id);
+    setMaxPrice(200); // reset price filter on collection change
+  };
+
   const filtered = useMemo(() => {
-    let items = [...initialProducts];
+    let items = [...products];
     if (maxPrice < 200) {
       items = items.filter((p) => (p.priceData?.price ?? 0) <= maxPrice);
     }
     if (sort === "price-low") items.sort((a, b) => (a.priceData?.price ?? 0) - (b.priceData?.price ?? 0));
     if (sort === "price-high") items.sort((a, b) => (b.priceData?.price ?? 0) - (a.priceData?.price ?? 0));
     return items;
-  }, [initialProducts, sort, maxPrice]);
+  }, [products, sort, maxPrice]);
 
   const currentCollection = allCollections.find((c) => c.id === activeCollection);
 
@@ -203,7 +231,7 @@ export function ShopClient({ initialProducts }: Props) {
             {allCollections.map((c) => (
               <button
                 key={c.id}
-                onClick={() => setActiveCollection(c.id)}
+                onClick={() => handleCollectionChange(c.id)}
                 style={{
                   padding: "10px 18px",
                   borderRadius: "var(--r-pill)",
@@ -374,8 +402,7 @@ export function ShopClient({ initialProducts }: Props) {
 
                 <button
                   onClick={() => {
-                    setActiveCollection("all");
-                    setMaxPrice(200);
+                    handleCollectionChange("all");
                     setSort("featured");
                   }}
                   style={{
@@ -415,7 +442,17 @@ export function ShopClient({ initialProducts }: Props) {
                 </button>
               )}
 
-              {filtered.length === 0 ? (
+              {loading ? (
+                <div
+                  style={{
+                    textAlign: "center",
+                    padding: "80px 0",
+                    color: "var(--muted)",
+                  }}
+                >
+                  <p style={{ fontSize: 15 }}>Loading…</p>
+                </div>
+              ) : filtered.length === 0 ? (
                 <div
                   style={{
                     textAlign: "center",

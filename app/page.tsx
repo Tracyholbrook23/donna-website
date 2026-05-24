@@ -3,7 +3,6 @@ import Link from "next/link";
 import { collections, giftOccasions } from "@/lib/data";
 import { ProductGlyph } from "@/components/ProductGlyph";
 import { ArrowIcon } from "@/components/Icons";
-import { HomeCustomizerTeaser } from "@/components/home/HomeCustomizerTeaser";
 import { wixClient } from "@/lib/wixClient";
 
 export const dynamic = "force-dynamic";
@@ -29,7 +28,6 @@ export default async function HomePage() {
       <HomePhotoGrid />
       <HomeTwoTiles />
       <HomeOccasions />
-      <HomeCustomizerTeaser />
       <HomeCustomCTA />
     </main>
   );
@@ -321,7 +319,6 @@ function HomeMarqueeStrip() {
     "Free US shipping over $125",
     "1,840+ five-star reviews",
     "Tumblers · Boards · Knives · Wallets · More",
-    "Live engraving preview",
     "24-hour custom-order replies",
     "Gift-ready packaging on every order",
   ];

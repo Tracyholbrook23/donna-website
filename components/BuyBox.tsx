@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { engravingFonts, engravingPlacements } from "@/lib/data";
-import { ProductGlyph } from "@/components/ProductGlyph";
+import { engravingPlacements } from "@/lib/data";
 import { StarIcon, PlusIcon } from "@/components/Icons";
-import type { ProductType } from "@/components/ProductGlyph";
 import { wixClient } from "@/lib/wixClient";
 
 // Wix product type (v1 API — some fields can be null)
@@ -29,7 +27,6 @@ export interface WixProduct {
 
 interface BuyBoxProps {
   product: WixProduct;
-  glyphType: ProductType;
 }
 
 const SWATCH_COLORS: Record<string, string> = {
@@ -45,49 +42,26 @@ const SWATCH_COLORS: Record<string, string> = {
   red: "#B03A2E",
 };
 
-function getPlacementLabel(id: string) {
-  return engravingPlacements.find((pl) => pl.id === id)?.label ?? id;
-}
-
 function colorForChoice(name: string): string {
   const key = name.toLowerCase();
   return SWATCH_COLORS[key] ?? "#888";
 }
 
-export function BuyBox({ product, glyphType }: BuyBoxProps) {
+export function BuyBox({ product }: BuyBoxProps) {
   const [qty, setQty] = useState(1);
   const [engraveOn, setEngraveOn] = useState(true);
   const [engText, setEngText] = useState("");
-  const [engFontIdx, setEngFontIdx] = useState(1);
   const [engPlacement, setEngPlacement] = useState("front-center");
   const [variantIdx, setVariantIdx] = useState(0);
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
   const [error, setError] = useState("");
 
-  const font = engravingFonts[engFontIdx];
-
   // Color options from Wix product
   const colorOption = product.productOptions?.find(
     (o) => o.optionType === "color" || o.name?.toLowerCase() === "color"
   );
   const choices = colorOption?.choices ?? [];
-
-  const engraving = engraveOn && engText
-    ? {
-        text: engText,
-        fontCss: font.css,
-        italic: font.italic,
-        weight: font.weight,
-        caps: (font as { caps?: boolean }).caps,
-        monogram: (font as { monogram?: boolean }).monogram,
-        size: (font as { monogram?: boolean }).monogram
-          ? 48
-          : engText.length > 12
-          ? 12
-          : 18,
-      }
-    : null;
 
   const handleAddToCart = async () => {
     if (!product._id) return;
@@ -98,7 +72,6 @@ export function BuyBox({ product, glyphType }: BuyBoxProps) {
       const customTextFields = engraveOn && engText
         ? [
             { title: "Engraving text", value: engText },
-            { title: "Engraving font", value: font.label },
             { title: "Placement", value: engPlacement },
           ]
         : undefined;
@@ -271,7 +244,7 @@ export function BuyBox({ product, glyphType }: BuyBoxProps) {
               Personalize your engraving
             </h3>
             <p style={{ fontSize: 12, color: "var(--muted)", margin: 0 }}>
-              Included · Preview updates live
+              Included with your order
             </p>
           </div>
           {/* Toggle */}
@@ -341,48 +314,6 @@ export function BuyBox({ product, glyphType }: BuyBoxProps) {
               </span>
             </div>
 
-            {/* Font selector */}
-            <div style={{ marginBottom: 16 }}>
-              <p
-                style={{
-                  fontSize: 11,
-                  fontWeight: 600,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  color: "var(--muted)",
-                  marginBottom: 8,
-                }}
-              >
-                Font
-              </p>
-              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                {engravingFonts.map((f, i) => (
-                  <button
-                    key={f.id}
-                    onClick={() => setEngFontIdx(i)}
-                    style={{
-                      padding: "6px 12px",
-                      borderRadius: "var(--r-pill)",
-                      border: `1px solid ${engFontIdx === i ? "var(--ink)" : "var(--line)"}`,
-                      background:
-                        engFontIdx === i ? "var(--ink)" : "transparent",
-                      color: engFontIdx === i ? "var(--cream)" : "var(--ink)",
-                      fontSize: 12,
-                      cursor: "pointer",
-                      transition: "all .2s",
-                      fontFamily: (f as { monogram?: boolean }).monogram
-                        ? "'Cormorant Garamond', Georgia, serif"
-                        : f.css,
-                      fontStyle: f.italic ? "italic" : "normal",
-                      fontWeight: f.weight,
-                    }}
-                  >
-                    {f.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
             {/* Placement */}
             <div>
               <p
@@ -420,44 +351,6 @@ export function BuyBox({ product, glyphType }: BuyBoxProps) {
               </div>
             </div>
 
-            {/* Live preview chip (show when text entered) */}
-            {engText && (
-              <div
-                style={{
-                  marginTop: 20,
-                  padding: "12px 16px",
-                  borderRadius: "var(--r-sm)",
-                  background: "rgba(31,20,16,0.06)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                }}
-              >
-                <ProductGlyph
-                  type={glyphType}
-                  size={60}
-                  color="var(--terracotta)"
-                  engraving={engraving}
-                />
-                <div>
-                  <p
-                    style={{
-                      fontSize: 11,
-                      fontWeight: 600,
-                      color: "var(--terracotta)",
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                      marginBottom: 2,
-                    }}
-                  >
-                    Live preview
-                  </p>
-                  <p style={{ fontSize: 13, color: "var(--muted)", margin: 0 }}>
-                    {font.label} · {getPlacementLabel(engPlacement)}
-                  </p>
-                </div>
-              </div>
-            )}
           </>
         )}
       </div>
