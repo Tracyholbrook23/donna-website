@@ -131,7 +131,7 @@ export function Footer() {
             </p>
             <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
               {[
-                { label: "IG", href: "https://www.instagram.com/mamalaserengraver" },
+                { label: "IG", href: "https://www.instagram.com/outofjerseycreations" },
                 { label: "TT", href: "#" },
                 { label: "PT", href: "#" },
                 { label: "FB", href: "#" },

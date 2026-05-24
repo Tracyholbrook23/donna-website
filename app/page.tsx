@@ -577,7 +577,7 @@ function HomePhotoGrid() {
             </h2>
           </div>
           <a
-            href="https://www.instagram.com/mamalaserengraver"
+            href="https://www.instagram.com/outofjerseycreations"
             target="_blank"
             rel="noopener noreferrer"
             style={{

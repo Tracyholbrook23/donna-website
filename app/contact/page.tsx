@@ -96,8 +96,8 @@ export default function ContactPage() {
                   },
                   {
                     label: "Instagram",
-                    value: "@outofjersey.engraving",
-                    href: "#",
+                    value: "@outofjerseycreations",
+                    href: "https://www.instagram.com/outofjerseycreations",
                     note: "DMs open · usually fastest",
                   },
                   {

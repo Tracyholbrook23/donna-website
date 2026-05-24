@@ -347,7 +347,7 @@ export default function CustomPage() {
                   custom@outofjersey.com
                 </a>
                 <a
-                  href="#"
+                  href="https://www.instagram.com/outofjerseycreations"
                   style={{
                     display: "block",
                     fontSize: 13,
@@ -356,7 +356,7 @@ export default function CustomPage() {
                     marginBottom: 4,
                   }}
                 >
-                  DM @outofjersey.engraving on Instagram
+                  DM @outofjerseycreations on Instagram
                 </a>
                 <a
                   href="#"
