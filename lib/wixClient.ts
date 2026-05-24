@@ -1,5 +1,5 @@
 import { createClient, OAuthStrategy } from "@wix/sdk";
-import { products, collections } from "@wix/stores";
+import { products } from "@wix/stores";
 import { currentCart, checkout } from "@wix/ecom";
 
 /**
@@ -14,7 +14,7 @@ import { currentCart, checkout } from "@wix/ecom";
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const _client = createClient({
-  modules: { products, collections, currentCart, checkout },
+  modules: { products, currentCart, checkout },
   auth: OAuthStrategy({
     clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID!,
   }),
@@ -22,7 +22,6 @@ const _client = createClient({
 
 export const wixClient = _client as {
   products: typeof products;
-  collections: typeof collections;
   currentCart: typeof currentCart;
   checkout: typeof checkout;
   auth: ReturnType<typeof OAuthStrategy>;

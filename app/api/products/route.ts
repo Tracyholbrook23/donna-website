@@ -1,12 +1,13 @@
 import { wixClient } from "@/lib/wixClient";
+import { collections } from "@/lib/data";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const collectionSlug = req.nextUrl.searchParams.get("collection");
+  const collectionId = req.nextUrl.searchParams.get("collection");
 
   try {
-    // If no collection filter (or "all"), return everything
-    if (!collectionSlug || collectionSlug === "all") {
+    // No filter or "all" — return everything
+    if (!collectionId || collectionId === "all") {
       const { items } = await wixClient.products
         .queryProducts()
         .limit(100)
@@ -14,17 +15,18 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(items);
     }
 
-    // Look up the Wix collection by slug, then filter products
-    const { collection } = await wixClient.collections.getCollectionBySlug(collectionSlug);
+    // Look up the Wix collection _id from our local data (no API call needed)
+    const match = collections.find((c) => c.id === collectionId);
+    const wixId = match?.wixId;
 
-    if (!collection?._id) {
-      // Slug doesn't match any Wix collection — return empty
+    // Category exists but has no products assigned in Wix yet
+    if (!wixId) {
       return NextResponse.json([]);
     }
 
     const { items } = await wixClient.products
       .queryProducts()
-      .hasSome("collectionIds", [collection._id])
+      .hasSome("collectionIds", [wixId])
       .limit(100)
       .find();
 

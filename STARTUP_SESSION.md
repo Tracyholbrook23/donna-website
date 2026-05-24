@@ -198,7 +198,7 @@ _Last updated: 2026-05-24 (session 4) | Updated by: Claude (Cowork session)_
 - [ ] **[HIGH] Add real pricing to all 139 products in Wix**
 - [ ] **[HIGH] Create the 8 missing categories in Wix dashboard and assign products**
 - [ ] **[HIGH] Upload product images to Wix** — see Section 13 for image strategy
-- [ ] **[MEDIUM] Update frontend `collections` array in `lib/data/index.ts`** — currently has 6 generic categories; needs to reflect the actual 15 Wix catalog categories (or a curated subset for the storefront nav)
+- [x] **[MEDIUM] Update frontend `collections` array in `lib/data/index.ts`** ✅ (2026-05-24) — All 22 real Wix categories added with real `wixId` values for the 7 that have products. Empty-category `wixId` fields will be filled in as products are assigned in Wix dashboard.
 - [ ] **[MEDIUM] Footer category links** — footer Shop column must match real Wix collection slugs after category cleanup
 - [ ] **[LOW] Add Best Sellers / "Fan Favorites" tag in Wix** — homepage `HomeBestsellers` shows first 8 products in default order, not actual bestsellers
 - [ ] **[LOW] Research user account/login system** — Wix Headless supports member auth; post-launch feature

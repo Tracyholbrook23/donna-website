@@ -2,13 +2,31 @@
 // Out of Jersey — Static catalog and content data
 // ─────────────────────────────────────────────
 
+// wixId = Wix collection _id (from Wix dashboard). Empty string = category exists in Wix but has no products yet.
 export const collections = [
-  { id: "tumblers",    name: "Drinkware",               count: 24, kicker: "Made to take with you" },
-  { id: "boards",      name: "Boards & Servingware",    count: 18, kicker: "For the table you set" },
-  { id: "home",        name: "Home & Keepsakes",        count: 32, kicker: "Pieces that stay with you" },
-  { id: "accessories", name: "Wallets & Accessories",   count: 21, kicker: "Everyday, made personal" },
-  { id: "wedding",     name: "Wedding & Anniversary",   count: 14, kicker: "For the milestone moments" },
-  { id: "corporate",  name: "Corporate & Bulk",         count: 8,  kicker: "Gifts at scale" },
+  // ── Categories with products ──────────────────────────────────────────────
+  { id: "stainless-steel-tumblers",       name: "Stainless Steel Tumblers",       wixId: "d266a14f-d114-4811-9a2d-10e1512ee0b6", count: 30, kicker: "Classic steel, personalized" },
+  { id: "powder-coated-tumblers",         name: "Powder Coated Tumblers",         wixId: "8e30eb08-07c8-4828-bf7d-024e27b05773", count: 22, kicker: "Bold colors, built to engrave" },
+  { id: "acrylic-blanks",                 name: "Acrylic Blanks",                 wixId: "9d3eab66-cad4-48be-a7d9-6b57471a38b9", count: 10, kicker: "Ready to personalize" },
+  { id: "wood-pendant-jewelry",           name: "Wood Pendant Jewelry",           wixId: "b5043d32-becc-465b-a1f1-f00e1e4f80c2", count: 7,  kicker: "Wearable keepsakes" },
+  { id: "wood-boxes",                     name: "Wood Boxes",                     wixId: "28716efe-8ff6-46c5-9ff9-759a91d1674a", count: 6,  kicker: "Gifts worth keeping" },
+  { id: "cutting-boards",                 name: "Cutting Boards",                 wixId: "5bd92e78-f534-4c55-939f-8b5ff36d61a4", count: 5,  kicker: "For the table you set" },
+  { id: "pocket-knives",                  name: "Pocket Knives",                  wixId: "4bfd4a69-8df9-42ba-9f08-b9e340a6841d", count: 1,  kicker: "Sharp and personal" },
+  // ── Coming soon (wixId = "" until products are assigned in Wix dashboard) ─
+  { id: "tumblers",                       name: "Tumblers",                       wixId: "", count: 0, kicker: "Custom drinkware" },
+  { id: "glassware",                      name: "Glassware",                      wixId: "", count: 0, kicker: "Etched to impress" },
+  { id: "wood-acrylic",                   name: "Wood & Acrylic",                 wixId: "", count: 0, kicker: "Natural meets modern" },
+  { id: "marble-wood",                    name: "Marble & Wood",                  wixId: "", count: 0, kicker: "Timeless materials" },
+  { id: "gourmet-knife-sets",             name: "Gourmet Knife Sets",             wixId: "", count: 0, kicker: "Knives worth engraving" },
+  { id: "bbq-grill",                      name: "BBQ & Grill",                    wixId: "", count: 0, kicker: "For the backyard chef" },
+  { id: "decanters-sets",                 name: "Decanters & Sets",               wixId: "", count: 0, kicker: "For whiskey lovers" },
+  { id: "laserette-products",             name: "Laserette Products",             wixId: "", count: 0, kicker: "Compact and creative" },
+  { id: "pens-pencils",                   name: "Pens & Pencils",                 wixId: "", count: 0, kicker: "Writing, personalized" },
+  { id: "sublimation-products",           name: "Sublimation Products",           wixId: "", count: 0, kicker: "Vivid and lasting" },
+  { id: "gourmet-kitchen",                name: "Gourmet Kitchen",                wixId: "", count: 0, kicker: "Elevate the kitchen" },
+  { id: "laserette-tm",                   name: "Laserette™",                wixId: "", count: 0, kicker: "Precision in every mark" },
+  { id: "sublimation-tumblers-blanks",    name: "Sublimation Tumblers & Blanks",  wixId: "", count: 0, kicker: "Ready for color" },
+  { id: "utility",                        name: "Utility",                        wixId: "", count: 0, kicker: "Tools with a personal touch" },
 ] as const;
 
 export type CollectionId = typeof collections[number]["id"];
