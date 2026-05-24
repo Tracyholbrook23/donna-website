@@ -591,6 +591,33 @@ select.field {
   .layout-footer-links { grid-template-columns: 1fr 1fr; }
 }
 
+/* Home photo grid — masonry-style, responsive */
+.layout-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: 200px;
+  gap: 8px;
+}
+
+@media (max-width: 900px) {
+  .layout-photo-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 150px;
+  }
+  /* Reset tall/wide spans on tablet — not enough columns */
+  .layout-photo-grid .photo-grid-item {
+    grid-row: span 1 !important;
+    grid-column: span 1 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .layout-photo-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 140px;
+  }
+}
+
 /* Shop product grid (3-col with sidebar open) */
 .layout-shop-grid {
   display: grid;
