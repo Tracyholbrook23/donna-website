@@ -5,6 +5,7 @@ import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { InteractionInit } from "@/components/InteractionInit";
+import { CursorTrail } from "@/components/CursorTrail";
 import { CartProvider } from "@/lib/cartContext";
 
 const fraunces = Fraunces({
@@ -55,6 +56,7 @@ export default function RootLayout({
           <div className="flex-1">{children}</div>
           <Footer />
           <InteractionInit />
+          <CursorTrail />
         </CartProvider>
       </body>
     </html>

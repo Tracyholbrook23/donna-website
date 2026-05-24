@@ -1,6 +1,6 @@
 # STARTUP_SESSION.md
 ### Out of Jersey — Master Session Handoff & Active Task Tracker
-_Last updated: 2026-05-24 (session 6) | Updated by: Claude (Cowork session)_
+_Last updated: 2026-05-24 (session 7) | Updated by: Claude (Cowork session)_
 
 ---
 
@@ -52,7 +52,7 @@ _Last updated: 2026-05-24 (session 6) | Updated by: Claude (Cowork session)_
 - **Aesthetic:** Editorial-meets-artisan — large type, generous whitespace, real photography, bold section headers with italic accent words in terracotta
 - **Navigation:** Dark forest green sticky header (`#1a3028`) with mega-menu for Shop
 - **Footer:** Dark ink background with newsletter signup, link columns, ghost logo watermark
-- **Animations:** Page enter fade, scroll reveal (`reveal` class), card hover lifts, marquee strip
+- **Animations:** Rich interaction system — see Section 17 for full inventory
 - **Videos:** Autoplay, muted, looping — displayed in horizontal scroll strip on homepage
 - **Product cards:** Real photos from Wix when available; smart local photo fallback by product name keyword; SVG glyphs as last resort
 
@@ -350,6 +350,106 @@ Right now the code does **both** — it tries Wix first, falls back to a local k
 ## 15. Misc Completed This Session
 
 - [x] **Favicon** ✅ (2026-05-24) — `app/icon.png` created from `public/logo.png` (64×64). Next.js picks it up automatically.
+
+---
+
+## 17. Animation & Interaction System (Session 7 — 2026-05-24)
+
+All animations live in three places: `app/globals.css` (CSS classes + keyframes), `components/InteractionInit.tsx` (JS wiring), and `components/CursorTrail.tsx` (cursor + trail).
+
+### CSS classes — `app/globals.css`
+
+| Class | Effect |
+|---|---|
+| `.reveal` | Fade + slide up on scroll into view (existing, wired by InteractionInit) |
+| `.reveal-left` | Slide in from left on scroll |
+| `.reveal-right` | Slide in from right on scroll |
+| `.reveal-scale` | Scale up from 0.92 → 1 on scroll |
+| `.reveal-blur` | Blur + fade in on scroll |
+| `.reveal-rotate` | Rotate + fade in (decorative elements) |
+| `.reveal-delay-1/2/3` | Stagger delay helpers (0.08s / 0.16s / 0.24s) |
+| `.reveal-stagger > *` | Children stagger automatically |
+| `.lift-on-hover` | translateY(-4px) + shadow on hover |
+| `.hover-float` | translateY(-6px) + xl shadow on hover |
+| `.card-hover` | Image scale 1.045 + brightness on hover (container) |
+| `.card-hover .card-media` | Image element inside card-hover |
+| `.shimmer-hover` | Light-sweep shimmer on hover (auto-added to `.card-hover` by InteractionInit) |
+| `.spring-press` | Scale 0.96 on active/click (satisfying tactile press) |
+| `.tilt-card` | 3D tilt setup (JS controlled via `data-tilt`) |
+| `.chip-hover` | Chip/filter tab fill animation |
+| `.heart-btn` / `.is-liked` | Heart pop animation |
+| `.btn::after` + `.is-pressed` | Radial ripple on button click |
+| `.link-underline` | Animated underline on hover |
+| `.scroll-progress` | Fixed top progress bar (created by InteractionInit JS) |
+| `.cursor-glow` | Soft radial glow that follows mouse (created by InteractionInit JS) |
+| `.click-particle` | Burst particle on click (created by InteractionInit JS) |
+| `.idle-drift` | Infinite float animation (badge elements) |
+| `.marquee-track` | Horizontal marquee scroll |
+| `.live-dot` | Pulsing live indicator dot |
+| `.engrave-text` | Letter-spacing entrance animation |
+| `.text-glint` | One-time glint/shine on text |
+| `.grain::after` | Noise texture overlay (paper feel) |
+
+### JS data attributes (handled by InteractionInit)
+
+| Attribute | Effect |
+|---|---|
+| `data-tilt="<degrees>"` | 3D perspective tilt toward cursor (default 6°) |
+| `data-magnetic="<px>"` | Element drifts toward cursor within px radius |
+| `data-parallax="<speed>"` | Element scrolls at speed × scrollY (negative = opposite direction) |
+| `data-counter="<number>"` | Animated count-up when scrolled into view |
+| `data-suffix` / `data-prefix` | Used with `data-counter` |
+| `data-burst` | Click triggers particle burst (auto on `.btn` and `.card-hover` too) |
+
+### InteractionInit — `components/InteractionInit.tsx`
+
+Runs once on mount via `useEffect`. Handles:
+1. **Button click ripples** — radial gradient ripple from click point on `.btn` elements
+2. **Magnetic hover** — `[data-magnetic]` elements drift toward cursor
+3. **Tilt cards** — `[data-tilt]` elements tilt in 3D on hover
+4. **Counter animation** — `[data-counter]` elements count up when in view
+5. **Scroll reveal** — IntersectionObserver adds `.visible` to all reveal variants
+6. **Scroll progress bar** — creates `.scroll-progress` div, updates `width` on scroll
+7. **Cursor glow** — creates `.cursor-glow` div, lerps to mouse position
+8. **Parallax** — `[data-parallax]` elements get `translateY` on scroll
+9. **Click particle burst** — spawns `.click-particle` divs on clicks over interactive elements
+10. **Auto shimmer** — adds `.shimmer-hover` class to all `.card-hover` elements
+
+Uses `MutationObserver` to re-run attachment on client-side navigation (Next.js route changes).
+
+### CursorTrail — `components/CursorTrail.tsx`
+
+Custom cursor + ember particle trail. **Only activates on fine-pointer (mouse) devices** — touch screens are unaffected.
+
+- **Cursor dot** (8px solid terracotta) — snaps exactly to mouse position
+- **Cursor ring** (34px ring, terracotta border) — lags behind with lerp (0.13 factor), targeting-reticle feel
+- **Ember trail** — canvas-based particle system. Spawns brand-colored sparks (terracotta, brass, clay, brass-light) as cursor moves. Particles float upward with slight gravity and fade over ~0.5–0.8s
+- **Hover state** — over `a`, `button`, `.btn`: dot grows to 12px, turns brass/gold; ring expands to 48px
+- **Click pulse** — ring pulses outward on click (scale 1.6 → fade → reset)
+- Injects `cursor: none !important` via a `<style>` tag; cleans up on unmount
+- Canvas renders at `z-index: 999996`; dot at `999999`; ring at `999998`
+
+### MeshGradient — `components/MeshGradient.tsx`
+
+File exists but is **NOT imported in layout.tsx** (removed — was too visually heavy).
+
+Two versions were built:
+1. **CSS blob version** (6 drifting radial-gradient divs, `mix-blend-mode: soft-light`) — removed, too subtle/generic
+2. **WebGL Voronoi shader** (Cell Bloom style, `mix-blend-mode: multiply`, 0.68 opacity) — looked great but was too dominant over page content. Removed from layout on Tracy's request.
+
+To re-enable if ever wanted: add `import { MeshGradient } from "@/components/MeshGradient"` and `<MeshGradient />` in `app/layout.tsx`. The WebGL version (current file) renders a Voronoi cell shader in brand colors with mouse interaction.
+
+### What's wired on the homepage (`app/page.tsx`)
+
+- Hero headline: `data-parallax="-0.04"` (slight counter-scroll effect)
+- Hero CTA buttons: `data-magnetic="60"` (magnetic pull)
+- Bestsellers heading: `reveal-left`
+- Product cards: `reveal-scale`, `data-tilt="5"`, `spring-press`, staggered `transitionDelay`
+- Two-tile cards (Corporate / Custom): `reveal-left` + `reveal-right`, `hover-float`
+- Occasions heading: `reveal-left`; subtext: `reveal-right`
+- Occasion grid cards: `reveal-scale`, `spring-press`, staggered delay
+- CTA block: `reveal-scale`
+- CTA buttons: `data-magnetic="70"`, `data-burst`
 
 ---
 
