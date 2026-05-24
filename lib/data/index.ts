@@ -13,36 +13,12 @@ export const collections = [
 
 export type CollectionId = typeof collections[number]["id"];
 
-export const testimonials = [
-  {
-    quote:
-      "I cried when I opened my mom's anniversary box. They engraved my parents' first dance lyrics around the lid and it's the most thoughtful gift I've ever given.",
-    name: "Imani K.",
-    role: "Atlanta, GA · Anniversary gift",
-    rating: 5,
-  },
-  {
-    quote:
-      "We ordered 80 monogrammed tumblers for our bridesmaids and corporate gifts and every single one was handled personally. Real human, real craft.",
-    name: "Sydney & Marcus",
-    role: "Brooklyn, NY · Wedding party",
-    rating: 5,
-  },
-  {
-    quote:
-      "I run a salon and we hand these tumblers out to clients on their first visit. They post them every time. Best marketing I've ever paid for.",
-    name: "Tasha B.",
-    role: "Houston, TX · Repeat customer",
-    rating: 5,
-  },
-  {
-    quote:
-      "They designed a charcuterie board with our family tree etched into the back. It sits at every Sunday dinner. Generational.",
-    name: "The Whitfield Family",
-    role: "New Jersey · Custom commission",
-    rating: 5,
-  },
-] as const;
+export const testimonials: ReadonlyArray<{
+  quote: string;
+  name: string;
+  role: string;
+  rating: number;
+}> = [];
 
 export const faqs = [
   {

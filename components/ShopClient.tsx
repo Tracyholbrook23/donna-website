@@ -466,7 +466,7 @@ export function ShopClient({ initialProducts }: Props) {
               }}
             >
               <Image
-                src="https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=700&q=80"
+                src="/photos/cutting-boards-family.jpg"
                 alt="Custom commission example — family tree board"
                 width={700}
                 height={525}

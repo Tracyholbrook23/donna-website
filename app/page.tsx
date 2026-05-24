@@ -1,17 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { collections, lifestyleScenes, giftOccasions } from "@/lib/data";
+import { collections, giftOccasions } from "@/lib/data";
 import { ProductGlyph } from "@/components/ProductGlyph";
 import { ArrowIcon } from "@/components/Icons";
 import { HomeCustomizerTeaser } from "@/components/home/HomeCustomizerTeaser";
-import { HomeTestimonials } from "@/components/home/HomeTestimonials";
 import { wixClient } from "@/lib/wixClient";
 
 export const dynamic = "force-dynamic";
 
 async function getFeaturedProducts() {
   try {
-    const { items } = await wixClient.products.queryProducts().limit(6).find();
+    const { items } = await wixClient.products.queryProducts().limit(8).find();
     return items;
   } catch {
     return [];
@@ -25,14 +24,12 @@ export default async function HomePage() {
     <main className="page-enter">
       <HomeHero />
       <HomeMarqueeStrip />
-      <HomeVideoStrip />
-      <HomeCategories />
-      <HomeStudioStory />
+      <HomeTwoTiles />
+      <HomeVideoShowcase />
       <HomeBestsellers products={products} />
       <HomeOccasions />
       <HomeCustomizerTeaser />
-      <HomeInTheirHands />
-      <HomeTestimonials />
+      <HomePhotoGrid />
       <HomeCustomCTA />
     </main>
   );
@@ -46,9 +43,9 @@ function HomeHero() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1.05fr 0.95fr",
-            gap: 48,
-            alignItems: "end",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 56,
+            alignItems: "center",
             minHeight: "78vh",
           }}
         >
@@ -60,9 +57,10 @@ function HomeHero() {
             <h1
               className="display reveal reveal-delay-1"
               style={{
-                fontSize: "clamp(64px,8.5vw,132px)",
+                fontSize: "clamp(56px,7.5vw,116px)",
                 margin: "0 0 12px",
                 fontWeight: 400,
+                lineHeight: 0.95,
               }}
             >
               Gifts that
@@ -83,23 +81,22 @@ function HomeHero() {
             <p
               className="reveal reveal-delay-2"
               style={{
-                fontSize: 18,
-                lineHeight: 1.55,
+                fontSize: 17,
+                lineHeight: 1.6,
                 color: "var(--muted)",
-                maxWidth: 460,
+                maxWidth: 440,
                 margin: "24px 0 36px",
               }}
             >
-              Out of Jersey — custom laser engraving on tumblers, boards, knives,
-              wallets, and one-of-a-kind commissions. For the moments that deserve
-              more than a card.
+              Out of Jersey — custom laser engraving on tumblers, boards,
+              knives, wallets, and one-of-a-kind commissions.
             </p>
 
             <div
               className="reveal reveal-delay-3"
               style={{ display: "flex", gap: 12, flexWrap: "wrap" }}
             >
-              <Link href="/shop" className="btn btn-primary" data-magnetic="60">
+              <Link href="/shop" className="btn btn-primary">
                 Shop the collection <ArrowIcon />
               </Link>
               <Link href="/custom" className="btn btn-secondary">
@@ -112,40 +109,40 @@ function HomeHero() {
               className="reveal reveal-delay-4"
               style={{
                 display: "flex",
-                gap: 32,
+                gap: 40,
                 marginTop: 56,
                 paddingTop: 28,
                 borderTop: "1px solid var(--line)",
                 flexWrap: "wrap",
               }}
             >
-              <HeroStat label="Pieces in the catalog" value="117" counter={117} />
-              <HeroStat label="Five-star reviews" value="1,840+" counter={1840} suffix="+" />
-              <HeroStat label="Engraved this year" value="6,200" counter={6200} />
+              <HeroStat label="5-star reviews" value="1,840+" />
+              <HeroStat label="Pieces engraved" value="14,200+" />
               <HeroStat label="Based in" value="New Jersey" />
+              <HeroStat label="Ownership" value="Woman Owned" />
             </div>
           </div>
 
-          {/* Right — image stack with real product photos */}
+          {/* Right — two stacked real product photos */}
           <div
             className="reveal reveal-delay-2"
-            style={{ position: "relative", minHeight: 580 }}
+            style={{ position: "relative", minHeight: 560 }}
           >
-            {/* Main hero image — BFF tumblers lifestyle */}
+            {/* Main large photo */}
             <div
               style={{
                 position: "absolute",
                 right: 0,
                 top: 0,
                 bottom: 0,
-                width: "90%",
-                borderRadius: "var(--r-md)",
+                width: "88%",
+                borderRadius: "var(--r-lg)",
                 overflow: "hidden",
               }}
             >
               <Image
                 src="/photos/bff-tumblers.jpg"
-                alt="Two friends toasting with their custom-engraved BFF tumblers"
+                alt="Custom engraved tumblers"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 90vw, 45vw"
@@ -153,178 +150,57 @@ function HomeHero() {
               />
             </div>
 
-            {/* Secondary floating photo — wedding board */}
+            {/* Floating inset — wedding board */}
             <div
-              data-tilt="4"
               style={{
                 position: "absolute",
-                left: "4%",
-                bottom: "18%",
-                width: 148,
-                height: 180,
+                left: 0,
+                bottom: "15%",
+                width: 156,
+                height: 190,
                 borderRadius: "var(--r-md)",
                 overflow: "hidden",
-                boxShadow: "var(--shadow-lg)",
+                boxShadow: "var(--shadow-xl)",
                 zIndex: 2,
-                border: "3px solid var(--cream)",
+                border: "4px solid var(--cream)",
               }}
             >
               <Image
                 src="/photos/wedding-board-couple.jpg"
-                alt="Couple holding a personalized engraved wedding board"
+                alt="Custom engraved wedding board"
                 fill
                 className="object-cover"
-                sizes="148px"
+                sizes="156px"
               />
             </div>
 
-            {/* Floating card — live order */}
-            <div
-              data-tilt="5"
-              style={{
-                position: "absolute",
-                left: 0,
-                top: "10%",
-                background: "var(--cream)",
-                boxShadow: "var(--shadow-lg)",
-                borderRadius: "var(--r-md)",
-                padding: 18,
-                maxWidth: 220,
-                zIndex: 3,
-              }}
-            >
-              <div
-                style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}
-              >
-                <span
-                  className="live-dot"
-                  style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: "50%",
-                    background: "var(--forest)",
-                    color: "var(--forest)",
-                  }}
-                />
-                <span
-                  style={{
-                    fontSize: 11,
-                    fontWeight: 600,
-                    color: "var(--forest)",
-                    letterSpacing: "0.06em",
-                  }}
-                >
-                  ENGRAVING NOW
-                </span>
-              </div>
-              <p style={{ fontSize: 13, lineHeight: 1.5, margin: 0, color: "var(--ink)" }}>
-                A walnut board for{" "}
-                <em style={{ fontStyle: "italic" }}>Sydney &amp; Marcus</em> —
-                the wedding monogram.
-              </p>
-              <div style={{ display: "flex", gap: 6, marginTop: 12 }}>
-                {[1, 2, 3, 4].map((i) => (
-                  <span
-                    key={i}
-                    style={{
-                      height: 3,
-                      flex: 1,
-                      borderRadius: 4,
-                      background:
-                        i <= 2 ? "var(--terracotta)" : "var(--cream-3)",
-                    }}
-                  />
-                ))}
-              </div>
-              <p
-                style={{
-                  fontSize: 10,
-                  color: "var(--muted-soft)",
-                  margin: "8px 0 0",
-                  letterSpacing: "0.04em",
-                }}
-              >
-                STEP 2 / 4 · ETCHING
-              </p>
-            </div>
-
-            {/* Floating signature card */}
-            <div
-              data-tilt="6"
-              style={{
-                position: "absolute",
-                right: "6%",
-                bottom: "-30px",
-                background: "var(--ink)",
-                color: "var(--cream)",
-                boxShadow: "var(--shadow-lg)",
-                borderRadius: "var(--r-md)",
-                padding: "16px 20px",
-                maxWidth: 240,
-                zIndex: 3,
-              }}
-            >
-              <p className="display-italic" style={{ fontSize: 22, margin: 0, lineHeight: 1 }}>
-                Out of Jersey
-              </p>
-              <p
-                style={{
-                  fontSize: 11,
-                  opacity: 0.7,
-                  margin: "4px 0 0",
-                  letterSpacing: "0.08em",
-                }}
-              >
-                Custom Laser Engraving · Woman Owned
-              </p>
-            </div>
-
-            {/* Rotating badge */}
+            {/* Woman Owned badge — real, not fake */}
             <div
               className="idle-drift"
               style={{
                 position: "absolute",
-                left: "-4%",
-                bottom: "40%",
-                background: "var(--brass)",
-                color: "var(--ink)",
-                borderRadius: "50%",
-                width: 110,
-                height: 110,
+                left: "-2%",
+                top: "18%",
+                background: "var(--ink)",
+                color: "var(--cream)",
+                borderRadius: "var(--r-pill)",
+                padding: "10px 16px",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "column",
-                textAlign: "center",
+                gap: 8,
                 boxShadow: "var(--shadow-lg)",
-                transform: "rotate(-6deg)",
-                zIndex: 4,
+                zIndex: 3,
+                fontSize: 12,
+                fontWeight: 600,
+                letterSpacing: "0.06em",
+                whiteSpace: "nowrap",
               }}
             >
-              <svg
-                width="80"
-                height="80"
-                viewBox="0 0 80 80"
-                style={{ position: "absolute", animation: "spin 30s linear infinite" }}
-              >
-                <path
-                  id="badge-circ"
-                  d="M 40 40 m -32 0 a 32 32 0 1 1 64 0 a 32 32 0 1 1 -64 0"
-                  fill="none"
-                />
-                <text
-                  fill="currentColor"
-                  fontSize="8.5"
-                  fontFamily="var(--font-body)"
-                  fontWeight="700"
-                  letterSpacing="3"
-                >
-                  <textPath href="#badge-circ">
-                    WOMAN OWNED · LASER ENGRAVED · WOMAN OWNED · LASER ENGRAVED ·
-                  </textPath>
-                </text>
-              </svg>
-              <span style={{ fontSize: 24 }}>✦</span>
+              <span style={{
+                width: 8, height: 8, borderRadius: "50%",
+                background: "var(--terracotta)", flexShrink: 0,
+              }} />
+              WOMAN OWNED &amp; OPERATED
             </div>
           </div>
         </div>
@@ -333,35 +209,13 @@ function HomeHero() {
   );
 }
 
-function HeroStat({
-  label,
-  value,
-  counter,
-  suffix,
-}: {
-  label: string;
-  value: string;
-  counter?: number;
-  suffix?: string;
-}) {
+function HeroStat({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <div
-        className="serif counter"
-        style={{ fontSize: 24, lineHeight: 1, marginBottom: 4 }}
-        {...(counter !== undefined ? { "data-counter": counter } : {})}
-        {...(suffix ? { "data-suffix": suffix } : {})}
-      >
+      <div className="serif" style={{ fontSize: 22, lineHeight: 1, marginBottom: 4, fontWeight: 600 }}>
         {value}
       </div>
-      <div
-        style={{
-          fontSize: 11,
-          color: "var(--muted)",
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-        }}
-      >
+      <div style={{ fontSize: 11, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
         {label}
       </div>
     </div>
@@ -382,28 +236,10 @@ function HomeMarqueeStrip() {
   const repeated = [...items, ...items, ...items];
 
   return (
-    <section
-      style={{
-        borderTop: "1px solid var(--line)",
-        borderBottom: "1px solid var(--line)",
-        padding: "18px 0",
-        overflow: "hidden",
-      }}
-    >
+    <section style={{ borderTop: "1px solid var(--line)", borderBottom: "1px solid var(--line)", padding: "18px 0", overflow: "hidden" }}>
       <div className="marquee-track" style={{ animationDuration: "46s" }}>
         {repeated.map((it, i) => (
-          <span
-            key={i}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 64,
-              fontSize: 13,
-              color: "var(--ink-soft)",
-              fontFamily: "var(--font-display)",
-              fontStyle: "italic",
-            }}
-          >
+          <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 64, fontSize: 13, color: "var(--ink-soft)", fontFamily: "var(--font-display)", fontStyle: "italic" }}>
             {it} <span style={{ color: "var(--brass)" }}>✦</span>
           </span>
         ))}
@@ -412,464 +248,164 @@ function HomeMarqueeStrip() {
   );
 }
 
-/* ── VIDEO STRIP ────────────────────────────────────────── */
-function HomeVideoStrip() {
+/* ── TWO TILES (RTIC-style) ─────────────────────────────── */
+function HomeTwoTiles() {
   return (
-    <section
-      style={{
-        position: "relative",
-        height: "clamp(320px, 45vw, 580px)",
-        overflow: "hidden",
-        background: "var(--ink)",
-      }}
-    >
-      {/* Video — autoplay, muted, loop, no controls */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          opacity: 0.65,
-        }}
-        src="/videos/laser-engraving-01.mp4"
-      />
-
-      {/* Gradient overlay */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(90deg, rgba(31,20,16,0.75) 0%, rgba(31,20,16,0.3) 50%, rgba(31,20,16,0.6) 100%)",
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* Content */}
-      <div
-        className="container"
-        style={{
-          position: "relative",
-          zIndex: 1,
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <div style={{ maxWidth: 640, color: "var(--cream)" }}>
-          <p className="eyebrow" style={{ color: "var(--brass-light)", marginBottom: 20 }}>
-            The craft
-          </p>
-          <h2
-            className="display"
-            style={{
-              fontSize: "clamp(36px, 5vw, 72px)",
-              margin: "0 0 24px",
-              fontWeight: 400,
-              lineHeight: 1.0,
-            }}
-          >
-            Every mark is{" "}
-            <em
-              style={{
-                fontStyle: "italic",
-                color: "var(--brass-light)",
-              }}
-            >
-              intentional.
-            </em>
-          </h2>
-          <p
-            style={{
-              fontSize: 17,
-              lineHeight: 1.65,
-              opacity: 0.8,
-              maxWidth: 480,
-              margin: "0 0 32px",
-            }}
-          >
-            Laser precision, human care. Every piece is reviewed personally
-            before it leaves the studio — no exceptions.
-          </p>
+    <section style={{ padding: "60px 0 0" }}>
+      <div className="container">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+          {/* Tile 1 — Corporate & Bulk */}
           <Link
-            href="/about"
-            className="btn"
+            href="/shop?collection=corporate"
+            className="card-hover"
             style={{
-              background: "transparent",
+              position: "relative",
+              borderRadius: "var(--r-lg)",
+              overflow: "hidden",
+              height: 480,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              textDecoration: "none",
               color: "var(--cream)",
-              border: "1px solid rgba(255,255,255,0.45)",
             }}
           >
-            Meet the studio <ArrowIcon size={14} />
+            <Image
+              src="/photos/keychain-business.jpg"
+              alt="Corporate and bulk engraving orders"
+              fill
+              className="object-cover card-media"
+              sizes="50vw"
+            />
+            <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.72) 100%)" }} />
+            <div style={{ position: "relative", zIndex: 1, padding: "32px 36px" }}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.7, margin: "0 0 10px" }}>
+                Bulk orders welcome
+              </p>
+              <h2 className="display" style={{ fontSize: "clamp(28px,3vw,40px)", margin: "0 0 20px", fontWeight: 400 }}>
+                Corporate Teams &amp; Gifting
+              </h2>
+              <p style={{ fontSize: 14, opacity: 0.8, margin: "0 0 24px", lineHeight: 1.55, maxWidth: 360 }}>
+                Brand awareness, client gifts, employee recognition — at any quantity.
+              </p>
+              <span className="btn" style={{ background: "var(--cream)", color: "var(--ink)", fontSize: 13, padding: "12px 22px", display: "inline-flex", alignItems: "center", gap: 8 }}>
+                START YOUR QUOTE <ArrowIcon size={13} />
+              </span>
+            </div>
+          </Link>
+
+          {/* Tile 2 — Custom Commissions */}
+          <Link
+            href="/custom"
+            className="card-hover"
+            style={{
+              position: "relative",
+              borderRadius: "var(--r-lg)",
+              overflow: "hidden",
+              height: 480,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              textDecoration: "none",
+              color: "var(--cream)",
+            }}
+          >
+            <Image
+              src="/photos/wedding-board-couple.jpg"
+              alt="Custom commission engraving orders"
+              fill
+              className="object-cover card-media"
+              sizes="50vw"
+            />
+            <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.72) 100%)" }} />
+            <div style={{ position: "relative", zIndex: 1, padding: "32px 36px" }}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.7, margin: "0 0 10px" }}>
+                One-of-a-kind pieces
+              </p>
+              <h2 className="display" style={{ fontSize: "clamp(28px,3vw,40px)", margin: "0 0 20px", fontWeight: 400 }}>
+                Custom Commissions
+              </h2>
+              <p style={{ fontSize: 14, opacity: 0.8, margin: "0 0 24px", lineHeight: 1.55, maxWidth: 360 }}>
+                Wedding gifts, family heirlooms, personal artwork — send a brief, get a quote in 24 hours.
+              </p>
+              <span className="btn" style={{ background: "var(--cream)", color: "var(--ink)", fontSize: 13, padding: "12px 22px", display: "inline-flex", alignItems: "center", gap: 8 }}>
+                START YOUR QUOTE <ArrowIcon size={13} />
+              </span>
+            </div>
           </Link>
         </div>
-      </div>
-
-      {/* Corner detail */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          bottom: 24,
-          right: 32,
-          fontSize: 11,
-          color: "rgba(255,255,255,0.35)",
-          letterSpacing: "0.14em",
-          textTransform: "uppercase",
-          fontWeight: 600,
-        }}
-      >
-        Out of Jersey · Woman Owned &amp; Operated
       </div>
     </section>
   );
 }
 
-/* ── CATEGORIES GRID ────────────────────────────────────── */
-function HomeCategories() {
-  // Real product photos for each category
-  const catImages = [
-    "/photos/bff-tumblers.jpg",
-    "/photos/cutting-boards-family.jpg",
-    "/photos/whiskey-glasses-bar.jpg",
-    "/photos/leather-wallet.jpg",
-    "/photos/wedding-board-couple.jpg",
-  ];
-  const bgs = [
-    "var(--blush)",
-    "var(--cream-3)",
-    "var(--forest)",
-    "var(--brass-light)",
-    "var(--ink)",
-  ];
-  const textColors = [
-    "var(--ink)",
-    "var(--ink)",
-    "var(--cream)",
-    "var(--ink)",
-    "var(--cream)",
-  ];
-  // col, row, colSpan, rowSpan, collectionIndex
-  const layout = [
-    { col: 1, row: 1, cs: 2, rs: 2, ci: 0 },
-    { col: 3, row: 1, cs: 2, rs: 1, ci: 1 },
-    { col: 5, row: 1, cs: 2, rs: 2, ci: 4 },
-    { col: 3, row: 2, cs: 1, rs: 1, ci: 2 },
-    { col: 4, row: 2, cs: 1, rs: 1, ci: 3 },
+/* ── VIDEO SHOWCASE ─────────────────────────────────────── */
+function HomeVideoShowcase() {
+  const videos = [
+    { src: "/videos/laser-engraving-01.mp4", label: "Laser in action" },
+    { src: "/videos/laser-engraving-02.mp4", label: "Custom tumbler" },
+    { src: "/videos/laser-engraving-03.mp4", label: "Engraving process" },
+    { src: "/videos/laser-engraving-04.mp4", label: "Mother's Day drop" },
+    { src: "/videos/laser-engraving-05.mp4", label: "Brand collab" },
   ];
 
   return (
-    <section style={{ padding: "120px 0 60px" }}>
+    <section style={{ padding: "100px 0 80px" }}>
       <div className="container">
         <div
           className="reveal"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "end",
-            marginBottom: 56,
-            flexWrap: "wrap",
-            gap: 20,
-          }}
+          style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 48, flexWrap: "wrap", gap: 20 }}
         >
           <div>
-            <p className="eyebrow">Browse</p>
-            <h2
-              className="display"
-              style={{
-                fontSize: "clamp(40px,5.5vw,76px)",
-                margin: "12px 0 0",
-                fontWeight: 400,
-              }}
-            >
-              Find your{" "}
-              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>
-                aisle.
-              </em>
+            <p className="eyebrow">Watch us work</p>
+            <h2 className="display" style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}>
+              The craft,{" "}
+              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>up close.</em>
             </h2>
           </div>
-          <Link
-            href="/shop"
-            style={{
-              color: "var(--ink)",
-              fontSize: 14,
-              fontWeight: 500,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              borderBottom: "1px solid var(--ink)",
-              paddingBottom: 4,
-              textDecoration: "none",
-            }}
-          >
-            See everything <ArrowIcon size={14} />
-          </Link>
+          <p style={{ fontSize: 15, color: "var(--muted)", maxWidth: 340, lineHeight: 1.6, margin: 0 }}>
+            Every mark is intentional. Laser precision, personal care — on every single piece.
+          </p>
         </div>
 
+        {/* 5 portrait-style video tiles */}
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(6,1fr)",
-            gridAutoRows: "220px",
-            gap: 16,
-          }}
+          className="reveal"
+          style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 12 }}
         >
-          {layout.map(({ col, row, cs, rs, ci }, i) => {
-            const c = collections[ci];
-            return (
-              <Link
-                key={c.id}
-                href={`/shop?collection=${c.id}`}
-                className="reveal card-hover"
-                style={{
-                  gridColumn: `${col} / span ${cs}`,
-                  gridRow: `${row} / span ${rs}`,
-                  background: bgs[i],
-                  color: textColors[i],
-                  borderRadius: "var(--r-md)",
-                  overflow: "hidden",
-                  position: "relative",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  padding: rs === 2 ? 28 : 20,
-                  textDecoration: "none",
-                  transition:
-                    "transform .5s var(--ease-out), box-shadow .5s var(--ease-out)",
-                }}
-              >
-                <Image
-                  src={catImages[i]}
-                  alt={c.name}
-                  fill
-                  className="object-cover card-media"
-                  style={{ opacity: rs === 2 ? 0.55 : 0.42 }}
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                {/* Gradient for readability */}
-                <div
-                  aria-hidden
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: "linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.35) 100%)",
-                    pointerEvents: "none",
-                  }}
-                />
-                <div style={{ position: "relative", zIndex: 1 }}>
-                  <p
-                    style={{
-                      fontSize: 10,
-                      letterSpacing: "0.2em",
-                      textTransform: "uppercase",
-                      opacity: 0.75,
-                      margin: 0,
-                    }}
-                  >
-                    {String(ci + 1).padStart(2, "0")} / Collection
-                  </p>
-                </div>
-                <div style={{ position: "relative", zIndex: 1 }}>
-                  <h3
-                    className="display"
-                    style={{
-                      fontSize:
-                        rs === 2 ? "clamp(32px,3.5vw,48px)" : 22,
-                      margin: "0 0 6px",
-                      lineHeight: 1,
-                      fontWeight: 400,
-                    }}
-                  >
-                    {c.name}
-                  </h3>
-                  <p
-                    style={{
-                      fontSize: 13,
-                      opacity: 0.8,
-                      margin: 0,
-                      fontStyle: "italic",
-                      fontFamily: "var(--font-display)",
-                    }}
-                  >
-                    {c.kicker}
-                  </p>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginTop: 18,
-                      fontSize: 12,
-                    }}
-                  >
-                    <span style={{ opacity: 0.75 }}>{c.count} pieces</span>
-                    <span>Shop →</span>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── STUDIO STORY ───────────────────────────────────────── */
-function HomeStudioStory() {
-  const values = [
-    { n: "01", t: "Laser precision", d: "Every mark is intentional — our equipment is dialed in, our standards are high." },
-    { n: "02", t: "Small batches",   d: "We cap intake so each order gets the attention it deserves." },
-    { n: "03", t: "Quality materials", d: "Walnut, acacia, leather, steel, crystal — sourced for what lasts." },
-    { n: "04", t: "Woman owned",    d: "Built, run, and operated by women who care about every detail." },
-  ];
-
-  return (
-    <section style={{ background: "var(--cream-2)", padding: "140px 0" }}>
-      <div className="container">
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "0.95fr 1.05fr",
-            gap: 80,
-            alignItems: "center",
-          }}
-        >
-          <div className="reveal" style={{ position: "relative" }}>
+          {videos.map((v, i) => (
             <div
+              key={i}
               style={{
-                width: "100%",
-                aspectRatio: "4/5",
+                position: "relative",
                 borderRadius: "var(--r-md)",
                 overflow: "hidden",
-                position: "relative",
+                aspectRatio: "9/16",
+                background: "var(--ink)",
               }}
             >
-              <Image
-                src="/photos/cutting-boards-family.jpg"
-                alt="Engraved family cutting boards — the Underwood and Connolly families"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 45vw"
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                src={v.src}
               />
-            </div>
-            {/* Floating caption badge */}
-            <div
-              style={{
+              {/* Label */}
+              <div style={{
                 position: "absolute",
-                left: -20,
-                bottom: 24,
-                background: "var(--cream)",
-                padding: "12px 18px",
-                borderRadius: "var(--r-pill)",
-                boxShadow: "var(--shadow-md)",
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                fontSize: 12,
-                fontFamily: "var(--font-display)",
-                fontStyle: "italic",
-              }}
-            >
-              <span
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  background: "var(--terracotta)",
-                  flexShrink: 0,
-                }}
-              />
-              Every name, every family — engraved with care.
+                bottom: 0, left: 0, right: 0,
+                background: "linear-gradient(transparent, rgba(0,0,0,0.65))",
+                padding: "24px 14px 14px",
+                color: "var(--cream)",
+              }}>
+                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", margin: 0 }}>
+                  {v.label}
+                </p>
+              </div>
             </div>
-          </div>
-
-          <div className="reveal reveal-delay-1">
-            <p className="eyebrow">Our Story</p>
-            <h2
-              className="display"
-              style={{
-                fontSize: "clamp(40px,5vw,72px)",
-                margin: "20px 0 24px",
-                fontWeight: 400,
-              }}
-            >
-              Built on{" "}
-              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>
-                precision and heart.
-              </em>
-            </h2>
-
-            <div
-              style={{ fontSize: 17, lineHeight: 1.7, color: "var(--ink-soft)", maxWidth: 520 }}
-            >
-              <p style={{ marginTop: 0 }}>
-                Out of Jersey started with a laser, a vision, and a passion for
-                making gifts that actually mean something. Every piece we engrave
-                carries a name, a date, a memory — something worth keeping.
-              </p>
-              <p>
-                Woman owned and operated. We handle every order personally —
-                from the first proof to the final pass. Nothing ships unless
-                we&rsquo;d be proud to give it ourselves.
-              </p>
-            </div>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 28,
-                marginTop: 40,
-              }}
-            >
-              {values.map((v) => (
-                <div
-                  key={v.n}
-                  style={{ borderTop: "1px solid var(--line)", paddingTop: 16 }}
-                >
-                  <span
-                    style={{
-                      fontSize: 11,
-                      color: "var(--terracotta)",
-                      fontWeight: 600,
-                      letterSpacing: "0.1em",
-                    }}
-                  >
-                    {v.n}
-                  </span>
-                  <h4 className="serif" style={{ fontSize: 17, margin: "6px 0" }}>
-                    {v.t}
-                  </h4>
-                  <p
-                    style={{
-                      fontSize: 13,
-                      color: "var(--muted)",
-                      margin: 0,
-                      lineHeight: 1.55,
-                    }}
-                  >
-                    {v.d}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <Link
-              href="/about"
-              className="btn btn-secondary"
-              style={{ marginTop: 36 }}
-            >
-              Read the full story <ArrowIcon size={14} />
-            </Link>
-          </div>
+          ))}
         </div>
       </div>
     </section>
@@ -885,359 +421,110 @@ type WixProduct = {
   media?: { mainMedia?: { image?: { url?: string | null } } } | null;
 };
 
-const GLYPH_TYPES = [
-  "tumbler",
-  "board",
-  "decanter",
-  "wallet",
-  "box",
-  "tumbler-tall",
-] as const;
-
-// Product badge labels for premium feel
-const PRODUCT_BADGES = ["BESTSELLER", "NEW", "BESTSELLER", "POPULAR", "NEW", "POPULAR"];
+const GLYPH_TYPES = ["tumbler", "board", "decanter", "wallet", "box", "tumbler-tall", "tumbler", "board"] as const;
 
 function HomeBestsellers({ products }: { products: WixProduct[] }) {
+  const list = products.length > 0 ? products : Array(8).fill(null);
+
   return (
-    <section style={{ padding: "140px 0 60px" }}>
+    <section style={{ padding: "80px 0 60px", background: "var(--cream-2)" }}>
       <div className="container">
-        <div
-          className="reveal"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "end",
-            marginBottom: 56,
-            flexWrap: "wrap",
-            gap: 20,
-          }}
-        >
+        <div className="reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 48, flexWrap: "wrap", gap: 20 }}>
           <div>
             <p className="eyebrow">Fan favorites</p>
-            <h2
-              className="display"
-              style={{
-                fontSize: "clamp(40px,5.5vw,76px)",
-                margin: "12px 0 0",
-                fontWeight: 400,
-              }}
-            >
-              The pieces{" "}
-              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>
-                everyone&nbsp;
-              </em>
-              orders.
+            <h2 className="display" style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}>
+              Most{" "}
+              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>ordered.</em>
             </h2>
           </div>
-          <Link
-            href="/shop"
-            style={{
-              color: "var(--ink)",
-              fontSize: 14,
-              fontWeight: 500,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              borderBottom: "1px solid var(--ink)",
-              paddingBottom: 4,
-              textDecoration: "none",
-            }}
-          >
+          <Link href="/shop" style={{ color: "var(--ink)", fontSize: 14, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 6, borderBottom: "1px solid var(--ink)", paddingBottom: 4, textDecoration: "none" }}>
             View all <ArrowIcon size={14} />
           </Link>
         </div>
 
-        <div
-          style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}
-        >
-          {(products.length > 0 ? products : Array(6).fill(null)).map(
-            (p, i) => {
-              const imageUrl = p?.media?.mainMedia?.image?.url ?? null;
-              const price = p?.priceData?.formatted?.price ?? null;
-              const slug = p?.slug ?? p?._id ?? "";
-              const glyphType = GLYPH_TYPES[i % GLYPH_TYPES.length];
-              const badge = PRODUCT_BADGES[i % PRODUCT_BADGES.length];
+        {/* 4-column grid like Everything Etched */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16 }}>
+          {list.slice(0, 8).map((p: WixProduct | null, i: number) => {
+            const imageUrl = p?.media?.mainMedia?.image?.url ?? null;
+            const price = p?.priceData?.formatted?.price ?? null;
+            const slug = p?.slug ?? p?._id ?? "";
+            const glyphType = GLYPH_TYPES[i % GLYPH_TYPES.length];
 
-              return p ? (
-                <Link
-                  key={p._id ?? i}
-                  href={`/product/${slug}`}
-                  className="reveal lift-on-hover"
-                  style={{
-                    background: "var(--cream)",
-                    borderRadius: "var(--r-md)",
-                    overflow: "hidden",
-                    textDecoration: "none",
-                    color: "var(--ink)",
-                    border: "1px solid var(--line-soft)",
-                    boxShadow: "var(--shadow-sm)",
-                    display: "block",
-                  }}
-                >
-                  <div
-                    className="card-hover"
-                    style={{
-                      aspectRatio: "1/1",
-                      background: "var(--cream-2)",
-                      position: "relative",
-                      overflow: "hidden",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {imageUrl ? (
-                      <Image
-                        src={imageUrl}
-                        alt={p.name ?? "Product"}
-                        fill
-                        className="object-cover card-media"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                      />
-                    ) : (
-                      <ProductGlyph type={glyphType} size={220} />
-                    )}
-                    {/* Badge */}
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: 12,
-                        left: 12,
-                        background: badge === "NEW" ? "var(--forest)" : "var(--ink)",
-                        color: "var(--cream)",
-                        fontSize: 9,
-                        fontWeight: 700,
-                        letterSpacing: "0.14em",
-                        padding: "4px 9px",
-                        borderRadius: "var(--r-pill)",
-                        zIndex: 1,
-                      }}
-                    >
-                      {badge}
+            return p ? (
+              <Link
+                key={p._id ?? i}
+                href={`/product/${slug}`}
+                className="reveal lift-on-hover"
+                style={{ background: "var(--cream)", borderRadius: "var(--r-md)", overflow: "hidden", textDecoration: "none", color: "var(--ink)", border: "1px solid var(--line-soft)", display: "block" }}
+              >
+                <div className="card-hover" style={{ aspectRatio: "1/1", background: "#f8f4ed", position: "relative", overflow: "hidden" }}>
+                  {imageUrl ? (
+                    <Image src={imageUrl} alt={p.name ?? "Product"} fill className="object-cover card-media" sizes="25vw" />
+                  ) : (
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+                      <ProductGlyph type={glyphType} size={160} />
                     </div>
-                  </div>
-                  <div style={{ padding: "18px 18px 20px" }}>
-                    <h3
-                      className="serif"
-                      style={{ fontSize: 17, margin: "0 0 4px", fontWeight: 500 }}
-                    >
-                      {p.name ?? "Unnamed"}
-                    </h3>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 6 }}>
-                      {price && (
-                        <div style={{ fontSize: 16, fontWeight: 600 }}>{price}</div>
-                      )}
-                      <span
-                        style={{
-                          fontSize: 12,
-                          color: "var(--terracotta)",
-                          fontWeight: 500,
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 4,
-                        }}
-                      >
-                        Personalize →
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              ) : (
-                // Skeleton
-                <div
-                  key={i}
-                  className="reveal lift-on-hover"
-                  style={{
-                    background: "var(--cream)",
-                    borderRadius: "var(--r-md)",
-                    overflow: "hidden",
-                    border: "1px solid var(--line-soft)",
-                  }}
-                >
-                  <div
-                    style={{
-                      aspectRatio: "1/1",
-                      background: "var(--cream-2)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      position: "relative",
-                    }}
-                  >
-                    <ProductGlyph type={glyphType} size={220} />
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: 12,
-                        left: 12,
-                        background: "var(--ink)",
-                        color: "var(--cream)",
-                        fontSize: 9,
-                        fontWeight: 700,
-                        letterSpacing: "0.14em",
-                        padding: "4px 9px",
-                        borderRadius: "var(--r-pill)",
-                      }}
-                    >
-                      {badge}
-                    </div>
-                  </div>
-                  <div style={{ padding: "18px 18px 20px" }}>
-                    <div
-                      style={{
-                        height: 16,
-                        width: "60%",
-                        background: "var(--cream-3)",
-                        borderRadius: 4,
-                        marginBottom: 8,
-                      }}
-                    />
-                    <div
-                      style={{
-                        height: 14,
-                        width: "30%",
-                        background: "var(--cream-3)",
-                        borderRadius: 4,
-                      }}
-                    />
+                  )}
+                </div>
+                <div style={{ padding: "14px 16px 16px" }}>
+                  <h3 className="serif" style={{ fontSize: 15, margin: "0 0 6px", fontWeight: 500, lineHeight: 1.3 }}>
+                    {p.name ?? "Product"}
+                  </h3>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    {price && <span style={{ fontSize: 15, fontWeight: 600 }}>{price}</span>}
+                    <span style={{ fontSize: 12, color: "var(--terracotta)", fontWeight: 500 }}>Personalize →</span>
                   </div>
                 </div>
-              );
-            }
-          )}
+              </Link>
+            ) : (
+              <div key={i} className="reveal" style={{ background: "var(--cream)", borderRadius: "var(--r-md)", overflow: "hidden", border: "1px solid var(--line-soft)" }}>
+                <div style={{ aspectRatio: "1/1", background: "#f8f4ed", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <ProductGlyph type={glyphType} size={160} />
+                </div>
+                <div style={{ padding: "14px 16px 16px" }}>
+                  <div style={{ height: 14, width: "65%", background: "var(--cream-3)", borderRadius: 4, marginBottom: 8 }} />
+                  <div style={{ height: 13, width: "35%", background: "var(--cream-3)", borderRadius: 4 }} />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
 
-/* ── OCCASIONS / SHOP BY MOMENT ─────────────────────────── */
+/* ── OCCASIONS ──────────────────────────────────────────── */
 function HomeOccasions() {
   return (
-    <section
-      style={{
-        background: "var(--cream-2)",
-        padding: "100px 0 120px",
-        overflow: "hidden",
-      }}
-    >
+    <section style={{ padding: "100px 0 80px" }}>
       <div className="container">
-        <div
-          className="reveal"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "end",
-            marginBottom: 52,
-            flexWrap: "wrap",
-            gap: 20,
-          }}
-        >
+        <div className="reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 48, flexWrap: "wrap", gap: 20 }}>
           <div>
             <p className="eyebrow">Gift by occasion</p>
-            <h2
-              className="display"
-              style={{
-                fontSize: "clamp(36px,5vw,68px)",
-                margin: "12px 0 0",
-                fontWeight: 400,
-              }}
-            >
+            <h2 className="display" style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}>
               Shop the{" "}
-              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>
-                moment.
-              </em>
+              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>moment.</em>
             </h2>
           </div>
-          <p
-            style={{
-              fontSize: 15,
-              color: "var(--muted)",
-              maxWidth: 360,
-              lineHeight: 1.6,
-              margin: 0,
-            }}
-          >
+          <p style={{ fontSize: 15, color: "var(--muted)", maxWidth: 320, lineHeight: 1.6, margin: 0 }}>
             Engraved gifts are always for a reason. Find yours.
           </p>
         </div>
 
-        {/* Horizontal scroll on mobile, 5-column grid on desktop */}
-        <div
-          className="reveal occasions-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: 16,
-          }}
-        >
+        <div className="reveal occasions-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 14 }}>
           {giftOccasions.map((occ, i) => (
             <Link
               key={occ.id}
               href={occ.href}
               className="card-hover"
-              style={{
-                position: "relative",
-                borderRadius: "var(--r-md)",
-                overflow: "hidden",
-                aspectRatio: "3/4",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                textDecoration: "none",
-                color: "var(--cream)",
-                animationDelay: `${i * 60}ms`,
-              }}
+              style={{ position: "relative", borderRadius: "var(--r-md)", overflow: "hidden", aspectRatio: "3/4", display: "flex", flexDirection: "column", justifyContent: "flex-end", textDecoration: "none", color: "var(--cream)" }}
             >
-              <Image
-                src={occ.src}
-                alt={occ.label}
-                fill
-                className="object-cover card-media"
-                sizes="(max-width: 768px) 60vw, 20vw"
-              />
-              {/* Gradient */}
-              <div
-                aria-hidden
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.65) 100%)",
-                  pointerEvents: "none",
-                }}
-              />
-              {/* Text */}
-              <div
-                style={{
-                  position: "relative",
-                  zIndex: 1,
-                  padding: "16px 16px 20px",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 700,
-                    letterSpacing: "0.16em",
-                    opacity: 0.7,
-                    margin: "0 0 5px",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {occ.kicker}
-                </p>
-                <h3
-                  className="serif"
-                  style={{
-                    fontSize: 16,
-                    margin: 0,
-                    lineHeight: 1.25,
-                    fontWeight: 600,
-                  }}
-                >
-                  {occ.label}
-                </h3>
+              <Image src={occ.src} alt={occ.label} fill className="object-cover card-media" sizes="20vw" />
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%)", pointerEvents: "none" }} />
+              <div style={{ position: "relative", zIndex: 1, padding: "14px 16px 18px" }}>
+                <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.16em", opacity: 0.7, margin: "0 0 4px", textTransform: "uppercase" }}>{occ.kicker}</p>
+                <h3 className="serif" style={{ fontSize: 15, margin: 0, lineHeight: 1.25, fontWeight: 600 }}>{occ.label}</h3>
               </div>
             </Link>
           ))}
@@ -1247,127 +534,54 @@ function HomeOccasions() {
   );
 }
 
-/* ── IN THEIR HANDS ─────────────────────────────────────── */
-function HomeInTheirHands() {
+/* ── PHOTO GRID (real photos only) ──────────────────────── */
+function HomePhotoGrid() {
+  // All real product photos — no stock, no Unsplash
+  const photos = [
+    { src: "/photos/bff-tumblers.jpg",          alt: "Custom engraved BFF tumblers" },
+    { src: "/photos/wedding-board-couple.jpg",   alt: "Personalized wedding board" },
+    { src: "/photos/cutting-boards-family.jpg",  alt: "Engraved family cutting boards" },
+    { src: "/photos/whiskey-glasses-bar.jpg",    alt: "Monogrammed whiskey glasses" },
+    { src: "/photos/knife-engraved.jpg",         alt: "Custom engraved knife" },
+    { src: "/photos/custom-artwork-tumbler.jpg", alt: "Custom artwork tumbler" },
+    { src: "/photos/leather-wallet.jpg",         alt: "Personalized leather wallet" },
+    { src: "/photos/decanter-set-gift.jpg",      alt: "Engraved decanter gift set" },
+    { src: "/photos/keychain-business.jpg",      alt: "Custom engraved business keychains" },
+    { src: "/photos/whiskey-glasses-monogram.jpg", alt: "Monogrammed whiskey glasses set" },
+    { src: "/photos/knife-trail.jpg",            alt: "Personalized trail knife" },
+    { src: "/photos/dad-keychain.jpg",           alt: "Engraved dad keychain" },
+  ];
+
   return (
-    <section style={{ padding: "140px 0 60px" }}>
+    <section style={{ padding: "80px 0 60px", background: "var(--cream-2)" }}>
       <div className="container">
-        <div
-          className="reveal"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "end",
-            marginBottom: 56,
-            flexWrap: "wrap",
-            gap: 20,
-          }}
-        >
+        <div className="reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 40, flexWrap: "wrap", gap: 16 }}>
           <div>
             <p className="eyebrow">@outofjersey.engraving</p>
-            <h2
-              className="display"
-              style={{
-                fontSize: "clamp(40px,5.5vw,76px)",
-                margin: "12px 0 0",
-                fontWeight: 400,
-                maxWidth: 720,
-              }}
-            >
-              In their{" "}
-              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>
-                hands.
-              </em>
+            <h2 className="display" style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}>
+              The work,{" "}
+              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>up close.</em>
             </h2>
-            <p style={{ fontSize: 16, color: "var(--muted)", marginTop: 14, maxWidth: 540 }}>
-              Real pieces, real people. Tag <strong>@outofjersey.engraving</strong> to be featured.
-            </p>
           </div>
           <a
             href="https://www.instagram.com/mamalaserengraver"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              color: "var(--ink)",
-              fontSize: 14,
-              fontWeight: 500,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              borderBottom: "1px solid var(--ink)",
-              paddingBottom: 4,
-              textDecoration: "none",
-            }}
+            style={{ color: "var(--ink)", fontSize: 14, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 6, borderBottom: "1px solid var(--ink)", paddingBottom: 4, textDecoration: "none" }}
           >
             Follow on Instagram <ArrowIcon size={14} />
           </a>
         </div>
 
-        {/* Masonry-style grid with varying heights for editorial feel */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 16,
-          }}
-        >
-          {lifestyleScenes.slice(0, 6).map((scene, i) => (
+        {/* Clean 6-column grid, 2 rows — like Everything Etched */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 10 }}>
+          {photos.map((p, i) => (
             <div
-              key={scene.id}
+              key={i}
               className="reveal card-hover"
-              style={{
-                position: "relative",
-                borderRadius: "var(--r-sm)",
-                overflow: "hidden",
-                aspectRatio: i === 0 || i === 5 ? "4/5" : "1/1",
-              }}
+              style={{ borderRadius: "var(--r-sm)", overflow: "hidden", aspectRatio: "1/1", position: "relative", background: "var(--cream-3)" }}
             >
-              <Image
-                src={scene.src}
-                alt={scene.caption}
-                fill
-                className="object-cover card-media"
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "linear-gradient(180deg, transparent 50%, rgba(31,20,16,0.68) 100%)",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  padding: 16,
-                  color: "var(--cream)",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: 9,
-                    fontWeight: 700,
-                    letterSpacing: "0.18em",
-                    alignSelf: "flex-start",
-                    background: "rgba(0,0,0,0.45)",
-                    padding: "4px 8px",
-                    borderRadius: 4,
-                    backdropFilter: "blur(4px)",
-                  }}
-                >
-                  {scene.tag}
-                </span>
-                <p
-                  style={{
-                    margin: 0,
-                    fontSize: 13,
-                    fontFamily: "var(--font-display)",
-                    fontStyle: "italic",
-                    lineHeight: 1.3,
-                  }}
-                >
-                  {scene.caption}
-                </p>
-              </div>
+              <Image src={p.src} alt={p.alt} fill className="object-cover card-media" sizes="16vw" />
             </div>
           ))}
         </div>
@@ -1379,104 +593,36 @@ function HomeInTheirHands() {
 /* ── CUSTOM CTA ─────────────────────────────────────────── */
 function HomeCustomCTA() {
   return (
-    <section style={{ padding: "120px 0 40px" }}>
+    <section style={{ padding: "100px 0 60px" }}>
       <div className="container">
         <div
           className="reveal"
-          style={{
-            background: "var(--terracotta)",
-            color: "var(--cream)",
-            borderRadius: "var(--r-xl)",
-            padding: "clamp(48px,6vw,96px)",
-            position: "relative",
-            overflow: "hidden",
-          }}
+          style={{ background: "var(--terracotta)", color: "var(--cream)", borderRadius: "var(--r-xl)", padding: "clamp(48px,6vw,96px)", position: "relative", overflow: "hidden" }}
         >
-          {/* Background texture word */}
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              right: -120,
-              top: -80,
-              fontSize: "clamp(280px,36vw,480px)",
-              fontFamily: "var(--font-display)",
-              fontStyle: "italic",
-              color: "rgba(255,255,255,0.08)",
-              lineHeight: 0.8,
-              pointerEvents: "none",
-              userSelect: "none",
-              whiteSpace: "nowrap",
-            }}
-          >
+          <div aria-hidden style={{ position: "absolute", right: -120, top: -80, fontSize: "clamp(280px,36vw,480px)", fontFamily: "var(--font-display)", fontStyle: "italic", color: "rgba(255,255,255,0.07)", lineHeight: 0.8, pointerEvents: "none", userSelect: "none", whiteSpace: "nowrap" }}>
             custom
           </div>
 
-          {/* Background product photo tease */}
-          <div
-            style={{
-              position: "absolute",
-              right: "5%",
-              top: 0,
-              bottom: 0,
-              width: "30%",
-              opacity: 0.18,
-              borderRadius: "0 var(--r-xl) var(--r-xl) 0",
-              overflow: "hidden",
-            }}
-            aria-hidden
-          >
-            <Image
-              src="/photos/decanter-set-gift.jpg"
-              alt=""
-              fill
-              className="object-cover"
-              sizes="30vw"
-            />
+          {/* Faint real product photo tease */}
+          <div style={{ position: "absolute", right: "4%", top: 0, bottom: 0, width: "28%", opacity: 0.15, overflow: "hidden", borderRadius: "0 var(--r-xl) var(--r-xl) 0" }} aria-hidden>
+            <Image src="/photos/decanter-set-gift.jpg" alt="" fill style={{ objectFit: "cover" }} sizes="28vw" />
           </div>
 
-          <div style={{ position: "relative", zIndex: 1, maxWidth: 720 }}>
-            <p className="eyebrow" style={{ color: "var(--blush)" }}>
-              By commission
-            </p>
-            <h2
-              className="display"
-              style={{
-                fontSize: "clamp(40px,6vw,88px)",
-                margin: "20px 0 24px",
-                fontWeight: 400,
-              }}
-            >
+          <div style={{ position: "relative", zIndex: 1, maxWidth: 680 }}>
+            <p className="eyebrow" style={{ color: "var(--blush)" }}>By commission</p>
+            <h2 className="display" style={{ fontSize: "clamp(40px,6vw,88px)", margin: "20px 0 24px", fontWeight: 400 }}>
               Have something{" "}
               <em style={{ fontStyle: "italic" }}>specific</em> in mind?
             </h2>
-            <p
-              style={{ fontSize: 18, opacity: 0.85, lineHeight: 1.6, maxWidth: 540 }}
-            >
-              From custom wedding sets to a single one-off piece — send a brief,
-              get a quote within 24 hours, and a digital proof before I touch the
-              laser.
+            <p style={{ fontSize: 17, opacity: 0.85, lineHeight: 1.6, maxWidth: 520 }}>
+              Send a brief, get a quote within 24 hours, and a digital proof before we touch the laser.
             </p>
-            <div
-              style={{ display: "flex", gap: 12, marginTop: 36, flexWrap: "wrap" }}
-            >
-              <Link
-                href="/custom"
-                className="btn"
-                style={{ background: "var(--cream)", color: "var(--ink)" }}
-              >
+            <div style={{ display: "flex", gap: 12, marginTop: 36, flexWrap: "wrap" }}>
+              <Link href="/custom" className="btn" style={{ background: "var(--cream)", color: "var(--ink)" }}>
                 Start a custom request <ArrowIcon size={14} />
               </Link>
-              <Link
-                href="/contact"
-                className="btn"
-                style={{
-                  background: "transparent",
-                  color: "var(--cream)",
-                  border: "1px solid rgba(255,255,255,0.4)",
-                }}
-              >
-                Talk to us directly
+              <Link href="/contact" className="btn" style={{ background: "transparent", color: "var(--cream)", border: "1px solid rgba(255,255,255,0.4)" }}>
+                Get in touch
               </Link>
             </div>
           </div>
