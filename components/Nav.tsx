@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { collections } from "@/lib/data";
+import { useCart } from "@/lib/cartContext";
 import {
   SearchIcon,
   AccountIcon,
@@ -16,6 +17,7 @@ import {
 
 export function Nav() {
   const pathname = usePathname();
+  const { cartCount } = useCart();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -131,9 +133,31 @@ export function Nav() {
               href="/cart"
               className="btn btn-ghost"
               style={{ padding: "10px 12px", position: "relative", color: "#fff" }}
-              aria-label="Cart"
+              aria-label={`Cart${cartCount > 0 ? ` (${cartCount} items)` : ""}`}
             >
               <CartIcon />
+              {cartCount > 0 && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: 6,
+                    right: 6,
+                    minWidth: 16,
+                    height: 16,
+                    borderRadius: "var(--r-pill)",
+                    background: "var(--terracotta)",
+                    color: "#fff",
+                    fontSize: 10,
+                    fontWeight: 700,
+                    lineHeight: "16px",
+                    textAlign: "center",
+                    padding: "0 4px",
+                    pointerEvents: "none",
+                  }}
+                >
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
             </Link>
             <button
               className="btn btn-ghost mobile-only"

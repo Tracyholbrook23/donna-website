@@ -5,6 +5,7 @@ import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { InteractionInit } from "@/components/InteractionInit";
+import { CartProvider } from "@/lib/cartContext";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -48,11 +49,13 @@ export default function RootLayout({
       }
     >
       <body className="min-h-full flex flex-col bg-[var(--cream)]">
-        <AnnouncementBar />
-        <Nav />
-        <div className="flex-1">{children}</div>
-        <Footer />
-        <InteractionInit />
+        <CartProvider>
+          <AnnouncementBar />
+          <Nav />
+          <div className="flex-1">{children}</div>
+          <Footer />
+          <InteractionInit />
+        </CartProvider>
       </body>
     </html>
   );

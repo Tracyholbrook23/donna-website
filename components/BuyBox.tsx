@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { engravingPlacements } from "@/lib/data";
 import { StarIcon, PlusIcon } from "@/components/Icons";
-import { wixClient } from "@/lib/wixClient";
+import { useCart } from "@/lib/cartContext";
 
 // Wix product type (v1 API — some fields can be null)
 export interface WixProduct {
@@ -48,12 +48,14 @@ function colorForChoice(name: string): string {
 }
 
 export function BuyBox({ product }: BuyBoxProps) {
+  const { addToCart, buyNow, loading: cartLoading } = useCart();
   const [qty, setQty] = useState(1);
   const [engraveOn, setEngraveOn] = useState(true);
   const [engText, setEngText] = useState("");
   const [engPlacement, setEngPlacement] = useState("front-center");
   const [variantIdx, setVariantIdx] = useState(0);
   const [adding, setAdding] = useState(false);
+  const [buyingNow, setBuyingNow] = useState(false);
   const [added, setAdded] = useState(false);
   const [error, setError] = useState("");
 
@@ -63,32 +65,18 @@ export function BuyBox({ product }: BuyBoxProps) {
   );
   const choices = colorOption?.choices ?? [];
 
+  const cartParams = () => ({
+    productId: product._id ?? "",
+    quantity: qty,
+    ...(engraveOn && engText ? { engravingText: engText, engravingPlacement: engPlacement } : {}),
+  });
+
   const handleAddToCart = async () => {
     if (!product._id) return;
     setAdding(true);
     setError("");
-
     try {
-      const customTextFields = engraveOn && engText
-        ? [
-            { title: "Engraving text", value: engText },
-            { title: "Placement", value: engPlacement },
-          ]
-        : undefined;
-
-      await wixClient.currentCart.addToCurrentCart({
-        lineItems: [
-          {
-            catalogReference: {
-              catalogItemId: product._id,
-              appId: "215238eb-22a5-4c36-9e7b-e7c08025e04e",
-            },
-            quantity: qty,
-            ...(customTextFields ? { customTextFields } : {}),
-          },
-        ],
-      });
-
+      await addToCart(cartParams());
       setAdded(true);
       setTimeout(() => setAdded(false), 2500);
     } catch (err) {
@@ -96,6 +84,20 @@ export function BuyBox({ product }: BuyBoxProps) {
       setError("Something went wrong. Please try again.");
     } finally {
       setAdding(false);
+    }
+  };
+
+  const handleBuyNow = async () => {
+    if (!product._id) return;
+    setBuyingNow(true);
+    setError("");
+    try {
+      await buyNow(cartParams());
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setBuyingNow(false);
     }
   };
 
@@ -357,7 +359,7 @@ export function BuyBox({ product }: BuyBoxProps) {
 
       {/* Qty + Add to cart */}
       <div
-        style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 16 }}
+        style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 12 }}
       >
         {/* Qty */}
         <div
@@ -413,7 +415,7 @@ export function BuyBox({ product }: BuyBoxProps) {
         {/* Add to cart */}
         <button
           onClick={handleAddToCart}
-          disabled={adding}
+          disabled={adding || cartLoading}
           className="btn btn-primary"
           style={{
             flex: 1,
@@ -422,12 +424,28 @@ export function BuyBox({ product }: BuyBoxProps) {
             background: added ? "var(--forest)" : "var(--ink)",
             borderColor: added ? "var(--forest)" : "var(--ink)",
             transition: "background .3s, border-color .3s",
-            opacity: adding ? 0.7 : 1,
+            opacity: adding || cartLoading ? 0.7 : 1,
           }}
         >
-          {adding ? "Adding…" : added ? "Added to cart ✓" : "Add to cart"}
+          {adding ? "Adding…" : added ? "Added ✓" : "Add to cart"}
         </button>
       </div>
+
+      {/* Buy Now */}
+      <button
+        onClick={handleBuyNow}
+        disabled={buyingNow || cartLoading}
+        className="btn btn-secondary"
+        style={{
+          width: "100%",
+          justifyContent: "center",
+          fontSize: 15,
+          marginBottom: 4,
+          opacity: buyingNow || cartLoading ? 0.7 : 1,
+        }}
+      >
+        {buyingNow ? "Loading checkout…" : "Buy it now"}
+      </button>
 
       {error && (
         <p style={{ fontSize: 13, color: "var(--terracotta)", marginBottom: 12 }}>

@@ -70,14 +70,17 @@ export function HomePhotoGrid() {
           }}
         >
           <div>
-            <p className="eyebrow">@outofjersey.engraving</p>
+            <p className="eyebrow">what we can make</p>
             <h2
               className="display"
               style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}
             >
-              The work,{" "}
+              The possibilities,{" "}
               <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>up close.</em>
             </h2>
+            <p style={{ marginTop: 14, fontSize: 15, color: "var(--ink-60, #666)", maxWidth: 480, lineHeight: 1.6 }}>
+              Every piece is made to order. These are examples of styles and products we engrave — if you can dream it, we can etch it.
+            </p>
           </div>
           <a
             href="https://www.instagram.com/outofjerseycreations"

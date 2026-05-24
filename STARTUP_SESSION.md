@@ -1,6 +1,6 @@
 # STARTUP_SESSION.md
 ### Out of Jersey — Master Session Handoff & Active Task Tracker
-_Last updated: 2026-05-24 (session 4) | Updated by: Claude (Cowork session)_
+_Last updated: 2026-05-24 (session 5) | Updated by: Claude (Cowork session)_
 
 ---
 
@@ -67,11 +67,11 @@ _Last updated: 2026-05-24 (session 4) | Updated by: Claude (Cowork session)_
   - **Status: do not implement yet — waiting for good email address from Donna**
   - Also applies to the "Get a Quote" form on `/custom`
 
-- [ ] **[HIGH] Fix shop category filter buttons — they do nothing**
-  - File: `components/ShopClient.tsx`
-  - `activeCollection` state exists but the filter logic only applies price/sort — collection filtering is NOT implemented against Wix
-  - Wix products need to be queried by collection slug OR client-side filtered by category metadata
-  - All 6 category pills ("Drinkware", "Boards & Servingware", etc.) appear to work visually but return the same product list
+- [x] **[HIGH] Fix shop category filter buttons** ✅ (2026-05-24)
+  - Client-side filtering via `product.collectionIds` is working
+  - Sidebar fake filters (Personalization, Material, Occasion) removed — they were non-functional placeholders
+  - Price slider remains and works
+  - ⚠️ NOTE: Filter counts show 0 for categories where Wix products haven't been assigned yet — Wix dashboard work still needed
 
 - [ ] **[HIGH] Fix cart/checkout button functionality**
   - The BuyBox (`components/BuyBox.tsx`) renders an Add to Cart button, but Wix cart integration needs verification — confirm cart state is actually updating and Wix checkout flow is reachable
@@ -98,17 +98,18 @@ _Last updated: 2026-05-24 (session 4) | Updated by: Claude (Cowork session)_
 
 ## 5. UX Improvements — MEDIUM
 
-- [ ] **[MEDIUM] Product/gallery images should enlarge when clicked (lightbox)**
-  - Currently images do not open in a lightbox
-  - Applies to: product detail page main image, photo grid on homepage, custom orders page gallery
-  - Suggested: use a simple lightbox component (e.g. `yet-another-react-lightbox` or custom modal)
+- [x] **[MEDIUM] Photo grid lightbox** ✅ (2026-05-24)
+  - `HomePhotoGrid` extracted to `components/HomePhotoGrid.tsx` (client component)
+  - Click any photo → fullscreen lightbox with prev/next arrows, counter, keyboard nav (← → Esc)
+  - Mobile grid fixed: responsive CSS class `layout-photo-grid` — 6 cols desktop, 3 tablet, 2 mobile
+  - Tall/wide span overrides reset on tablet/mobile so photos don't squish
 
-- [ ] **[MEDIUM] Create "View Our Work" / Portfolio page**
-  - Route: `/our-work` or `/gallery`
-  - Should showcase real custom work and product photography — not placeholder images
-  - Pull from `/public/photos/` and `/Product photography/` folder
-  - Source material: 35+ real photos already in repo + 17 product videos in `public/videos/`
-  - This page was explicitly requested by Donna
+- [ ] **[MEDIUM] Lightbox still needed on: product detail page main image, custom orders page gallery**
+  - Homepage photo grid ✅ done
+  - `/product/[slug]` main image — not yet
+  - `/custom` page gallery — not yet
+
+- ❌ **[REMOVED] "View Our Work" / Portfolio page** — Donna does not want this page
 
 - [ ] **[MEDIUM] Fix desktop hero/banner — animations not playing**
   - Mobile banners animate but desktop banners do not
@@ -206,6 +207,12 @@ _Last updated: 2026-05-24 (session 4) | Updated by: Claude (Cowork session)_
 - [ ] **[MEDIUM] Improve engraving-specific photography** — need close-up detail shots showing laser precision on different materials (wood grain, leather texture, glass etching)
 - [ ] **[MEDIUM] Custom Orders page (`/custom`) should display a gallery of real custom work** — currently the process steps and form dominate; add a visual gallery of past commissions
 - [x] **[LOW] Product videos** ✅ (2026-05-24) — All 17 videos confirmed approved by Donna. All videos feature the custom 30oz tumbler with handle. 15 of 17 are currently shown in the homepage scroll strip.
+- [x] **[MEDIUM] Video strip — mobile autoplay, arrows, lightbox** ✅ (2026-05-24)
+  - `HomeVideoShowcase` extracted to `components/HomeVideoShowcase.tsx` (client component)
+  - Mobile autoplay fixed using IntersectionObserver — calls `.play()` when video is ≥50% in view (iOS Safari workaround)
+  - Arrow buttons added to scroll strip (dark green circle, appears when there's more to scroll)
+  - Fade gradient edges hint at more content off-screen
+  - Click any video → fullscreen lightbox with prev/next, counter, keyboard nav
 - [ ] **[LOW] Rename the source folder** — `Product photogrophy` (typo) and `Inspiartion` (typo) folders in repo root should be renamed to `Product Photography` and `Inspiration`
 
 ---
@@ -259,17 +266,17 @@ _Last updated: 2026-05-24 (session 4) | Updated by: Claude (Cowork session)_
 | Product pricing | ❌ All $0.00 placeholders | Wix dashboard |
 | Product images in Wix | ❌ None uploaded yet | Wix dashboard — next step |
 | 8 Wix categories missing | ❌ Need manual creation | Wix dashboard |
-| Shop category filter buttons | ❌ Non-functional | `components/ShopClient.tsx` |
+| Shop category filter buttons | ✅ Working (client-side via collectionIds) | `components/ShopClient.tsx` |
 | Custom inquiry email delivery | ❌ Not wired (⏳ waiting on Donna's email) | `app/api/custom-inquiry/route.ts` |
 | Cart / checkout flow | ⚠️ Unverified | `components/BuyBox.tsx` + Wix |
 | Desktop hero animations | ⚠️ Not firing | `app/globals.css` |
-| Image lightbox / click-to-enlarge | ❌ Missing | All pages with photos |
+| Image lightbox / click-to-enlarge | ⚠️ Partial — homepage photo grid ✅, product page ❌, custom page ❌ | `components/HomePhotoGrid.tsx` done; others pending |
 | File upload on custom order form | ❌ Missing | `app/custom/page.tsx` |
 | Footer `/account` link | ❌ 404 | `components/Footer.tsx` |
 | `/shop-test` route | ⚠️ Should be deleted | `app/shop-test/page.tsx` |
 | Newsletter form | ⚠️ Unverified wiring | `components/NewsletterForm.tsx` |
 | Testimonials section | ❌ No data | `components/home/HomeTestimonials.tsx` |
-| "View Our Work" page | ❌ Missing | Needs new route `/our-work` |
+| "View Our Work" page | ❌ Removed from scope — Donna does not want this | N/A |
 | Live engraving preview | ❌ Remove per Donna | `components/HomeCustomizerTeaser.tsx`, `components/BuyBox.tsx` |
 | Frontend category list | ⚠️ Outdated — 6 generic categories | `lib/data/index.ts` — needs updating to match real Wix catalog |
 
