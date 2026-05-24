@@ -176,15 +176,8 @@ _Last updated: 2026-05-24 (session 4) | Updated by: Claude (Cowork session)_
 - [x] ✅ Old 14 placeholder products deleted
 - [ ] **[HIGH] All product prices are $0.00** — pricing placeholders only, needs to be filled in
 - [ ] **[HIGH] No product images uploaded yet** — next planned step (see Section 8 and Section 13)
-- [ ] **[HIGH] 8 Wix categories need to be manually created in Wix dashboard** — products exist but aren't assigned yet:
-  - BBQ & Grill
-  - Decanters & Sets
-  - Gourmet Kitchen
-  - Laserette™
-  - Marble & Wood
-  - Pens & Pencils
-  - Sublimation Tumblers & Blanks
-  - Utility
+- [x] ✅ **[HIGH] All 8 Wix categories created in dashboard** (2026-05-24)
+  - BBQ & Grill, Decanters & Sets, Gourmet Kitchen, Laserette™, Marble & Wood, Pens & Pencils, Sublimation Tumblers & Blanks, Utility
 - [x] ✅ 7 categories imported and categorized successfully:
   - Powder Coated Tumblers, Cutting Boards, Wood Boxes, Pocket Knives, Wood Pendant Jewelry, Stainless Steel Tumblers, Acrylic Blanks
 
