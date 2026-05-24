@@ -103,10 +103,10 @@ export default function AboutPage() {
               }}
             >
               <Image
-                src="/photos/wedding-board-couple.jpg"
-                alt="Out of Jersey — custom engraved wedding board"
+                src="/photos/prod-cutting-board-wedding.jpg"
+                alt="Out of Jersey — custom engraved wedding cutting board"
                 fill
-                style={{ objectFit: "cover", objectPosition: "center top" }}
+                style={{ objectFit: "cover", objectPosition: "center center" }}
                 priority
               />
             </div>

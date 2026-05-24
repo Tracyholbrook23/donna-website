@@ -156,7 +156,6 @@ export const policies = [
 
 export const announcementMessages = [
   "Free US shipping on orders over $125",
-  "Holiday lead times: order by Dec 12 for Christmas",
   "Custom commissions open — 2 slots left in November",
   "Woman owned & operated · Custom laser engraving out of New Jersey",
 ];

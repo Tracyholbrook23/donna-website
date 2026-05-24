@@ -27,7 +27,7 @@ const GLYPH_TYPES: ProductType[] = [
 
 function glyphForProduct(p: WixProduct, idx: number): ProductType {
   const name = (p.name ?? "").toLowerCase();
-  if (name.includes("tumbler") || name.includes("cup") || name.includes("drink"))
+  if (name.includes("tumbler") || name.includes("cup") || name.includes("drink") || name.includes("mug"))
     return "tumbler";
   if (name.includes("board") || name.includes("serv") || name.includes("charcuterie"))
     return "board";
@@ -36,6 +36,48 @@ function glyphForProduct(p: WixProduct, idx: number): ProductType {
   if (name.includes("box") || name.includes("keep")) return "box";
   if (name.includes("glass") || name.includes("flute")) return "glass" as ProductType;
   return GLYPH_TYPES[idx % GLYPH_TYPES.length];
+}
+
+// Maps product keywords → real product photos. Used when Wix has no image.
+function localPhotoForProduct(p: WixProduct): string | null {
+  const name = (p.name ?? "").toLowerCase();
+  if (name.includes("decanter") && (name.includes("glass") || name.includes("set")))
+    return "/photos/prod-decanter-glasses-etsy.jpg";
+  if (name.includes("decanter") && name.includes("premium"))
+    return "/photos/prod-decanter-premium.jpg";
+  if (name.includes("decanter"))
+    return "/photos/prod-decanter-dad.jpg";
+  if (name.includes("whiskey") && (name.includes("glass") || name.includes("colchester")))
+    return "/photos/prod-whiskey-glasses-colchester.jpg";
+  if (name.includes("whiskey") && name.includes("gift"))
+    return "/photos/prod-whiskey-gift-set-box.jpg";
+  if (name.includes("whiskey") || name.includes("glass"))
+    return "/photos/prod-whiskey-glasses-classic.jpg";
+  if (name.includes("cutting board") || name.includes("charcuterie"))
+    return name.includes("wedding") || name.includes("personalized")
+      ? "/photos/prod-cutting-board-wedding.jpg"
+      : "/photos/prod-cutting-board-custom.jpg";
+  if (name.includes("board"))
+    return "/photos/prod-cutting-board-wedding.jpg";
+  if (name.includes("knife") && name.includes("elk"))
+    return "/photos/prod-knife-elk-ridge.jpg";
+  if (name.includes("knife") || name.includes("pocket"))
+    return "/photos/prod-knife-cupid.jpg";
+  if (name.includes("keychain") && (name.includes("dad") || name.includes("father")))
+    return "/photos/prod-keychain-dad.jpg";
+  if (name.includes("keychain") || name.includes("key chain"))
+    return "/photos/prod-keychain-family.jpg";
+  if (name.includes("passport") || (name.includes("wallet") && name.includes("travel")))
+    return "/photos/prod-passport-wallet.jpg";
+  if (name.includes("wallet") || name.includes("leather"))
+    return "/photos/prod-leather-wallet.jpg";
+  if (name.includes("hammer"))
+    return "/photos/prod-hammer.jpg";
+  if (name.includes("tumbler") || name.includes("mug") || name.includes("drinkware") || name.includes("cup"))
+    return "/photos/prod-tumbler-40oz.jpg";
+  if (name.includes("artwork") || name.includes("unique") || name.includes("custom"))
+    return "/photos/prod-unique-artwork.jpg";
+  return null;
 }
 
 const GLYPH_COLORS = [
@@ -475,7 +517,7 @@ export function ShopClient({ initialProducts }: Props) {
 }
 
 function ProductCard({ product, index }: { product: WixProduct; index: number }) {
-  const imgUrl = product.media?.mainMedia?.image?.url;
+  const imgUrl = product.media?.mainMedia?.image?.url ?? localPhotoForProduct(product);
   const price = product.priceData?.formatted?.price ?? "";
   const href = `/product/${product.slug ?? product._id}`;
   const glyphType = glyphForProduct(product, index);

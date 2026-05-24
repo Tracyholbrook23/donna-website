@@ -328,28 +328,14 @@ function Wordmark() {
       }}
       aria-label="Out of Jersey — Home"
     >
-      {/* Logo badge: black background is intentional — like a stamp/seal */}
-      <div
-        style={{
-          background: "#000",
-          borderRadius: 8,
-          padding: "4px 6px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: 44,
-          width: "auto",
-        }}
-      >
-        <Image
-          src="/logo.png"
+      <Image
+          src="/logo-transparent.png"
           alt="Out of Jersey Custom Laser Engraving"
-          width={120}
-          height={36}
+          width={140}
+          height={56}
           style={{ objectFit: "contain", display: "block" }}
           priority
         />
-      </div>
     </Link>
   );
 }
