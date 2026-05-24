@@ -117,14 +117,7 @@ export default function CustomPage() {
       {/* Hero */}
       <section style={{ padding: "60px 0 40px" }}>
         <div className="container">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1.1fr 0.9fr",
-              gap: 60,
-              alignItems: "end",
-            }}
-          >
+          <div className="layout-custom-split" style={{ alignItems: "end" }}>
             <div className="reveal">
               <p className="eyebrow" style={{ marginBottom: 16 }}>
                 By commission
@@ -242,13 +235,7 @@ export default function CustomPage() {
             </h2>
           </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: 24,
-            }}
-          >
+          <div className="layout-custom-cards" style={{ gap: 24 }}>
             {PROCESS_STEPS.map((s) => (
               <div
                 key={s.n}
@@ -308,14 +295,7 @@ export default function CustomPage() {
       {/* Inquiry form */}
       <section style={{ padding: "80px 0 120px" }}>
         <div className="container">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "0.8fr 1.2fr",
-              gap: 80,
-              alignItems: "start",
-            }}
-          >
+          <div className="layout-custom-form" style={{ gap: 80 }}>
             {/* Left: sidebar copy */}
             <div className="reveal" style={{ position: "sticky", top: 100 }}>
               <p className="eyebrow" style={{ marginBottom: 12 }}>

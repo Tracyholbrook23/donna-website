@@ -74,14 +74,7 @@ export default async function ProductPage({ params }: PageProps) {
       {/* Hero — gallery + buybox */}
       <section style={{ padding: "32px 0 80px" }}>
         <div className="container">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1.1fr 0.9fr",
-              gap: 64,
-              alignItems: "start",
-            }}
-          >
+          <div className="layout-product-page" style={{ gap: 64 }}>
             {/* Gallery */}
             <div
               style={{

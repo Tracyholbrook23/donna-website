@@ -71,14 +71,7 @@ export default function ContactPage() {
       {/* Content */}
       <section style={{ padding: "0 0 120px" }}>
         <div className="container">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1.4fr",
-              gap: 80,
-              alignItems: "start",
-            }}
-          >
+          <div className="layout-contact" style={{ gap: 80 }}>
             {/* Left: contact details */}
             <div className="reveal" style={{ position: "sticky", top: 100 }}>
               <div

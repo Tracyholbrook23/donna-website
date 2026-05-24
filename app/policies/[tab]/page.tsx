@@ -156,7 +156,7 @@ function PolicyContent({ tab }: { tab: string }) {
   if (!policy) return null;
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 80 }}>
+    <div className="layout-policy">
       {/* Sidebar */}
       <div style={{ position: "sticky", top: 100, alignSelf: "start" }}>
         <h2
@@ -229,7 +229,7 @@ function PolicyContent({ tab }: { tab: string }) {
 
 function FaqContent() {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 80 }}>
+    <div className="layout-policy">
       <div style={{ position: "sticky", top: 100, alignSelf: "start" }}>
         <h2
           className="display"

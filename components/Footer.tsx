@@ -69,15 +69,7 @@ export function Footer() {
 
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
         {/* Newsletter */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.2fr 1fr",
-            gap: 60,
-            paddingBottom: 60,
-            borderBottom: "1px solid rgba(255,255,255,0.08)",
-          }}
-        >
+        <div className="layout-footer-top">
           <div>
             <p
               className="eyebrow"
@@ -121,14 +113,7 @@ export function Footer() {
         </div>
 
         {/* Link columns */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr 1fr 1fr",
-            gap: 40,
-            padding: "60px 0 40px",
-          }}
-        >
+        <div className="layout-footer-links">
           <div>
             <FooterWordmark />
             <p

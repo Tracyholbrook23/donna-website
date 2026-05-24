@@ -450,6 +450,10 @@ select.field {
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--clay); }
 
+/* ── Hide scrollbar on video strip ──────────────── */
+.video-scroll-strip::-webkit-scrollbar { display: none; }
+.video-scroll-strip { scrollbar-width: none; -ms-overflow-style: none; }
+
 /* ── Selection ───────────────────────────────────── */
 ::selection { background: var(--terracotta); color: var(--cream); }
 
@@ -469,12 +473,225 @@ select.field {
   to   { transform: rotate(360deg); }
 }
 
-/* ── Occasions grid — mobile responsive ─────────── */
-@media (max-width: 900px) {
-  .occasions-grid { grid-template-columns: repeat(3, 1fr) !important; }
+/* ── Responsive grid layouts ─────────────────────── */
+
+/* Hero — 2-col split */
+.layout-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  min-height: 78vh;
 }
-@media (max-width: 620px) {
-  .occasions-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+/* Side-by-side tiles (e.g. two big photo tiles) */
+.layout-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Product grid — 4 columns */
+.layout-4col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* Occasions — 5 columns */
+.occasions-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+/* Photo grid — 6 columns */
+.layout-6col {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+/* About — story prose split */
+.layout-story {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* About — values 3-col */
+.layout-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* About — team 3-col */
+.layout-3col-team {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+/* Footer newsletter bar */
+.layout-footer-top {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Footer link columns */
+.layout-footer-links {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding: 60px 0 40px;
+}
+
+/* Tablet breakpoint (≤ 900px) */
+@media (max-width: 900px) {
+  .occasions-grid { grid-template-columns: repeat(3, 1fr); }
+  .layout-4col { grid-template-columns: repeat(2, 1fr); }
+  .layout-6col { grid-template-columns: repeat(3, 1fr); }
+  .layout-footer-links { grid-template-columns: 1fr 1fr; gap: 32px; padding: 40px 0 32px; }
+  .layout-story { gap: 48px; }
+}
+
+/* Mobile breakpoint (≤ 768px) */
+@media (max-width: 768px) {
+  .layout-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: 28px;
+  }
+  .layout-hero .hero-right {
+    min-height: 320px !important;
+  }
+  .hero-floating { display: none !important; }
+
+  .layout-2col { grid-template-columns: 1fr; }
+  .layout-2col .tile-card { height: 280px !important; }
+
+  .occasions-grid { grid-template-columns: repeat(2, 1fr); }
+  .layout-6col { grid-template-columns: repeat(3, 1fr); }
+
+  .layout-story { grid-template-columns: 1fr; }
+  .layout-story > *:first-child { position: static !important; top: auto !important; }
+
+  .layout-3col { grid-template-columns: 1fr; }
+  .layout-3col-team { grid-template-columns: 1fr; }
+
+  .layout-footer-top { grid-template-columns: 1fr; }
+  .layout-footer-links { grid-template-columns: 1fr 1fr; }
+}
+
+/* Shop product grid (3-col with sidebar open) */
+.layout-shop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* Product detail page — image + info split */
+.layout-product-page {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 56px;
+  align-items: start;
+}
+
+/* Custom page main split */
+.layout-custom-split {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* Custom page — order type cards (4 col) */
+.layout-custom-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+/* Custom page — form + photo split */
+.layout-custom-form {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* Contact page split */
+.layout-contact {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* Home customizer teaser */
+.layout-customizer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+/* Policy sidebar + content */
+.layout-policy {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* Small mobile (≤ 480px) */
+@media (max-width: 480px) {
+  .layout-6col { grid-template-columns: repeat(2, 1fr); }
+  .layout-footer-links { grid-template-columns: 1fr; }
+  .layout-3col-team { grid-template-columns: 1fr; }
+}
+
+/* Tablet (≤ 900px) for secondary layouts */
+@media (max-width: 900px) {
+  .layout-shop-grid { grid-template-columns: repeat(2, 1fr); }
+  .layout-custom-cards { grid-template-columns: repeat(2, 1fr); }
+  .layout-custom-form { grid-template-columns: 1fr; }
+}
+
+/* Mobile (≤ 768px) for secondary layouts */
+@media (max-width: 768px) {
+  .layout-product-page { grid-template-columns: 1fr; gap: 32px; }
+  .layout-custom-split { grid-template-columns: 1fr; gap: 32px; }
+  .layout-custom-cards { grid-template-columns: repeat(2, 1fr); }
+  .layout-custom-form { grid-template-columns: 1fr; }
+  .layout-contact { grid-template-columns: 1fr; gap: 40px; }
+  .layout-customizer { grid-template-columns: 1fr; gap: 40px; }
+  .layout-policy { grid-template-columns: 1fr; gap: 40px; }
+  .layout-shop-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Unstick sidebars on mobile */
+  .layout-story > *:first-child,
+  .layout-custom-form > *:first-child,
+  .layout-contact > *:first-child,
+  .layout-policy > *:first-child {
+    position: static !important;
+    top: auto !important;
+  }
+
+  /* Reduce section padding on mobile */
+  section { padding-top: 60px !important; padding-bottom: 60px !important; }
+  section[style*="padding: \"120px"] { padding: 60px 0 !important; }
+
+  /* Hero section — less top padding on mobile */
+  .layout-hero { padding: 20px 0 40px; }
 }
 
 /* ── Reduce motion ───────────────────────────────── */

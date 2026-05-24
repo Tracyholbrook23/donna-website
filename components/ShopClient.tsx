@@ -395,13 +395,7 @@ export function ShopClient({ initialProducts }: Props) {
                   </p>
                 </div>
               ) : (
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
-                    gap: 20,
-                  }}
-                >
+                <div className="layout-shop-grid">
                   {filtered.map((p, i) => (
                     <ProductCard key={p._id ?? i} product={p} index={i} />
                   ))}

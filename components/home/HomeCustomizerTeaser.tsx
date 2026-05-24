@@ -32,12 +32,7 @@ export function HomeCustomizerTeaser() {
     >
       <div className="container">
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 80,
-            alignItems: "center",
-          }}
+          className="layout-customizer"
         >
           {/* Left: copy + controls */}
           <div className="reveal">

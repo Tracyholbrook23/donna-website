@@ -117,14 +117,7 @@ export default function AboutPage() {
       {/* The letter */}
       <section style={{ padding: "80px 0 100px" }}>
         <div className="container">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1.3fr",
-              gap: 80,
-              alignItems: "start",
-            }}
-          >
+          <div className="layout-story">
             <div className="reveal" style={{ position: "sticky", top: 100 }}>
               <p className="eyebrow" style={{ marginBottom: 16 }}>
                 Our story
@@ -277,15 +270,7 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: 1,
-              background: "rgba(255,255,255,0.08)",
-              border: "1px solid rgba(255,255,255,0.08)",
-            }}
-          >
+          <div className="layout-3col">
             {VALUES.map((v) => (
               <div
                 key={v.n}
@@ -347,13 +332,7 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: 32,
-            }}
-          >
+          <div className="layout-3col-team">
             {TEAM.map((m, i) => (
               <div key={i} className="reveal">
                 <div

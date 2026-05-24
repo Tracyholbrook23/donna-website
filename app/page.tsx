@@ -40,15 +40,7 @@ function HomeHero() {
   return (
     <section style={{ position: "relative", padding: "40px 0 80px" }}>
       <div className="container">
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 56,
-            alignItems: "center",
-            minHeight: "78vh",
-          }}
-        >
+        <div className="layout-hero">
           {/* Left — headline */}
           <div style={{ position: "relative", padding: "40px 0" }}>
             <p className="eyebrow reveal" style={{ marginBottom: 28 }}>
@@ -125,7 +117,7 @@ function HomeHero() {
 
           {/* Right — two stacked real product photos */}
           <div
-            className="reveal reveal-delay-2"
+            className="reveal reveal-delay-2 hero-right"
             style={{ position: "relative", minHeight: 560 }}
           >
             {/* Main large photo */}
@@ -152,6 +144,7 @@ function HomeHero() {
 
             {/* Floating inset — wedding board */}
             <div
+              className="hero-floating"
               style={{
                 position: "absolute",
                 left: 0,
@@ -176,7 +169,7 @@ function HomeHero() {
 
             {/* Woman Owned badge — real, not fake */}
             <div
-              className="idle-drift"
+              className="idle-drift hero-floating"
               style={{
                 position: "absolute",
                 left: "-2%",
@@ -253,11 +246,11 @@ function HomeTwoTiles() {
   return (
     <section style={{ padding: "60px 0 0" }}>
       <div className="container">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+        <div className="layout-2col">
           {/* Tile 1 — Corporate & Bulk */}
           <Link
             href="/shop?collection=corporate"
-            className="card-hover"
+            className="card-hover tile-card"
             style={{
               position: "relative",
               borderRadius: "var(--r-lg)",
@@ -297,7 +290,7 @@ function HomeTwoTiles() {
           {/* Tile 2 — Custom Commissions */}
           <Link
             href="/custom"
-            className="card-hover"
+            className="card-hover tile-card"
             style={{
               position: "relative",
               borderRadius: "var(--r-lg)",
@@ -342,15 +335,25 @@ function HomeTwoTiles() {
 /* ── VIDEO SHOWCASE ─────────────────────────────────────── */
 function HomeVideoShowcase() {
   const videos = [
-    { src: "/videos/laser-engraving-01.mp4", label: "Laser in action" },
     { src: "/videos/laser-engraving-02.mp4", label: "Custom tumbler" },
     { src: "/videos/laser-engraving-03.mp4", label: "Engraving process" },
     { src: "/videos/laser-engraving-04.mp4", label: "Mother's Day drop" },
     { src: "/videos/laser-engraving-05.mp4", label: "Brand collab" },
+    { src: "/videos/laser-engraving-06.mp4", label: "Laser in action" },
+    { src: "/videos/laser-engraving-07.mp4", label: "Mother's Day set" },
+    { src: "/videos/laser-engraving-08.mp4", label: "Custom engraving" },
+    { src: "/videos/laser-engraving-09.mp4", label: "49ers collab" },
+    { src: "/videos/laser-engraving-10.mp4", label: "APA international" },
+    { src: "/videos/laser-engraving-11.mp4", label: "Studio process" },
+    { src: "/videos/laser-engraving-13.mp4", label: "Detail shot" },
+    { src: "/videos/laser-engraving-14.mp4", label: "HK custom piece" },
+    { src: "/videos/laser-engraving-15.mp4", label: "Custom artwork" },
+    { src: "/videos/laser-engraving-16.mp4", label: "Team design" },
+    { src: "/videos/laser-engraving-17.mp4", label: "Championship piece" },
   ];
 
   return (
-    <section style={{ padding: "100px 0 80px" }}>
+    <section style={{ padding: "100px 0 80px", overflow: "hidden" }}>
       <div className="container">
         <div
           className="reveal"
@@ -367,46 +370,55 @@ function HomeVideoShowcase() {
             Every mark is intentional. Laser precision, personal care — on every single piece.
           </p>
         </div>
+      </div>
 
-        {/* 5 portrait-style video tiles */}
-        <div
-          className="reveal"
-          style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 12 }}
-        >
-          {videos.map((v, i) => (
-            <div
-              key={i}
-              style={{
-                position: "relative",
-                borderRadius: "var(--r-md)",
-                overflow: "hidden",
-                aspectRatio: "9/16",
-                background: "var(--ink)",
-              }}
-            >
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                src={v.src}
-              />
-              {/* Label */}
-              <div style={{
-                position: "absolute",
-                bottom: 0, left: 0, right: 0,
-                background: "linear-gradient(transparent, rgba(0,0,0,0.65))",
-                padding: "24px 14px 14px",
-                color: "var(--cream)",
-              }}>
-                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", margin: 0 }}>
-                  {v.label}
-                </p>
-              </div>
+      {/* Full-bleed horizontal scroll strip */}
+      <div
+        style={{
+          display: "flex",
+          gap: 10,
+          overflowX: "auto",
+          paddingLeft: "max(24px, calc((100vw - 1280px) / 2))",
+          paddingRight: "max(24px, calc((100vw - 1280px) / 2))",
+          paddingBottom: 8,
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+      >
+        {videos.map((v, i) => (
+          <div
+            key={i}
+            style={{
+              position: "relative",
+              borderRadius: "var(--r-md)",
+              overflow: "hidden",
+              aspectRatio: "9/16",
+              height: 420,
+              flexShrink: 0,
+              background: "var(--ink)",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              src={v.src}
+            />
+            <div style={{
+              position: "absolute",
+              bottom: 0, left: 0, right: 0,
+              background: "linear-gradient(transparent, rgba(0,0,0,0.65))",
+              padding: "24px 14px 14px",
+              color: "var(--cream)",
+            }}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", margin: 0 }}>
+                {v.label}
+              </p>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -443,7 +455,7 @@ function HomeBestsellers({ products }: { products: WixProduct[] }) {
         </div>
 
         {/* 4-column grid like Everything Etched */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16 }}>
+        <div className="layout-4col">
           {list.slice(0, 8).map((p: WixProduct | null, i: number) => {
             const imageUrl = p?.media?.mainMedia?.image?.url ?? null;
             const price = p?.priceData?.formatted?.price ?? null;
@@ -512,7 +524,7 @@ function HomeOccasions() {
           </p>
         </div>
 
-        <div className="reveal occasions-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 14 }}>
+        <div className="reveal occasions-grid">
           {giftOccasions.map((occ, i) => (
             <Link
               key={occ.id}
@@ -574,7 +586,7 @@ function HomePhotoGrid() {
         </div>
 
         {/* Clean 6-column grid, 2 rows — like Everything Etched */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 10 }}>
+        <div className="layout-6col">
           {photos.map((p, i) => (
             <div
               key={i}
