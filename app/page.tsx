@@ -421,7 +421,7 @@ function HomeTwoTiles() {
       <div className="container">
         <div className="layout-2col">
           <Link
-            href="/shop?collection=corporate"
+            href="/custom"
             className="card-hover tile-card reveal-left hover-float"
             style={{
               position: "relative",

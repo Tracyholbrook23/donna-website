@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { collections } from "@/lib/data";
+import { collections, navGroups } from "@/lib/data";
 import { ProductGlyph } from "@/components/ProductGlyph";
 import { ArrowIcon } from "@/components/Icons";
 import type { ProductType } from "@/components/ProductGlyph";
@@ -134,11 +134,21 @@ export function ShopClient({ initialProducts }: Props) {
     setMaxPrice(200); // reset price filter on collection change
   };
 
-  // Build collection tabs — derive live counts from actual product data
+  // Build collection tabs — sorted by catalog order, derive live counts from Wix data
   const allCollections = useMemo(() => {
+    const sorted = [...collections].sort((a, b) => a.sortOrder - b.sortOrder);
     return [
-      { id: "all", name: "Everything", wixId: "", count: initialProducts.length, kicker: "Every piece in the studio, ready to engrave." },
-      ...collections.map((c) => ({
+      {
+        id: "all",
+        name: "Everything",
+        wixId: "",
+        group: "all",
+        featured: 0,
+        sortOrder: 0,
+        kicker: "Every piece in the studio, ready to engrave.",
+        count: initialProducts.length,
+      },
+      ...sorted.map((c) => ({
         ...c,
         count: c.wixId
           ? initialProducts.filter((p) => (p.collectionIds ?? []).includes(c.wixId)).length

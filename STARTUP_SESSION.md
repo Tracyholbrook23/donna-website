@@ -1,6 +1,6 @@
 # STARTUP_SESSION.md
 ### Out of Jersey — Master Session Handoff & Active Task Tracker
-_Last updated: 2026-05-24 (session 8) | Updated by: Claude (Cowork session)_
+_Last updated: 2026-05-25 (session 9) | Updated by: Claude (Cowork session)_
 
 ---
 
@@ -83,10 +83,17 @@ _Last updated: 2026-05-24 (session 8) | Updated by: Claude (Cowork session)_
   - Checkout flow: `currentCart.createCheckoutFromCurrentCart()` → `redirects.createRedirectSession()` → redirect to Wix checkout URL
   - ⚠️ NOTE: Needs at least one product with a real price in Wix to test checkout (all products currently $0.00)
 
-- [ ] **[HIGH] Remove all placeholder/unapproved product categories**
-  - `lib/data/index.ts` collections: confirm with Donna that all 6 are real: tumblers, boards, home, accessories, wedding, corporate
-  - The note mentions "walnut oak leather" as a category — this does NOT appear in the current codebase, so it may have already been removed, but confirm with Donna
-  - Collection product counts (24, 18, 32…) are hardcoded static numbers — misleading if they don't match reality
+- [x] **[HIGH] Rebuild category architecture — exactly 15 categories matching wholesale catalog** ✅ (2026-05-25)
+  - `lib/data/index.ts` — 15 clean categories, all with confirmed Wix IDs, grouped into 4 nav groups
+  - Removed all old aliases: tumblers, glassware, wood-acrylic, laserette-products, sublimation-products, gourmet-kitchen, utility
+  - Renamed: gourmet-knife-sets → gourmet-knife-set, laserette-tm → laserette, utility → hammer-set
+  - Added `sortOrder` (catalog order), `group` (nav cluster), `featured` (launch product count) to each collection
+  - Old hardcoded `count` field removed — counts now derive live from Wix product data
+  - `navGroups` data structure added: Drinkware, Kitchen & Bar, Gifts & Accessories, Specialty & Blanks
+  - Mega-menu redesigned to show categories grouped by navGroup with section headers
+  - Footer updated to 2 shop columns (categories 1–8 and 9–15)
+  - Stale collection hrefs (`wedding`, `home`, `tumblers`, `corporate`) updated to real IDs
+  - Architecture reference document created: `ECOMMERCE_ARCHITECTURE.md`
 
 - [x] **[HIGH] Remove the live engraving preview / "Type a name" feature** ✅ (2026-05-24)
   - `components/HomeCustomizerTeaser.tsx` — deleted
@@ -169,6 +176,13 @@ _Last updated: 2026-05-24 (session 8) | Updated by: Claude (Cowork session)_
 ---
 
 ## 7. Store / Shop Tasks
+
+### ⚠️ STRATEGY PIVOT — Session 2026-05-25
+
+> **DO NOT bulk-import all products.** New strategy: Foundation First.
+> Upload ~40 curated products (2–4 per category) to make the store feel alive.
+> Donna will upload the rest herself over time via Wix dashboard.
+> Full architecture documented in `ECOMMERCE_ARCHITECTURE.md`.
 
 ### Wix Product Catalog — Session 2026-05-24 Progress
 

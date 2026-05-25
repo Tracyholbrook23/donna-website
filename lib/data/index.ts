@@ -2,31 +2,182 @@
 // Out of Jersey — Static catalog and content data
 // ─────────────────────────────────────────────
 
-// wixId = Wix collection _id (from Wix dashboard). Empty string = category exists in Wix but has no products yet.
+// ── Navigation groups ─────────────────────────────────────────────────────
+// Used by mega-menu and shop sidebar to visually cluster the 15 catalog categories.
+export const navGroups = [
+  {
+    id: "drinkware",
+    label: "Drinkware",
+    description: "Tumblers in every finish, size, and style — all ready for your name.",
+    collections: ["powder-coated-tumblers", "stainless-steel-tumblers", "sublimation-tumblers-blanks"],
+  },
+  {
+    id: "kitchen-bar",
+    label: "Kitchen & Bar",
+    description: "From charcuterie to cocktail hour — pieces built for the table.",
+    collections: ["cutting-boards", "marble-wood", "gourmet-knife-set", "grill-bbq", "decanters-sets"],
+  },
+  {
+    id: "gifts-accessories",
+    label: "Gifts & Accessories",
+    description: "The kind of gifts people keep for years.",
+    collections: ["wood-boxes", "wood-pendant-jewelry", "laserette", "pocket-knives", "pens-pencils"],
+  },
+  {
+    id: "specialty",
+    label: "Specialty & Blanks",
+    description: "Tools, crafts, and custom blanks — for every occasion.",
+    collections: ["hammer-set", "acrylics"],
+  },
+] as const;
+
+export type NavGroupId = typeof navGroups[number]["id"];
+
+// ── The 15 product categories — exactly matching the wholesale catalog ────
+// group     = navGroups id (for mega-menu clustering)
+// wixId     = Wix collection _id (confirmed in Wix dashboard)
+// featured  = recommended number of products to upload first for launch-readiness
+// kicker    = short descriptor shown in mega-menu and shop filters
 export const collections = [
-  // ── Categories with products ──────────────────────────────────────────────
-  { id: "stainless-steel-tumblers",       name: "Stainless Steel Tumblers",       wixId: "d266a14f-d114-4811-9a2d-10e1512ee0b6", count: 30, kicker: "Classic steel, personalized" },
-  { id: "powder-coated-tumblers",         name: "Powder Coated Tumblers",         wixId: "8e30eb08-07c8-4828-bf7d-024e27b05773", count: 22, kicker: "Bold colors, built to engrave" },
-  { id: "acrylic-blanks",                 name: "Acrylic Blanks",                 wixId: "9d3eab66-cad4-48be-a7d9-6b57471a38b9", count: 10, kicker: "Ready to personalize" },
-  { id: "wood-pendant-jewelry",           name: "Wood Pendant Jewelry",           wixId: "b5043d32-becc-465b-a1f1-f00e1e4f80c2", count: 7,  kicker: "Wearable keepsakes" },
-  { id: "wood-boxes",                     name: "Wood Boxes",                     wixId: "28716efe-8ff6-46c5-9ff9-759a91d1674a", count: 6,  kicker: "Gifts worth keeping" },
-  { id: "cutting-boards",                 name: "Cutting Boards",                 wixId: "5bd92e78-f534-4c55-939f-8b5ff36d61a4", count: 5,  kicker: "For the table you set" },
-  { id: "pocket-knives",                  name: "Pocket Knives",                  wixId: "4bfd4a69-8df9-42ba-9f08-b9e340a6841d", count: 1,  kicker: "Sharp and personal" },
-  // ── Coming soon (wixId = "" until products are assigned in Wix dashboard) ─
-  { id: "tumblers",                       name: "Tumblers",                       wixId: "", count: 0, kicker: "Custom drinkware" },
-  { id: "glassware",                      name: "Glassware",                      wixId: "", count: 0, kicker: "Etched to impress" },
-  { id: "wood-acrylic",                   name: "Wood & Acrylic",                 wixId: "", count: 0, kicker: "Natural meets modern" },
-  { id: "marble-wood",                    name: "Marble & Wood",                  wixId: "84f4fa7a-2766-4e07-94e7-bc05dd6393fe", count: 0, kicker: "Timeless materials" },
-  { id: "gourmet-knife-sets",             name: "Gourmet Knife Sets",             wixId: "0f86c184-e302-4f2a-a5b9-7fb65141d9e7", count: 0, kicker: "Knives worth engraving" },
-  { id: "bbq-grill",                      name: "BBQ & Grill",                    wixId: "f86d875b-a491-4f4d-b47b-e1bcfd88bffb", count: 0, kicker: "For the backyard chef" },
-  { id: "decanters-sets",                 name: "Decanters & Sets",               wixId: "332f3f58-6bd5-4cf2-a6a3-ba3c680bd776", count: 0, kicker: "For whiskey lovers" },
-  { id: "laserette-products",             name: "Laserette Products",             wixId: "c7401104-3241-408a-afa0-449db6800110", count: 0, kicker: "Compact and creative" },
-  { id: "pens-pencils",                   name: "Pens & Pencils",                 wixId: "7515d62a-2ed4-4fec-a8fe-6a9180a441d5", count: 0, kicker: "Writing, personalized" },
-  { id: "sublimation-products",           name: "Sublimation Products",           wixId: "", count: 0, kicker: "Vivid and lasting" },
-  { id: "gourmet-kitchen",                name: "Gourmet Kitchen",                wixId: "1f2895ed-59c6-4301-89e0-d6139614c269", count: 0, kicker: "Elevate the kitchen" },
-  { id: "laserette-tm",                   name: "Laserette™",                     wixId: "aa1ab6f6-d508-4467-b2b6-f2ee9ae89d1c", count: 0, kicker: "Precision in every mark" },
-  { id: "sublimation-tumblers-blanks",    name: "Sublimation Tumblers & Blanks",  wixId: "cf51cdf0-bce9-43ce-931c-9483b0f0801f", count: 0, kicker: "Ready for color" },
-  { id: "utility",                        name: "Utility",                        wixId: "faaa201b-f309-4e15-8a7f-f8fdd727217f", count: 0, kicker: "Tools with a personal touch" },
+  // ── DRINKWARE ──────────────────────────────────────────────────────────────
+  {
+    id: "powder-coated-tumblers",
+    name: "Powder Coated Tumblers",
+    wixId: "8e30eb08-07c8-4828-bf7d-024e27b05773",
+    group: "drinkware",
+    featured: 4,
+    kicker: "Bold colors, 20oz–40oz, all finishes",
+    sortOrder: 1,
+  },
+  {
+    id: "stainless-steel-tumblers",
+    name: "Stainless Steel Tumblers",
+    wixId: "d266a14f-d114-4811-9a2d-10e1512ee0b6",
+    group: "drinkware",
+    featured: 4,
+    kicker: "Classic steel, every size",
+    sortOrder: 2,
+  },
+  {
+    id: "sublimation-tumblers-blanks",
+    name: "Sublimation Tumblers & Blanks",
+    wixId: "cf51cdf0-bce9-43ce-931c-9483b0f0801f",
+    group: "drinkware",
+    featured: 3,
+    kicker: "Full-color sublimation-ready",
+    sortOrder: 3,
+  },
+  // ── KITCHEN & BAR ─────────────────────────────────────────────────────────
+  {
+    id: "cutting-boards",
+    name: "Cutting Boards",
+    wixId: "5bd92e78-f534-4c55-939f-8b5ff36d61a4",
+    group: "kitchen-bar",
+    featured: 3,
+    kicker: "Bamboo, walnut, maple — made to engrave",
+    sortOrder: 4,
+  },
+  {
+    id: "marble-wood",
+    name: "Marble & Wood",
+    wixId: "84f4fa7a-2766-4e07-94e7-bc05dd6393fe",
+    group: "kitchen-bar",
+    featured: 3,
+    kicker: "Charcuterie sets, serving boards, desk pieces",
+    sortOrder: 5,
+  },
+  {
+    id: "gourmet-knife-set",
+    name: "Gourmet Knife Set",
+    wixId: "0f86c184-e302-4f2a-a5b9-7fb65141d9e7",
+    group: "kitchen-bar",
+    featured: 1,
+    kicker: "Full-tang set with engraved stand",
+    sortOrder: 6,
+  },
+  {
+    id: "grill-bbq",
+    name: "Grill & BBQ",
+    wixId: "f86d875b-a491-4f4d-b47b-e1bcfd88bffb",
+    group: "kitchen-bar",
+    featured: 2,
+    kicker: "For the backyard chef",
+    sortOrder: 7,
+  },
+  {
+    id: "decanters-sets",
+    name: "Decanters & Sets",
+    wixId: "332f3f58-6bd5-4cf2-a6a3-ba3c680bd776",
+    group: "kitchen-bar",
+    featured: 2,
+    kicker: "Whiskey glasses, decanters & gift sets",
+    sortOrder: 8,
+  },
+  // ── GIFTS & ACCESSORIES ───────────────────────────────────────────────────
+  {
+    id: "wood-boxes",
+    name: "Wood Boxes",
+    wixId: "28716efe-8ff6-46c5-9ff9-759a91d1674a",
+    group: "gifts-accessories",
+    featured: 3,
+    kicker: "Memory boxes, cigar boxes, valet boxes",
+    sortOrder: 9,
+  },
+  {
+    id: "wood-pendant-jewelry",
+    name: "Wood Pendant Jewelry",
+    wixId: "b5043d32-becc-465b-a1f1-f00e1e4f80c2",
+    group: "gifts-accessories",
+    featured: 3,
+    kicker: "Wearable keepsakes — hearts, circles, bars",
+    sortOrder: 10,
+  },
+  {
+    id: "laserette",
+    name: "Laserette™",
+    wixId: "aa1ab6f6-d508-4467-b2b6-f2ee9ae89d1c",
+    group: "gifts-accessories",
+    featured: 4,
+    kicker: "Wallets, journals, keychains & more",
+    sortOrder: 11,
+  },
+  {
+    id: "pocket-knives",
+    name: "Pocket Knives",
+    wixId: "4bfd4a69-8df9-42ba-9f08-b9e340a6841d",
+    group: "gifts-accessories",
+    featured: 2,
+    kicker: "Natural, rosewood & black metal",
+    sortOrder: 12,
+  },
+  {
+    id: "pens-pencils",
+    name: "Pens & Pencils",
+    wixId: "7515d62a-2ed4-4fec-a8fe-6a9180a441d5",
+    group: "gifts-accessories",
+    featured: 2,
+    kicker: "Stylus gel pens & mechanical pencils",
+    sortOrder: 13,
+  },
+  // ── SPECIALTY & BLANKS ────────────────────────────────────────────────────
+  {
+    id: "hammer-set",
+    name: "Hammer Set",
+    wixId: "faaa201b-f309-4e15-8a7f-f8fdd727217f",
+    group: "specialty",
+    featured: 1,
+    kicker: "16oz engraved hammer set — unique gift",
+    sortOrder: 14,
+  },
+  {
+    id: "acrylics",
+    name: "Acrylics",
+    wixId: "9d3eab66-cad4-48be-a7d9-6b57471a38b9",
+    group: "specialty",
+    featured: 3,
+    kicker: "Shaped blanks — circles, hearts, stars & more",
+    sortOrder: 15,
+  },
 ] as const;
 
 export type CollectionId = typeof collections[number]["id"];
@@ -219,13 +370,14 @@ export const lifestyleScenes = [
 ] as const;
 
 // Gift occasions — for the "Shop by Moment" homepage section
+// hrefs point to real collection IDs that exist in the 15-category architecture
 export const giftOccasions = [
   {
     id: "wedding",
     label: "Wedding & Bridal",
-    kicker: "Boards, flutes, and forever pieces",
+    kicker: "Boards, boxes & forever pieces",
     src: "/photos/wedding-board-couple.jpg",
-    href: "/shop?collection=wedding",
+    href: "/shop?collection=cutting-boards",
     accent: "var(--blush)",
   },
   {
@@ -233,15 +385,15 @@ export const giftOccasions = [
     label: "Gifts for Him",
     kicker: "Whiskey sets, knives, wallets",
     src: "/photos/whiskey-glasses-bar.jpg",
-    href: "/shop?collection=home",
+    href: "/shop?collection=decanters-sets",
     accent: "var(--cream-3)",
   },
   {
     id: "birthday",
     label: "Birthday & Milestones",
-    kicker: "Tumblers, boards, keepsakes",
+    kicker: "Tumblers, boxes, keepsakes",
     src: "/photos/bff-tumblers.jpg",
-    href: "/shop?collection=tumblers",
+    href: "/shop?collection=powder-coated-tumblers",
     accent: "var(--brass-light)",
   },
   {
@@ -249,7 +401,7 @@ export const giftOccasions = [
     label: "Corporate & Bulk",
     kicker: "Branded gifts at scale",
     src: "/photos/keychain-business.jpg",
-    href: "/shop?collection=corporate",
+    href: "/custom",
     accent: "var(--forest)",
   },
   {

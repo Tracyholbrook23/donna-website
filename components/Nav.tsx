@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { collections } from "@/lib/data";
+import { collections, navGroups } from "@/lib/data";
 import { useCart } from "@/lib/cartContext";
 import {
   SearchIcon,
@@ -187,66 +187,100 @@ export function Nav() {
               zIndex: 50,
             }}
           >
-            <div className="container" style={{ padding: "40px 28px" }}>
+            <div className="container" style={{ padding: "36px 28px" }}>
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1.2fr 2fr 1fr",
-                  gap: 60,
+                  gridTemplateColumns: "200px 1fr 220px",
+                  gap: 48,
+                  alignItems: "start",
                 }}
               >
-                <div>
-                  <p className="eyebrow" style={{ marginBottom: 16 }}>
-                    Shop by
+                {/* Left: heading */}
+                <div style={{ paddingTop: 4 }}>
+                  <p className="eyebrow" style={{ marginBottom: 14 }}>
+                    Shop all
                   </p>
                   <h3
                     className="display"
-                    style={{ fontSize: 36, margin: 0 }}
+                    style={{ fontSize: 28, margin: "0 0 20px", lineHeight: 1.1 }}
                   >
-                    Every piece, laser-engraved for the moment it&rsquo;s for.
+                    Every piece,<br />laser-engraved.
                   </h3>
+                  <Link
+                    href="/shop"
+                    className="btn btn-secondary"
+                    style={{ padding: "9px 16px", fontSize: 12 }}
+                  >
+                    Browse all <ArrowIcon size={11} />
+                  </Link>
                 </div>
 
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: "8px 32px",
-                  }}
-                >
-                  {collections.map((c) => (
-                    <Link
-                      key={c.id}
-                      href={`/shop?collection=${c.id}`}
-                      style={{
-                        padding: "14px 0",
-                        borderBottom: "1px solid var(--line-soft)",
-                        display: "flex",
-                        alignItems: "baseline",
-                        justifyContent: "space-between",
-                        color: "var(--ink)",
-                        textDecoration: "none",
-                        gap: 16,
-                      }}
-                    >
-                      <span style={{ fontSize: 15, fontWeight: 500 }}>
-                        {c.name}
-                      </span>
-                      <span style={{ fontSize: 11, color: "var(--muted-soft)" }}>
-                        {c.count}
-                      </span>
-                    </Link>
-                  ))}
+                {/* Centre: categories grouped */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+                  {navGroups.map((group) => {
+                    const groupCollections = collections.filter((c) =>
+                      (group.collections as readonly string[]).includes(c.id)
+                    );
+                    return (
+                      <div key={group.id}>
+                        <p
+                          className="eyebrow"
+                          style={{
+                            marginBottom: 8,
+                            color: "var(--terracotta)",
+                            fontSize: 10,
+                            letterSpacing: "0.12em",
+                          }}
+                        >
+                          {group.label}
+                        </p>
+                        <div
+                          style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
+                            gap: "0 24px",
+                          }}
+                        >
+                          {groupCollections.map((c) => (
+                            <Link
+                              key={c.id}
+                              href={`/shop?collection=${c.id}`}
+                              style={{
+                                padding: "9px 0",
+                                borderBottom: "1px solid var(--line-soft)",
+                                display: "flex",
+                                alignItems: "baseline",
+                                justifyContent: "space-between",
+                                color: "var(--ink)",
+                                textDecoration: "none",
+                                gap: 8,
+                                transition: "color .15s",
+                              }}
+                              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--terracotta)")}
+                              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ink)")}
+                            >
+                              <span style={{ fontSize: 14, fontWeight: 500 }}>
+                                {c.name}
+                              </span>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
 
+                {/* Right: feature card */}
                 <div
                   style={{
-                    background: "var(--cream-2)",
+                    background: "#1a3028",
                     borderRadius: "var(--r-md)",
                     padding: 24,
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
+                    minHeight: 200,
                   }}
                 >
                   <div>
@@ -254,32 +288,31 @@ export function Nav() {
                       className="eyebrow"
                       style={{ color: "var(--brass)", marginBottom: 8 }}
                     >
-                      Featured
+                      Popular right now
                     </p>
                     <h4
                       className="serif"
-                      style={{ fontSize: 22, margin: "0 0 8px" }}
+                      style={{ fontSize: 20, margin: "0 0 8px", color: "#fff" }}
                     >
-                      Wedding Season &rsquo;26
+                      Custom Orders
                     </h4>
                     <p
-                      style={{ fontSize: 13, color: "var(--muted)", margin: 0 }}
+                      style={{ fontSize: 13, color: "rgba(255,255,255,0.65)", margin: 0, lineHeight: 1.5 }}
                     >
-                      Curated bridal party sets, monogrammed flutes, and bespoke
-                      favors.
+                      Got something specific in mind? We engrave logos, artwork, handwriting — anything.
                     </p>
                   </div>
                   <Link
-                    href="/shop?collection=wedding"
-                    className="btn btn-secondary"
+                    href="/custom"
+                    className="btn btn-primary"
                     style={{
-                      marginTop: 16,
+                      marginTop: 20,
                       alignSelf: "flex-start",
                       padding: "10px 18px",
                       fontSize: 12,
                     }}
                   >
-                    Explore <ArrowIcon size={12} />
+                    Get a quote <ArrowIcon size={12} />
                   </Link>
                 </div>
               </div>
@@ -508,7 +541,7 @@ function SearchOverlay({ onClose }: { onClose: () => void }) {
                         {c.name}
                       </div>
                       <div style={{ fontSize: 12, color: "var(--muted)" }}>
-                        {c.count} pieces
+                        {c.kicker}
                       </div>
                     </div>
                   </Link>

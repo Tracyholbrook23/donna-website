@@ -4,13 +4,24 @@ import { collections } from "@/lib/data";
 import { NewsletterForm } from "@/components/NewsletterForm";
 
 export function Footer() {
+  // Sort collections by catalog order and group into two footer columns for readability
+  const shopCol1 = [...collections]
+    .sort((a, b) => a.sortOrder - b.sortOrder)
+    .slice(0, 8)
+    .map((c) => ({ label: c.name, href: `/shop?collection=${c.id}` }));
+  const shopCol2 = [...collections]
+    .sort((a, b) => a.sortOrder - b.sortOrder)
+    .slice(8)
+    .map((c) => ({ label: c.name, href: `/shop?collection=${c.id}` }));
+
   const cols = [
     {
-      title: "Shop",
-      items: collections.map((c) => ({
-        label: c.name,
-        href: `/shop?collection=${c.id}`,
-      })),
+      title: "Drinkware & Kitchen",
+      items: shopCol1,
+    },
+    {
+      title: "Gifts & More",
+      items: shopCol2,
     },
     {
       title: "Studio",
