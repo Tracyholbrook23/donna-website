@@ -244,12 +244,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const client = getClient();
     setLoading(true);
     try {
-      // 1. Create checkout from current cart (lives on currentCart, not checkout)
+      // 1. Create checkout from current cart
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const checkoutResult: any = await (client.currentCart as any).createCheckoutFromCurrentCart({
         channelType: "WEB",
       });
-      const checkoutId = checkoutResult?.checkoutId ?? checkoutResult?._id;
+
+      // Wix SDK returns the id in different shapes depending on SDK version:
+      // { checkoutId } or { _id } or { checkout: { _id } }
+      const checkoutId =
+        checkoutResult?.checkoutId ??
+        checkoutResult?._id ??
+        checkoutResult?.checkout?._id;
+
+      if (!checkoutId) {
+        console.error("createCheckoutFromCurrentCart response:", checkoutResult);
+        throw new Error(`No checkout ID in response: ${JSON.stringify(checkoutResult)}`);
+      }
 
       // 2. Create a Wix redirect session → get the full checkout URL
       const { redirectSession } = await client.redirects.createRedirectSession({
@@ -265,11 +276,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
       if (redirectSession?.fullUrl) {
         window.location.assign(redirectSession.fullUrl);
       } else {
+        console.error("createRedirectSession response:", redirectSession);
         throw new Error("No checkout URL returned from Wix");
       }
     } catch (err) {
-      console.error("Checkout error:", err);
-      alert("Something went wrong starting checkout. Please try again.");
+      // Log the real error so it's visible in browser DevTools → Console
+      console.error("Checkout error (full):", err);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const msg = (err as any)?.message ?? String(err);
+      alert(`Checkout failed: ${msg}`);
     } finally {
       setLoading(false);
     }
