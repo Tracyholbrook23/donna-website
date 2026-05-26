@@ -20,8 +20,13 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@wix/ecom": "^1.0.2080",
+    "@wix/media": "^1.0.249",
+    "@wix/redirects": "^1.0.114",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "form-data": "^4.0.5",
+    "node-fetch": "^3.3.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

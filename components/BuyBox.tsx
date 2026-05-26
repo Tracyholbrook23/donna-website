@@ -6,13 +6,22 @@ import { StarIcon, PlusIcon } from "@/components/Icons";
 import { useCart } from "@/lib/cartContext";
 
 // Wix product type (v1 API — some fields can be null)
+export interface WixMediaItem {
+  _id?: string | null;
+  title?: string | null;
+  image?: { url?: string | null } | null;
+}
+
 export interface WixProduct {
   _id?: string | null;
   name?: string | null;
   slug?: string | null;
   description?: string | null;
   priceData?: { formatted?: { price?: string | null } | null; price?: number | null } | null;
-  media?: { mainMedia?: { image?: { url?: string | null } | null } | null } | null;
+  media?: {
+    mainMedia?: { image?: { url?: string | null } | null } | null;
+    items?: WixMediaItem[] | null;
+  } | null;
   productOptions?: Array<{
     name?: string | null;
     optionType?: string | null;
@@ -21,12 +30,17 @@ export interface WixProduct {
       description?: string | null;
       inStock?: boolean | null;
       visible?: boolean | null;
+      /** Wix links a gallery image to each color choice in the dashboard */
+      linkedMediaItems?: WixMediaItem[] | null;
     }> | null;
   }> | null;
 }
 
 interface BuyBoxProps {
   product: WixProduct;
+  /** Called when a color swatch is clicked. Receives the color name and the
+   *  linked image URL for that color (if one has been set in Wix). */
+  onColorSelect?: (colorName: string, imageUrl: string | null | undefined) => void;
 }
 
 // ─── Color swatch map ─────────────────────────────────────────────────────────
@@ -138,7 +152,7 @@ function isColorOption(opt: NonNullable<WixProduct["productOptions"]>[0]): boole
   );
 }
 
-export function BuyBox({ product }: BuyBoxProps) {
+export function BuyBox({ product, onColorSelect }: BuyBoxProps) {
   const { addToCart, buyNow, loading: cartLoading } = useCart();
 
   // One entry per option name, initialised to first visible choice
@@ -165,8 +179,16 @@ export function BuyBox({ product }: BuyBoxProps) {
     (opt) => (opt.choices?.filter((c) => c.visible !== false).length ?? 0) > 0
   );
 
-  function selectChoice(optName: string, value: string) {
+  function selectChoice(
+    optName: string,
+    value: string,
+    linkedImageUrl?: string | null,
+    isColor?: boolean,
+  ) {
     setSelections((prev) => ({ ...prev, [optName]: value }));
+    if (isColor && onColorSelect) {
+      onColorSelect(value, linkedImageUrl);
+    }
   }
 
   const cartParams = () => ({
@@ -306,10 +328,11 @@ export function BuyBox({ product }: BuyBoxProps) {
                   const bg = colorForChoice(label);
                   const isGradient = bg.startsWith("linear-gradient");
 
+                  const linkedImg = c.linkedMediaItems?.[0]?.image?.url;
                   return (
                     <button
                       key={i}
-                      onClick={() => selectChoice(opt.name!, val)}
+                      onClick={() => selectChoice(opt.name!, val, linkedImg, true)}
                       aria-label={label}
                       title={label}
                       style={{

@@ -1,10 +1,10 @@
 import { wixClient } from "@/lib/wixClient";
-import { BuyBox } from "@/components/BuyBox";
 import type { WixProduct } from "@/components/BuyBox";
 import Image from "next/image";
 import Link from "next/link";
 import { ProductGlyph } from "@/components/ProductGlyph";
 import type { ProductType } from "@/components/ProductGlyph";
+import { ProductPageClient } from "@/components/ProductPageClient";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -53,7 +53,6 @@ export default async function ProductPage({ params }: PageProps) {
   if (!product) notFound();
 
   const related = await getRelated(product._id ?? "");
-  const imgUrl = product.media?.mainMedia?.image?.url;
   const glyphType = glyphTypeFromName(product.name ?? "");
 
   return (
@@ -74,84 +73,7 @@ export default async function ProductPage({ params }: PageProps) {
       {/* Hero — gallery + buybox */}
       <section style={{ padding: "32px 0 80px" }}>
         <div className="container">
-          <div className="layout-product-page" style={{ gap: 64 }}>
-            {/* Gallery */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "80px 1fr",
-                gap: 16,
-              }}
-            >
-              {/* Thumbnails */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {[0, 1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    style={{
-                      width: 80,
-                      height: 80,
-                      borderRadius: "var(--r-sm)",
-                      border: `1.5px solid ${i === 0 ? "var(--ink)" : "var(--line)"}`,
-                      padding: 6,
-                      background: "var(--cream-2)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      overflow: "hidden",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {imgUrl && i === 0 ? (
-                      <Image
-                        src={imgUrl}
-                        alt={product.name ?? ""}
-                        width={56}
-                        height={56}
-                        style={{ objectFit: "cover", borderRadius: 4 }}
-                      />
-                    ) : (
-                      <ProductGlyph type={glyphType} size={56} />
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Main image */}
-              <div
-                style={{
-                  aspectRatio: "4/5",
-                  background: "var(--cream-2)",
-                  borderRadius: "var(--r-md)",
-                  position: "relative",
-                  overflow: "hidden",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {imgUrl ? (
-                  <Image
-                    src={imgUrl}
-                    alt={product.name ?? "Product image"}
-                    fill
-                    style={{ objectFit: "cover" }}
-                    priority
-                    sizes="(max-width: 768px) 100vw, 55vw"
-                  />
-                ) : (
-                  <ProductGlyph
-                    type={glyphType}
-                    size={380}
-                    color="var(--terracotta)"
-                  />
-                )}
-              </div>
-            </div>
-
-            {/* BuyBox (client component) */}
-            <BuyBox product={product} />
-          </div>
+          <ProductPageClient product={product} glyphType={glyphType} />
         </div>
       </section>
 
