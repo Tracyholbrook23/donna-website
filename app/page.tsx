@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { collections, giftOccasions } from "@/lib/data";
-import { ProductGlyph } from "@/components/ProductGlyph";
+import { giftOccasions } from "@/lib/data";
 import { ArrowIcon } from "@/components/Icons";
 import { wixClient } from "@/lib/wixClient";
 import { HomePhotoGrid } from "@/components/HomePhotoGrid";
 import { HomeVideoShowcase } from "@/components/HomeVideoShowcase";
+import { HomeBestsellersClient } from "@/components/home/HomeBestsellersClient";
 
 export const dynamic = "force-dynamic";
 
@@ -26,7 +26,7 @@ export default async function HomePage() {
       <HomeHero />
       <HomeVideoShowcase />
       <HomeMarqueeStrip />
-      <HomeBestsellers products={products} />
+      <HomeBestsellersClient initialProducts={products} />
       <HomePhotoGrid />
       <HomeTwoTiles />
       <HomeOccasions />
@@ -241,172 +241,6 @@ function HomeMarqueeStrip() {
             {it} <span style={{ color: "var(--brass)" }}>✦</span>
           </span>
         ))}
-      </div>
-    </section>
-  );
-}
-
-/* ── BESTSELLERS ────────────────────────────────────────── */
-type WixProduct = {
-  _id?: string | null;
-  name?: string | null;
-  slug?: string | null;
-  priceData?: { formatted?: { price?: string | null } } | null;
-  media?: { mainMedia?: { image?: { url?: string | null } } } | null;
-};
-
-const GLYPH_TYPES = ["tumbler", "board", "decanter", "wallet", "box", "tumbler-tall", "tumbler", "board"] as const;
-
-function HomeBestsellers({ products }: { products: WixProduct[] }) {
-  const list = products.length > 0 ? products : Array(8).fill(null);
-
-  return (
-    <section style={{ padding: "80px 0 60px", background: "var(--cream-2)" }}>
-      <div className="container">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-            marginBottom: 48,
-            flexWrap: "wrap",
-            gap: 20,
-          }}
-        >
-          <div className="reveal-left">
-            <p className="eyebrow">Fan favorites</p>
-            <h2
-              className="display"
-              style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}
-            >
-              Most{" "}
-              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>ordered.</em>
-            </h2>
-          </div>
-          <Link
-            href="/shop"
-            style={{
-              color: "var(--ink)",
-              fontSize: 14,
-              fontWeight: 500,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              borderBottom: "1px solid var(--ink)",
-              paddingBottom: 4,
-              textDecoration: "none",
-            }}
-          >
-            View all <ArrowIcon size={14} />
-          </Link>
-        </div>
-
-        <div className="layout-4col">
-          {list.slice(0, 8).map((p: WixProduct | null, i: number) => {
-            const imageUrl = p?.media?.mainMedia?.image?.url ?? null;
-            const price = p?.priceData?.formatted?.price ?? null;
-            const slug = p?.slug ?? p?._id ?? "";
-            const glyphType = GLYPH_TYPES[i % GLYPH_TYPES.length];
-
-            return p ? (
-              <Link
-                key={p._id ?? i}
-                href={`/product/${slug}`}
-                className="reveal-scale lift-on-hover spring-press"
-                data-tilt="5"
-                style={{
-                  background: "var(--cream)",
-                  borderRadius: "var(--r-md)",
-                  overflow: "hidden",
-                  textDecoration: "none",
-                  color: "var(--ink)",
-                  border: "1px solid var(--line-soft)",
-                  display: "block",
-                  transitionDelay: `${i * 0.05}s`,
-                }}
-              >
-                <div
-                  className="card-hover"
-                  style={{
-                    aspectRatio: "1/1",
-                    background: "#f8f4ed",
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
-                >
-                  {imageUrl ? (
-                    <Image
-                      src={imageUrl}
-                      alt={p.name ?? "Product"}
-                      fill
-                      className="object-cover card-media"
-                      sizes="25vw"
-                    />
-                  ) : (
-                    <div
-                      style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}
-                    >
-                      <ProductGlyph type={glyphType} size={160} />
-                    </div>
-                  )}
-                </div>
-                <div style={{ padding: "14px 16px 16px" }}>
-                  <h3
-                    className="serif"
-                    style={{ fontSize: 15, margin: "0 0 6px", fontWeight: 500, lineHeight: 1.3 }}
-                  >
-                    {p.name ?? "Product"}
-                  </h3>
-                  <div
-                    style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
-                  >
-                    {price && <span style={{ fontSize: 15, fontWeight: 600 }}>{price}</span>}
-                    <span style={{ fontSize: 12, color: "var(--terracotta)", fontWeight: 500 }}>
-                      Personalize →
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ) : (
-              <div
-                key={i}
-                className="reveal"
-                style={{
-                  background: "var(--cream)",
-                  borderRadius: "var(--r-md)",
-                  overflow: "hidden",
-                  border: "1px solid var(--line-soft)",
-                }}
-              >
-                <div
-                  style={{
-                    aspectRatio: "1/1",
-                    background: "#f8f4ed",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <ProductGlyph type={glyphType} size={160} />
-                </div>
-                <div style={{ padding: "14px 16px 16px" }}>
-                  <div
-                    style={{
-                      height: 14,
-                      width: "65%",
-                      background: "var(--cream-3)",
-                      borderRadius: 4,
-                      marginBottom: 8,
-                    }}
-                  />
-                  <div
-                    style={{ height: 13, width: "35%", background: "var(--cream-3)", borderRadius: 4 }}
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </div>
     </section>
   );
