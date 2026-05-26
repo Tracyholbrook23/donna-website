@@ -12,6 +12,25 @@ interface ProductPageClientProps {
   glyphType: ProductType;
 }
 
+type ProductOptions = NonNullable<WixProduct["productOptions"]>;
+
+/** Given an image URL, find the color choice that links to it via linkedMediaItems. */
+function resolveColorForImage(url: string | null, options: ProductOptions): string | null {
+  if (!url) return null;
+  for (const opt of options) {
+    const name = (opt.name ?? "").toLowerCase().trim();
+    if (opt.optionType !== "color" && name !== "color" && name !== "colour" && name !== "finish color" && name !== "color / finish") continue;
+    for (const choice of opt.choices ?? []) {
+      for (const media of choice.linkedMediaItems ?? []) {
+        if (media.image?.url === url) {
+          return choice.value ?? choice.description ?? null;
+        }
+      }
+    }
+  }
+  return null;
+}
+
 export function ProductPageClient({ product, glyphType }: ProductPageClientProps) {
   // Collect all gallery images from Wix (mainMedia first, then the rest)
   const allImages: WixMediaItem[] = (() => {
@@ -37,15 +56,21 @@ export function ProductPageClient({ product, glyphType }: ProductPageClientProps
   const firstUrl = allImages[0]?.image?.url ?? null;
   const [activeUrl, setActiveUrl] = useState<string | null>(firstUrl);
   const [activeIdx, setActiveIdx] = useState(0);
+  // Tracks which color name the currently-selected thumbnail maps to,
+  // so BuyBox can include the right color when adding to cart.
+  const [colorOverride, setColorOverride] = useState<string | null>(null);
 
   function selectImage(url: string | null | undefined, idx: number) {
     setActiveUrl(url ?? null);
     setActiveIdx(idx);
+
+    // Resolve which color choice this thumbnail belongs to by matching
+    // the image URL against each choice's linkedMediaItems array.
+    const resolved = resolveColorForImage(url ?? null, product.productOptions ?? []);
+    setColorOverride(resolved);
   }
 
-  /** Called from BuyBox when a color swatch is clicked.
-   *  Matches the color name against each image's altText or title — works
-   *  automatically as long as images are named like "Product Name — Color". */
+  /** Called from BuyBox when a color swatch is clicked (kept for symmetry). */
   function handleColorSelect(colorName: string) {
     const color = colorName.toLowerCase().trim();
     const idx = allImages.findIndex((img) => {
@@ -151,7 +176,7 @@ export function ProductPageClient({ product, glyphType }: ProductPageClientProps
       </div>
 
       {/* ── BuyBox ──────────────────────────────────────────────────────────── */}
-      <BuyBox product={product} onColorSelect={handleColorSelect} />
+      <BuyBox product={product} onColorSelect={handleColorSelect} colorOverride={colorOverride} />
     </div>
   );
 }

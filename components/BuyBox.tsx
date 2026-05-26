@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { engravingPlacements } from "@/lib/data";
 import { StarIcon, PlusIcon } from "@/components/Icons";
 import { useCart } from "@/lib/cartContext";
@@ -40,6 +40,8 @@ interface BuyBoxProps {
   product: WixProduct;
   /** Called when a color swatch is clicked with the selected color name. */
   onColorSelect?: (colorName: string) => void;
+  /** Externally-driven color selection coming from the thumbnail rail. */
+  colorOverride?: string | null;
 }
 
 // ─── Color swatch map ─────────────────────────────────────────────────────────
@@ -151,7 +153,7 @@ function isColorOption(opt: NonNullable<WixProduct["productOptions"]>[0]): boole
   );
 }
 
-export function BuyBox({ product, onColorSelect }: BuyBoxProps) {
+export function BuyBox({ product, onColorSelect, colorOverride }: BuyBoxProps) {
   const { addToCart, buyNow, loading: cartLoading } = useCart();
 
   // One entry per option name, initialised to first visible choice
@@ -164,6 +166,15 @@ export function BuyBox({ product, onColorSelect }: BuyBoxProps) {
     }
     return init;
   });
+
+  // When the thumbnail rail selects a color, sync it into our selections map
+  useEffect(() => {
+    if (!colorOverride) return;
+    const colorOpt = (product.productOptions ?? []).find(isColorOption);
+    if (colorOpt?.name) {
+      setSelections((prev) => ({ ...prev, [colorOpt.name!]: colorOverride }));
+    }
+  }, [colorOverride, product.productOptions]);
 
   const [qty, setQty] = useState(1);
   const [engraveOn, setEngraveOn] = useState(true);
@@ -312,44 +323,9 @@ export function BuyBox({ product, onColorSelect }: BuyBoxProps) {
               </span>
             </div>
 
-            {/* Color swatches */}
-            {isColor ? (
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                {choices.map((c, i) => {
-                  const label = c.description ?? c.value ?? `Option ${i + 1}`;
-                  const val = c.value ?? c.description ?? "";
-                  const active = currentVal === val;
-                  const bg = colorForChoice(label);
-                  const isGradient = bg.startsWith("linear-gradient");
-
-                  return (
-                    <button
-                      key={i}
-                      onClick={() => selectChoice(opt.name!, val, true)}
-                      aria-label={label}
-                      title={label}
-                      style={{
-                        width: 34,
-                        height: 34,
-                        borderRadius: "50%",
-                        background: bg,
-                        border: `2.5px solid ${active ? "var(--ink)" : "transparent"}`,
-                        boxShadow: isGradient
-                          ? "0 0 0 1px var(--line)"
-                          : "0 0 0 1px var(--line) inset, 0 0 0 3.5px var(--cream) inset",
-                        cursor: c.inStock === false ? "not-allowed" : "pointer",
-                        opacity: c.inStock === false ? 0.35 : 1,
-                        padding: 0,
-                        flexShrink: 0,
-                        transition: "border-color .15s, transform .15s",
-                        transform: active ? "scale(1.12)" : "scale(1)",
-                      }}
-                    />
-                  );
-                })}
-              </div>
-            ) : (
-              /* Text pill buttons for size, finish, wood type, etc. */
+            {/* Color option — circles removed; color is chosen via the thumbnail rail.
+                Non-color options (size, finish, etc.) still render as pill buttons. */}
+            {!isColor && (
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                 {choices.map((c, i) => {
                   const val = c.value ?? c.description ?? `Option ${i + 1}`;
