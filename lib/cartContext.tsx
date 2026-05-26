@@ -174,7 +174,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
         customTextFields.push({ title: "Placement", value: params.engravingPlacement });
       }
 
-      await client.currentCart.addToCurrentCart({
+      // addToCurrentCart returns the full updated cart — use it directly instead
+      // of calling getCurrentCart() separately (which can silently fail and reset state).
+      const response = await client.currentCart.addToCurrentCart({
         lineItems: [
           {
             catalogReference: {
@@ -192,12 +194,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
 
       saveWixTokens(client);
-      await refreshCart();
+
+      // Update cart state from the response cart (avoids a second network call
+      // and eliminates the silent-catch issue in refreshCart).
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const updatedCart = (response as any)?.cart ?? response;
+      const { items, count, subtotal } = normaliseCart(updatedCart);
+      setCartItems(items);
+      setCartCount(count);
+      setCartSubtotal(subtotal);
     } finally {
       setLoading(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshCart]);
+  }, []);
 
   // ── Remove from cart ────────────────────────────────────────────────────────
   const removeFromCart = useCallback(async (lineItemId: string) => {
