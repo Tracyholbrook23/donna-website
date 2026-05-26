@@ -47,12 +47,19 @@ export function ProductPageClient({ product, glyphType }: ProductPageClientProps
   function handleColorSelect(
     _colorName: string,
     linkedImageUrl: string | null | undefined,
+    choiceIndex: number,
   ) {
-    if (!linkedImageUrl) return;
-    // Find the index of this image in allImages so the thumbnail highlights correctly
-    const idx = allImages.findIndex((img) => img.image?.url === linkedImageUrl);
-    setActiveUrl(linkedImageUrl);
-    setActiveIdx(idx >= 0 ? idx : activeIdx);
+    if (linkedImageUrl) {
+      // Best case: Donna has linked a specific image to this color in Wix dashboard
+      const idx = allImages.findIndex((img) => img.image?.url === linkedImageUrl);
+      setActiveUrl(linkedImageUrl);
+      setActiveIdx(idx >= 0 ? idx : activeIdx);
+    } else if (allImages.length > 0) {
+      // Fallback: map choice index → image index (wraps around if fewer images than colors)
+      const idx = choiceIndex % allImages.length;
+      setActiveUrl(allImages[idx].image?.url ?? null);
+      setActiveIdx(idx);
+    }
   }
 
   // How many thumbnails to show (cap at 6 so the strip doesn't get too long)

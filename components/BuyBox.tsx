@@ -38,9 +38,9 @@ export interface WixProduct {
 
 interface BuyBoxProps {
   product: WixProduct;
-  /** Called when a color swatch is clicked. Receives the color name and the
-   *  linked image URL for that color (if one has been set in Wix). */
-  onColorSelect?: (colorName: string, imageUrl: string | null | undefined) => void;
+  /** Called when a color swatch is clicked. Receives the color name, the
+   *  linked image URL for that color (if set in Wix), and the choice index. */
+  onColorSelect?: (colorName: string, imageUrl: string | null | undefined, choiceIndex: number) => void;
 }
 
 // ─── Color swatch map ─────────────────────────────────────────────────────────
@@ -184,10 +184,11 @@ export function BuyBox({ product, onColorSelect }: BuyBoxProps) {
     value: string,
     linkedImageUrl?: string | null,
     isColor?: boolean,
+    choiceIndex?: number,
   ) {
     setSelections((prev) => ({ ...prev, [optName]: value }));
     if (isColor && onColorSelect) {
-      onColorSelect(value, linkedImageUrl);
+      onColorSelect(value, linkedImageUrl, choiceIndex ?? 0);
     }
   }
 
@@ -332,7 +333,7 @@ export function BuyBox({ product, onColorSelect }: BuyBoxProps) {
                   return (
                     <button
                       key={i}
-                      onClick={() => selectChoice(opt.name!, val, linkedImg, true)}
+                      onClick={() => selectChoice(opt.name!, val, linkedImg, true, i)}
                       aria-label={label}
                       title={label}
                       style={{
