@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { collections } from "@/lib/data";
 import { ProductGlyph, ProductType } from "@/components/ProductGlyph";
 import { ArrowIcon } from "@/components/Icons";
 
@@ -14,23 +15,30 @@ type WixProduct = {
   media?: { mainMedia?: { image?: { url?: string | null } } } | null;
 };
 
+// "All" tab + every collection from lib/data (mirrors Wix exactly)
 const TABS = [
-  { id: "all",                   label: "All",               collection: null },
-  { id: "powder-coated-tumblers",label: "Tumblers",          collection: "powder-coated-tumblers" },
-  { id: "cutting-boards",        label: "Boards",            collection: "cutting-boards" },
-  { id: "decanters-sets",        label: "Decanters & Bar",   collection: "decanters-sets" },
-  { id: "laserette",             label: "Gifts",             collection: "laserette" },
-  { id: "pocket-knives",         label: "Knives & Wallets",  collection: "pocket-knives" },
-] as const;
+  { id: "all", label: "All", collection: null as string | null },
+  ...collections.map((c) => ({ id: c.id, label: c.name, collection: c.id as string | null })),
+];
 
-// Map collection → best-fit glyph for placeholder
+// Map collection id → best-fit placeholder glyph
 const COLLECTION_GLYPHS: Record<string, ProductType[]> = {
-  "all":                    ["tumbler", "board", "decanter", "wallet", "box", "tumbler-tall", "tumbler", "board"],
-  "powder-coated-tumblers": ["tumbler", "tumbler-tall", "tumbler", "tumbler-tall", "tumbler", "tumbler-tall", "tumbler", "tumbler-tall"],
-  "cutting-boards":         ["board", "board-round", "board", "board-round", "board", "board-round", "board", "board-round"],
-  "decanters-sets":         ["decanter", "glass", "decanter", "glass", "decanter", "glass", "decanter", "glass"],
-  "laserette":              ["wallet", "box", "wallet", "box", "wallet", "box", "wallet", "box"],
-  "pocket-knives":          ["wallet", "wallet", "wallet", "wallet", "wallet", "wallet", "wallet", "wallet"],
+  "all":                         ["tumbler", "board", "decanter", "wallet", "box", "tumbler-tall", "tumbler", "board"],
+  "powder-coated-tumblers":      ["tumbler", "tumbler-tall", "tumbler", "tumbler-tall", "tumbler", "tumbler-tall", "tumbler", "tumbler-tall"],
+  "stainless-steel-tumblers":    ["tumbler", "tumbler-tall", "tumbler", "tumbler-tall", "tumbler", "tumbler-tall", "tumbler", "tumbler-tall"],
+  "sublimation-tumblers-blanks": ["tumbler", "tumbler-tall", "tumbler", "tumbler-tall", "tumbler", "tumbler-tall", "tumbler", "tumbler-tall"],
+  "cutting-boards":              ["board", "board-round", "board", "board-round", "board", "board-round", "board", "board-round"],
+  "marble-wood":                 ["board-round", "board", "board-round", "board", "board-round", "board", "board-round", "board"],
+  "gourmet-knife-set":           ["wallet", "wallet", "wallet", "wallet", "wallet", "wallet", "wallet", "wallet"],
+  "grill-bbq":                   ["board", "board", "board", "board", "board", "board", "board", "board"],
+  "decanters-sets":              ["decanter", "glass", "decanter", "glass", "decanter", "glass", "decanter", "glass"],
+  "wood-boxes":                  ["box", "box", "box", "box", "box", "box", "box", "box"],
+  "wood-pendant-jewelry":        ["wallet", "wallet", "wallet", "wallet", "wallet", "wallet", "wallet", "wallet"],
+  "laserette":                   ["wallet", "box", "wallet", "box", "wallet", "box", "wallet", "box"],
+  "pocket-knives":               ["wallet", "wallet", "wallet", "wallet", "wallet", "wallet", "wallet", "wallet"],
+  "pens-pencils":                ["wallet", "wallet", "wallet", "wallet", "wallet", "wallet", "wallet", "wallet"],
+  "hammer-set":                  ["box", "box", "box", "box", "box", "box", "box", "box"],
+  "acrylics":                    ["board-round", "board-round", "board-round", "board-round", "board-round", "board-round", "board-round", "board-round"],
 };
 
 function SkeletonCard() {
@@ -91,7 +99,7 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
     }
   }, [initialProducts]);
 
-  const handleTabClick = (tab: typeof TABS[number]) => {
+  const handleTabClick = (tab: { id: string; label: string; collection: string | null }) => {
     if (tab.id === activeTab) return;
     setActiveTab(tab.id);
     fetchProducts(tab.collection);
