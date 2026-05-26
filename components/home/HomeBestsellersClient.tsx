@@ -66,23 +66,30 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [products, setProducts] = useState<WixProduct[]>(initialProducts);
   const [loading, setLoading] = useState(false);
+  const [empty, setEmpty] = useState(false);
 
   const fetchProducts = useCallback(async (collectionId: string | null) => {
+    // "All" tab always reuses the server-fetched initial products
+    if (!collectionId) {
+      setProducts(initialProducts);
+      setEmpty(initialProducts.length === 0);
+      return;
+    }
     setLoading(true);
+    setEmpty(false);
     try {
-      const url = collectionId
-        ? `/api/products?collection=${collectionId}`
-        : `/api/products`;
-      const res = await fetch(url);
+      const res = await fetch(`/api/products?collection=${collectionId}`);
       if (!res.ok) throw new Error("Failed to fetch");
       const data: WixProduct[] = await res.json();
       setProducts(data.slice(0, 8));
+      setEmpty(data.length === 0);
     } catch {
       setProducts([]);
+      setEmpty(true);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [initialProducts]);
 
   const handleTabClick = (tab: typeof TABS[number]) => {
     if (tab.id === activeTab) return;
@@ -91,11 +98,7 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
   };
 
   const glyphs = COLLECTION_GLYPHS[activeTab] ?? COLLECTION_GLYPHS["all"];
-  const displayList = loading
-    ? Array(8).fill(null)
-    : products.length > 0
-    ? products
-    : Array(8).fill(null);
+  const displayList = loading ? Array(8).fill(null) : products;
 
   return (
     <section style={{ padding: "80px 0 60px", background: "var(--cream-2)" }}>
@@ -197,9 +200,36 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
           ))}
         </div>
 
+        {/* Empty state */}
+        {empty && !loading && (
+          <div
+            style={{
+              textAlign: "center",
+              padding: "60px 20px",
+              color: "var(--ink-soft)",
+            }}
+          >
+            <p style={{ fontSize: 15, marginBottom: 16 }}>
+              No products in this category yet.
+            </p>
+            <Link
+              href="/shop"
+              style={{
+                color: "var(--terracotta)",
+                fontSize: 14,
+                fontWeight: 500,
+                textDecoration: "underline",
+              }}
+            >
+              Browse all products →
+            </Link>
+          </div>
+        )}
+
         {/* Product grid */}
+        {!empty && (
         <div className={`layout-4col bs-grid-wrap${loading ? " loading" : ""}`}>
-          {displayList.slice(0, 8).map((p: WixProduct | null, i: number) => {
+          {(loading ? Array(8).fill(null) : displayList).slice(0, 8).map((p: WixProduct | null, i: number) => {
             const imageUrl = p?.media?.mainMedia?.image?.url ?? null;
             const price = p?.priceData?.formatted?.price ?? null;
             const slug = p?.slug ?? p?._id ?? "";
@@ -272,6 +302,7 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
             );
           })}
         </div>
+        )}
       </div>
     </section>
   );
