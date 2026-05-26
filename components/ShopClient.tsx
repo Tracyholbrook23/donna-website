@@ -134,9 +134,15 @@ export function ShopClient({ initialProducts }: Props) {
     setMaxPrice(200); // reset price filter on collection change
   };
 
-  // Build collection tabs — sorted by catalog order, derive live counts from Wix data
+  // Build collection tabs — sorted by catalog order, only show categories with products
   const allCollections = useMemo(() => {
     const sorted = [...collections].sort((a, b) => a.sortOrder - b.sortOrder);
+    const withCounts = sorted.map((c) => ({
+      ...c,
+      count: c.wixId
+        ? initialProducts.filter((p) => (p.collectionIds ?? []).includes(c.wixId)).length
+        : 0,
+    }));
     return [
       {
         id: "all",
@@ -148,12 +154,7 @@ export function ShopClient({ initialProducts }: Props) {
         kicker: "Every piece in the studio, ready to engrave.",
         count: initialProducts.length,
       },
-      ...sorted.map((c) => ({
-        ...c,
-        count: c.wixId
-          ? initialProducts.filter((p) => (p.collectionIds ?? []).includes(c.wixId)).length
-          : 0,
-      })),
+      ...withCounts.filter((c) => c.count > 0),
     ];
   }, [initialProducts]);
 
