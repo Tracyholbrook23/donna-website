@@ -43,16 +43,20 @@ export function ProductPageClient({ product, glyphType }: ProductPageClientProps
     setActiveIdx(idx);
   }
 
-  /** Called from BuyBox when a color swatch is clicked */
-  function handleColorSelect(
-    _colorName: string,
-    linkedImageUrl: string | null | undefined,
-    _choiceIndex: number,
-  ) {
-    if (!linkedImageUrl) return; // no linked image set in Wix yet — do nothing
-    const idx = allImages.findIndex((img) => img.image?.url === linkedImageUrl);
-    setActiveUrl(linkedImageUrl);
-    setActiveIdx(idx >= 0 ? idx : activeIdx);
+  /** Called from BuyBox when a color swatch is clicked.
+   *  Matches the color name against each image's altText or title — works
+   *  automatically as long as images are named like "Product Name — Color". */
+  function handleColorSelect(colorName: string) {
+    const color = colorName.toLowerCase().trim();
+    const idx = allImages.findIndex((img) => {
+      const alt = (img.image?.altText ?? "").toLowerCase();
+      const title = (img.title ?? "").toLowerCase();
+      return alt.includes(color) || title.includes(color);
+    });
+    if (idx >= 0) {
+      setActiveUrl(allImages[idx].image?.url ?? null);
+      setActiveIdx(idx);
+    }
   }
 
   // How many thumbnails to show (cap at 6 so the strip doesn't get too long)

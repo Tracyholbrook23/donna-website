@@ -9,7 +9,7 @@ import { useCart } from "@/lib/cartContext";
 export interface WixMediaItem {
   _id?: string | null;
   title?: string | null;
-  image?: { url?: string | null } | null;
+  image?: { url?: string | null; altText?: string | null } | null;
 }
 
 export interface WixProduct {
@@ -38,9 +38,8 @@ export interface WixProduct {
 
 interface BuyBoxProps {
   product: WixProduct;
-  /** Called when a color swatch is clicked. Receives the color name, the
-   *  linked image URL for that color (if set in Wix), and the choice index. */
-  onColorSelect?: (colorName: string, imageUrl: string | null | undefined, choiceIndex: number) => void;
+  /** Called when a color swatch is clicked with the selected color name. */
+  onColorSelect?: (colorName: string) => void;
 }
 
 // ─── Color swatch map ─────────────────────────────────────────────────────────
@@ -179,16 +178,10 @@ export function BuyBox({ product, onColorSelect }: BuyBoxProps) {
     (opt) => (opt.choices?.filter((c) => c.visible !== false).length ?? 0) > 0
   );
 
-  function selectChoice(
-    optName: string,
-    value: string,
-    linkedImageUrl?: string | null,
-    isColor?: boolean,
-    choiceIndex?: number,
-  ) {
+  function selectChoice(optName: string, value: string, isColor?: boolean) {
     setSelections((prev) => ({ ...prev, [optName]: value }));
     if (isColor && onColorSelect) {
-      onColorSelect(value, linkedImageUrl, choiceIndex ?? 0);
+      onColorSelect(value);
     }
   }
 
@@ -329,11 +322,10 @@ export function BuyBox({ product, onColorSelect }: BuyBoxProps) {
                   const bg = colorForChoice(label);
                   const isGradient = bg.startsWith("linear-gradient");
 
-                  const linkedImg = c.linkedMediaItems?.[0]?.image?.url;
                   return (
                     <button
                       key={i}
-                      onClick={() => selectChoice(opt.name!, val, linkedImg, true, i)}
+                      onClick={() => selectChoice(opt.name!, val, true)}
                       aria-label={label}
                       title={label}
                       style={{
