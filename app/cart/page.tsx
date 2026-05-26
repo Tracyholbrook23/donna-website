@@ -32,16 +32,9 @@ export default function CartPage() {
         {isEmpty ? (
           <EmptyCart />
         ) : (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 320px",
-              gap: 48,
-              alignItems: "start",
-            }}
-          >
+          <div className="layout-cart">
             {/* Line items */}
-            <div>
+            <div className="cart-items">
               {cartItems.map((item) => (
                 <CartItem
                   key={item._id}
@@ -55,6 +48,7 @@ export default function CartPage() {
 
             {/* Order summary */}
             <div
+              className="cart-summary"
               style={{
                 position: "sticky",
                 top: 100,

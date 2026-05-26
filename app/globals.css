@@ -625,6 +625,21 @@ select.field {
   gap: 16px;
 }
 
+/* Shop body: filter sidebar + product grid */
+.layout-shop-body {
+  display: grid;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Cart: line items + order summary */
+.layout-cart {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 48px;
+  align-items: start;
+}
+
 /* Product detail page — image + info split */
 .layout-product-page {
   display: grid;
@@ -704,6 +719,22 @@ select.field {
   .layout-customizer { grid-template-columns: 1fr; gap: 40px; }
   .layout-policy { grid-template-columns: 1fr; gap: 40px; }
   .layout-shop-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Shop: always full-width on mobile; sidebar becomes hidden */
+  .layout-shop-body { grid-template-columns: 1fr !important; gap: 24px; }
+  .shop-sidebar { display: none !important; }
+  .shop-sidebar-mobile-btn { display: flex !important; }
+
+  /* Cart: stack vertically on mobile */
+  .layout-cart { grid-template-columns: 1fr !important; gap: 32px; }
+  /* Move order summary below items on mobile */
+  .layout-cart .cart-summary { order: 2; position: static !important; top: auto !important; }
+  .layout-cart .cart-items  { order: 1; }
+
+  /* Commission band: stack on mobile */
+  .layout-commission-band { grid-template-columns: 1fr !important; gap: 32px; }
+  /* Hide commission photo on mobile to keep it tidy */
+  .layout-commission-band > *:last-child { display: none; }
 
   /* Unstick sidebars on mobile */
   .layout-story > *:first-child,

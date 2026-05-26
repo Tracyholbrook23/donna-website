@@ -100,6 +100,13 @@ export function ShopClient({ initialProducts }: Props) {
   const [maxPrice, setMaxPrice] = useState(200);
   const [filtersOpen, setFiltersOpen] = useState(true);
 
+  // Close filters by default on mobile so the product grid gets full width
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth <= 768) {
+      setFiltersOpen(false);
+    }
+  }, []);
+
   const pillsRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -378,16 +385,14 @@ export function ShopClient({ initialProducts }: Props) {
       <section style={{ padding: "40px 0 100px" }}>
         <div className="container">
           <div
+            className="layout-shop-body"
             style={{
-              display: "grid",
               gridTemplateColumns: filtersOpen ? "240px 1fr" : "1fr",
-              gap: 48,
-              alignItems: "start",
             }}
           >
             {/* Sidebar */}
             {filtersOpen && (
-              <aside style={{ position: "sticky", top: 100 }}>
+              <aside className="shop-sidebar" style={{ position: "sticky", top: 100 }}>
                 <div
                   style={{
                     display: "flex",
@@ -526,7 +531,7 @@ export function ShopClient({ initialProducts }: Props) {
       <section style={{ padding: "0 0 100px" }}>
         <div className="container">
           <div
-            className="reveal"
+            className="reveal layout-commission-band"
             style={{
               background: "var(--cream-2)",
               borderRadius: "var(--r-xl)",
