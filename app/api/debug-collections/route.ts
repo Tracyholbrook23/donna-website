@@ -1,23 +1,15 @@
 import { wixClient } from "@/lib/wixClient";
 import { NextResponse } from "next/server";
 
-// Temp debug route — visit /api/debug-collections to see ALL real Wix collection IDs
+// Temp debug route — visit /api/debug-collections to see real Wix collection IDs
 export async function GET() {
   try {
-    const allItems = [];
-    let cursor: string | null | undefined = undefined;
+    const page1 = await wixClient.products.queryProducts().limit(100).find();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const page2 = await (page1 as any).next().catch(() => ({ items: [] }));
 
-    // Page through all products (Wix max 100 per page)
-    do {
-      const query = wixClient.products.queryProducts().limit(100);
-      const result = cursor
-        ? await (query as unknown as { skipTo: (c: string) => typeof query }).skipTo(cursor).find()
-        : await query.find();
-      allItems.push(...result.items);
-      cursor = result.hasNext() ? result.cursors?.next : undefined;
-    } while (cursor);
+    const allItems = [...page1.items, ...(page2.items ?? [])];
 
-    // Collect unique collection IDs and count products per collection
     const collectionMap: Record<string, string[]> = {};
     for (const p of allItems) {
       const ids = (p as Record<string, unknown>).collectionIds;
