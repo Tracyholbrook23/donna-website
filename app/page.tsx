@@ -6,6 +6,7 @@ import { wixClient } from "@/lib/wixClient";
 import { HomePhotoGrid } from "@/components/HomePhotoGrid";
 import { HomeVideoShowcase } from "@/components/HomeVideoShowcase";
 import { HomeBestsellersClient } from "@/components/home/HomeBestsellersClient";
+import { HomeMarqueeStrip } from "@/components/home/HomeMarqueeStrip";
 
 export const dynamic = "force-dynamic";
 
@@ -250,48 +251,6 @@ function HomeHero() {
   );
 }
 
-/* ── MARQUEE STRIP ────────────────────────────────────────────────────────── */
-function HomeMarqueeStrip() {
-  const items = [
-    "Custom laser engraving — woman owned & operated",
-    "Every piece made to order · no two are alike",
-    "1,840+ five-star reviews",
-    "Tumblers · Boards · Knives · Wallets · More",
-    "Quotes within 24 hours · personal replies every time",
-    "Gift-ready packaging on every order",
-  ];
-  const repeated = [...items, ...items];
-
-  return (
-    <section
-      style={{
-        borderTop: "1px solid var(--line)",
-        borderBottom: "1px solid var(--line)",
-        padding: "18px 0",
-        overflow: "hidden",
-      }}
-    >
-      <div className="marquee-track" style={{ animationDuration: "46s" }}>
-        {repeated.map((it, i) => (
-          <span
-            key={i}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 64,
-              fontSize: 13,
-              color: "var(--ink-soft)",
-              fontFamily: "var(--font-display)",
-              fontStyle: "italic",
-            }}
-          >
-            {it} <span style={{ color: "var(--brass)" }}>✦</span>
-          </span>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 /* ── HOW IT WORKS — condensed process strip ──────────────────────────────── */
 function HomeProcess() {
