@@ -70,7 +70,7 @@ export function Nav() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "18px 28px",
+            padding: "9px 28px",
           }}
         >
           {/* Wordmark */}
@@ -360,8 +360,8 @@ function Wordmark() {
       <Image
           src="/logo-transparent.png"
           alt="Out of Jersey Creations Custom Laser Engraving"
-          width={140}
-          height={56}
+          width={90}
+          height={36}
           style={{ objectFit: "contain", display: "block" }}
           priority
         />
