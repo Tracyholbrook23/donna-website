@@ -262,13 +262,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
         throw new Error(`No checkout ID in response: ${JSON.stringify(checkoutResult)}`);
       }
 
-      // 2. Create a Wix redirect session → get the full checkout URL
+      // 2. Create a Wix redirect session → get the full checkout URL.
+      // No callbacks passed: Wix falls back to the "Frontend link" configured in
+      // Headless Settings (https://outofjerseycreationshub.com) after checkout.
+      // Passing explicit callback URLs triggers Wix's redirect-URL allowlist
+      // validation which requires a separate dashboard configuration step.
       const { redirectSession } = await client.redirects.createRedirectSession({
         ecomCheckout: { checkoutId },
-        callbacks: {
-          postFlowUrl: window.location.origin,
-          thankYouPageUrl: `${window.location.origin}/?order=confirmed`,
-        },
       });
 
       saveWixTokens(client);
