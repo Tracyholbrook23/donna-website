@@ -106,7 +106,8 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
   };
 
   const glyphs = COLLECTION_GLYPHS[activeTab] ?? COLLECTION_GLYPHS["all"];
-  const displayList = loading ? Array(8).fill(null) : products;
+  const displayLimit = activeTab === "all" ? 15 : 8;
+  const displayList = loading ? Array(displayLimit).fill(null) : products;
 
   return (
     <section style={{ padding: "80px 0 60px", background: "var(--cream-2)" }}>
@@ -237,7 +238,7 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
         {/* Product grid */}
         {!empty && (
         <div className={`layout-4col bs-grid-wrap${loading ? " loading" : ""}`}>
-          {(loading ? Array(8).fill(null) : displayList).slice(0, 8).map((p: WixProduct | null, i: number) => {
+          {(loading ? Array(displayLimit).fill(null) : displayList).slice(0, displayLimit).map((p: WixProduct | null, i: number) => {
             const imageUrl = p?.media?.mainMedia?.image?.url ?? null;
             const price = p?.priceData?.formatted?.price ?? null;
             const slug = p?.slug ?? p?._id ?? "";

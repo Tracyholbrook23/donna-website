@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { giftOccasions } from "@/lib/data";
+import { giftOccasions, collections } from "@/lib/data";
 import { ArrowIcon } from "@/components/Icons";
 import { wixClient } from "@/lib/wixClient";
 import { HomePhotoGrid } from "@/components/HomePhotoGrid";
@@ -11,8 +11,25 @@ export const dynamic = "force-dynamic";
 
 async function getFeaturedProducts() {
   try {
-    const { items } = await wixClient.products.queryProducts().limit(8).find();
-    return items;
+    // Fetch all products in one call
+    const { items } = await wixClient.products.queryProducts().limit(100).find();
+
+    // Pick the first product from each category (catalog order) — gives one per category variety
+    const seen = new Set<string>();
+    const result = [];
+    for (const collection of collections) {
+      if (!collection.wixId) continue;
+      const match = items.find(
+        (p) =>
+          ((p as unknown as { collectionIds?: string[] }).collectionIds ?? []).includes(collection.wixId) &&
+          !seen.has(p._id ?? "")
+      );
+      if (match) {
+        seen.add(match._id ?? "");
+        result.push(match);
+      }
+    }
+    return result;
   } catch {
     return [];
   }
