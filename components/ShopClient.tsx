@@ -596,7 +596,7 @@ export function ShopClient({ initialProducts }: Props) {
 }
 
 function ProductCard({ product, index }: { product: WixProduct; index: number }) {
-  const imgUrl = null; // Photos removed — real product photos will be added later via Wix
+  const imgUrl = product.media?.mainMedia?.image?.url ?? null;
   const price = product.priceData?.formatted?.price ?? "";
   const href = `/product/${product.slug ?? product._id}`;
   const glyphType = glyphForProduct(product, index);

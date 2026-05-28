@@ -86,9 +86,8 @@ export function ProductPageClient({ product, glyphType }: ProductPageClientProps
 
   // How many thumbnails to show (cap at 6 so the strip doesn't get too long)
   const thumbImages = allImages.length > 0 ? allImages.slice(0, 6) : [];
-  // Pad with null placeholders so we always show at least 4 slots
-  const thumbSlots: (WixMediaItem | null)[] = [...thumbImages];
-  while (thumbSlots.length < 4) thumbSlots.push(null);
+  // Only show the thumbnail rail when there are 2+ images
+  const showThumbs = thumbImages.length > 1;
 
   return (
     <div className="layout-product-page" style={{ gap: 64 }}>
@@ -96,51 +95,53 @@ export function ProductPageClient({ product, glyphType }: ProductPageClientProps
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "80px 1fr",
+          gridTemplateColumns: showThumbs ? "80px 1fr" : "1fr",
           gap: 16,
           alignItems: "start",
         }}
       >
-        {/* Thumbnails */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          {thumbSlots.map((item, i) => {
-            const thumbUrl = item?.image?.url;
-            const isActive = i === activeIdx;
-            return (
-              <button
-                key={i}
-                onClick={() => thumbUrl && selectImage(thumbUrl, i)}
-                aria-label={`View image ${i + 1}`}
-                style={{
-                  width: 80,
-                  height: 80,
-                  borderRadius: "var(--r-sm)",
-                  border: `1.5px solid ${isActive ? "var(--ink)" : "var(--line)"}`,
-                  padding: 6,
-                  background: "var(--cream-2)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  overflow: "hidden",
-                  cursor: thumbUrl ? "pointer" : "default",
-                  transition: "border-color .15s",
-                }}
-              >
-                {thumbUrl ? (
-                  <Image
-                    src={thumbUrl}
-                    alt={`Product image ${i + 1}`}
-                    width={56}
-                    height={56}
-                    style={{ objectFit: "cover", borderRadius: 4 }}
-                  />
-                ) : (
-                  <ProductGlyph type={glyphType} size={48} />
-                )}
-              </button>
-            );
-          })}
-        </div>
+        {/* Thumbnails — only shown when there are 2+ images */}
+        {showThumbs && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {thumbImages.map((item, i) => {
+              const thumbUrl = item?.image?.url;
+              const isActive = i === activeIdx;
+              return (
+                <button
+                  key={i}
+                  onClick={() => thumbUrl && selectImage(thumbUrl, i)}
+                  aria-label={`View image ${i + 1}`}
+                  style={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: "var(--r-sm)",
+                    border: `1.5px solid ${isActive ? "var(--ink)" : "var(--line)"}`,
+                    padding: 6,
+                    background: "var(--cream-2)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                    cursor: thumbUrl ? "pointer" : "default",
+                    transition: "border-color .15s",
+                  }}
+                >
+                  {thumbUrl ? (
+                    <Image
+                      src={thumbUrl}
+                      alt={`Product image ${i + 1}`}
+                      width={56}
+                      height={56}
+                      style={{ objectFit: "cover", borderRadius: 4 }}
+                    />
+                  ) : (
+                    <ProductGlyph type={glyphType} size={48} />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {/* Main image */}
         <div
