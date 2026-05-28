@@ -77,7 +77,15 @@ export default function ContactPage() {
             <div className="reveal" style={{ position: "sticky", top: 100, alignSelf: "start" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
 
-                {/* Instagram — only confirmed real contact */}
+                {/* Phone */}
+                <ContactDetail
+                  label="Phone"
+                  value="(657) 633-6994"
+                  href="tel:+16576336994"
+                  note="Call or text anytime"
+                />
+
+                {/* Instagram */}
                 <ContactDetail
                   label="Instagram"
                   value="@outofjerseycreations"
