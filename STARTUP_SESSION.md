@@ -1,6 +1,6 @@
 # STARTUP_SESSION.md
 ### Out of Jersey — Master Session Handoff & Active Task Tracker
-_Last updated: 2026-05-28 (session 10) | Updated by: Claude (Cowork session)_
+_Last updated: 2026-05-28 (session 11) | Updated by: Claude (Cowork session)_
 
 ---
 
@@ -107,11 +107,12 @@ _Last updated: 2026-05-28 (session 10) | Updated by: Claude (Cowork session)_
 ## 4. Priority Fixes — HIGH (Launch Blockers)
 
 - [ ] **[HIGH] Wire up custom inquiry form to Donna's email** ⏳ BLOCKED — waiting on Donna's email address
-  - File: `app/api/custom-inquiry/route.ts`
-  - Currently only `console.log()`s — NO email is sent
-  - Needs: Resend, SendGrid, or Nodemailer integration
-  - **Status: do not implement yet — waiting for good email address from Donna**
-  - Also applies to the "Get a Quote" form on `/custom`
+  - `resend` package installed (^6.12.4)
+  - `lib/email-templates.ts` — beautiful HTML email templates for both Donna and customer auto-reply
+  - `app/api/custom-inquiry/route.ts` — fully rewritten: handles `multipart/form-data`, file attachments, Resend integration
+  - `components/CustomInquiryForm.tsx` — full new form with drag-and-drop uploads, product category grid, 3-step flow
+  - **To activate:** add `RESEND_API_KEY=re_xxx` and `DONNA_EMAIL=donna@example.com` to `.env.local`
+  - Until those are set, submissions log to console only — no data lost
 
 - [x] **[HIGH] Fix shop category filter buttons** ✅ (2026-05-24)
   - Client-side filtering via `product.collectionIds` is working
