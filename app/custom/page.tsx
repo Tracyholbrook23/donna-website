@@ -8,27 +8,34 @@ import { ArrowIcon } from "@/components/Icons";
 const PROCESS_STEPS = [
   {
     n: "01",
-    t: "Brief",
-    d: "Use the form below or email. Include the gift, the recipient, the deadline, and any imagery you want incorporated.",
+    t: "Share your vision",
+    d: "Use the form below, DM on Instagram, or email directly. A rough idea is all you need — Donna will help shape the rest.",
     time: "5 min · you",
   },
   {
     n: "02",
-    t: "Quote",
-    d: "Within 24 hours we send a quote, a recommended material, and a realistic timeline. 50% deposit reserves your studio slot.",
-    time: "24 hrs · studio",
+    t: "Get your quote",
+    d: "Within 24 hours, Donna sends a personalized quote, material recommendation, and realistic timeline. No obligation.",
+    time: "24 hrs · Donna",
   },
   {
     n: "03",
-    t: "Proof",
-    d: "We sketch the engraving and send a digital proof. Two rounds of revisions included. We won't engrave until you sign off.",
-    time: "48–72 hrs · together",
+    t: "$20 design fee",
+    d: "A $20 non-refundable initiation fee reserves your studio slot and covers the initial design work. This fee is credited toward your final total.",
+    time: "Reserves your slot",
+    highlight: true,
   },
   {
     n: "04",
-    t: "Engrave",
-    d: "We cut the piece, photograph it, ship it gift-ready in kraft and twine, with a hand-written card.",
-    time: "1–3 wks · studio",
+    t: "Approve your proof",
+    d: "Donna sends a digital proof of your design. Two rounds of revisions included. Nothing is engraved until you sign off.",
+    time: "48–72 hrs · together",
+  },
+  {
+    n: "05",
+    t: "Made & shipped",
+    d: "Your piece is laser-engraved, photographed, and shipped gift-ready in kraft and twine with a hand-written card.",
+    time: "1–3 wks · Donna",
   },
 ];
 
@@ -151,8 +158,9 @@ export default function CustomPage() {
                 }}
               >
                 Single pieces, family heirlooms, wedding sets, corporate
-                gifts, or something only you can describe. Briefs go straight
-                to me. Quotes within 24 hours.
+                gifts, or something only you can describe. Every order starts
+                with a conversation — no shopping carts, no templates.
+                Quotes within 24 hours.
               </p>
             </div>
 
@@ -235,23 +243,45 @@ export default function CustomPage() {
             </h2>
           </div>
 
-          <div className="layout-custom-cards" style={{ gap: 24 }}>
+          <div className="layout-custom-cards" style={{ gap: 16 }}>
             {PROCESS_STEPS.map((s) => (
               <div
                 key={s.n}
                 className="reveal"
                 style={{
-                  background: "var(--cream)",
+                  background: (s as { highlight?: boolean }).highlight ? "var(--terracotta)" : "var(--cream)",
                   padding: 28,
-                  border: "1px solid var(--line)",
+                  border: (s as { highlight?: boolean }).highlight ? "none" : "1px solid var(--line)",
                   borderRadius: "var(--r-md)",
+                  position: "relative",
+                  overflow: "hidden",
                 }}
               >
+                {(s as { highlight?: boolean }).highlight && (
+                  <div
+                    aria-hidden
+                    style={{
+                      position: "absolute",
+                      right: -20,
+                      top: -20,
+                      fontSize: 80,
+                      opacity: 0.12,
+                      fontFamily: "var(--font-display)",
+                      fontStyle: "italic",
+                      color: "#fff",
+                      lineHeight: 1,
+                      userSelect: "none",
+                      pointerEvents: "none",
+                    }}
+                  >
+                    $20
+                  </div>
+                )}
                 <span
                   className="display-italic"
                   style={{
                     fontSize: 56,
-                    color: "var(--terracotta)",
+                    color: (s as { highlight?: boolean }).highlight ? "rgba(255,255,255,0.5)" : "var(--terracotta)",
                     lineHeight: 1,
                     display: "block",
                     marginBottom: 16,
@@ -261,14 +291,18 @@ export default function CustomPage() {
                 </span>
                 <h3
                   className="serif"
-                  style={{ fontSize: 22, margin: "0 0 8px" }}
+                  style={{
+                    fontSize: 22,
+                    margin: "0 0 8px",
+                    color: (s as { highlight?: boolean }).highlight ? "#fff" : "var(--ink)",
+                  }}
                 >
                   {s.t}
                 </h3>
                 <p
                   style={{
                     fontSize: 13,
-                    color: "var(--muted)",
+                    color: (s as { highlight?: boolean }).highlight ? "rgba(255,255,255,0.85)" : "var(--muted)",
                     lineHeight: 1.6,
                     margin: "0 0 16px",
                   }}
@@ -278,7 +312,7 @@ export default function CustomPage() {
                 <p
                   style={{
                     fontSize: 11,
-                    color: "var(--muted-soft)",
+                    color: (s as { highlight?: boolean }).highlight ? "rgba(255,255,255,0.6)" : "var(--muted-soft)",
                     letterSpacing: "0.08em",
                     textTransform: "uppercase",
                     margin: 0,
@@ -288,6 +322,51 @@ export default function CustomPage() {
                 </p>
               </div>
             ))}
+          </div>
+
+          {/* $20 fee callout */}
+          <div
+            className="reveal"
+            style={{
+              marginTop: 32,
+              background: "var(--cream-2)",
+              border: "1px solid var(--line)",
+              borderRadius: "var(--r-md)",
+              padding: "20px 28px",
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 16,
+              flexWrap: "wrap",
+            }}
+          >
+            <div
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: "50%",
+                background: "var(--terracotta)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#fff",
+                fontSize: 18,
+                flexShrink: 0,
+                marginTop: 2,
+              }}
+            >
+              ✦
+            </div>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontSize: 14, fontWeight: 700, margin: "0 0 6px", color: "var(--ink)" }}>
+                About the $20 non-refundable design fee
+              </p>
+              <p style={{ fontSize: 14, color: "var(--muted)", margin: 0, lineHeight: 1.65 }}>
+                Before Donna begins custom work, a $20 initiation fee is collected. This covers her time
+                creating your initial design concept, digital proof, and reserving your studio slot. It&apos;s
+                non-refundable because real work starts immediately — but it is <strong>credited toward your
+                final order total</strong> when the piece is completed.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -333,7 +412,9 @@ export default function CustomPage() {
                   Or reach me directly
                 </p>
                 <a
-                  href="mailto:custom@outofjersey.com"
+                  href="https://www.instagram.com/outofjerseycreations"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     display: "block",
                     fontFamily: "var(--font-display)",
@@ -344,10 +425,12 @@ export default function CustomPage() {
                     marginBottom: 8,
                   }}
                 >
-                  custom@outofjersey.com
+                  @outofjerseycreations
                 </a>
                 <a
                   href="https://www.instagram.com/outofjerseycreations"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     display: "block",
                     fontSize: 13,
@@ -356,18 +439,7 @@ export default function CustomPage() {
                     marginBottom: 4,
                   }}
                 >
-                  DM @outofjerseycreations on Instagram
-                </a>
-                <a
-                  href="#"
-                  style={{
-                    display: "block",
-                    fontSize: 13,
-                    color: "var(--muted)",
-                    textDecoration: "none",
-                  }}
-                >
-                  WhatsApp · +1 (704) 555-0177
+                  Instagram · DM or message anytime
                 </a>
               </div>
             </div>

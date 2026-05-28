@@ -35,30 +35,24 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
           }}
         >
           <div className="reveal-left">
-            <p className="eyebrow">Fan favorites</p>
+            <p className="eyebrow">Gallery spotlight</p>
             <h2
               className="display"
               style={{ fontSize: "clamp(36px,5vw,68px)", margin: "12px 0 0", fontWeight: 400 }}
             >
-              Most{" "}
-              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>ordered.</em>
+              Popular{" "}
+              <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>designs.</em>
             </h2>
+            <p style={{ fontSize: 15, color: "var(--muted)", marginTop: 12, maxWidth: 480, lineHeight: 1.6 }}>
+              Browse for inspiration — every piece can be made custom for you.
+              Contact Donna with your vision and get a quote within 24 hours.
+            </p>
           </div>
           <Link
-            href="/shop"
-            style={{
-              color: "var(--ink)",
-              fontSize: 14,
-              fontWeight: 500,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              borderBottom: "1px solid var(--ink)",
-              paddingBottom: 4,
-              textDecoration: "none",
-            }}
+            href="/custom"
+            className="btn btn-primary reveal"
           >
-            View all <ArrowIcon size={14} />
+            Request a design <ArrowIcon size={14} />
           </Link>
         </div>
 
@@ -74,9 +68,30 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
                 product={p}
                 index={i}
                 glyphType={GLYPH_TYPES[i % GLYPH_TYPES.length]}
+                showPrice={false}
               />
             </div>
           ))}
+        </div>
+
+        {/* Gallery link */}
+        <div style={{ textAlign: "center", marginTop: 48 }}>
+          <Link
+            href="/shop"
+            style={{
+              color: "var(--ink)",
+              fontSize: 14,
+              fontWeight: 500,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              borderBottom: "1px solid var(--ink)",
+              paddingBottom: 4,
+              textDecoration: "none",
+            }}
+          >
+            Browse the full gallery <ArrowIcon size={14} />
+          </Link>
         </div>
       </div>
     </section>

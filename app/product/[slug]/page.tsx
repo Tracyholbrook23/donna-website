@@ -64,7 +64,7 @@ export default async function ProductPage({ params }: PageProps) {
         </Link>
         <span style={{ margin: "0 8px" }}>/</span>
         <Link href="/shop" style={{ color: "inherit", textDecoration: "none" }}>
-          Shop
+          Gallery
         </Link>
         <span style={{ margin: "0 8px" }}>/</span>
         <span style={{ color: "var(--ink)" }}>{product.name}</span>
@@ -90,7 +90,7 @@ export default async function ProductPage({ params }: PageProps) {
               }}
             >
               <h2 className="display" style={{ fontSize: 36, margin: 0 }}>
-                You may also love
+                More inspiration
               </h2>
               <Link
                 href="/shop"
@@ -101,7 +101,7 @@ export default async function ProductPage({ params }: PageProps) {
                   fontWeight: 500,
                 }}
               >
-                View all →
+                Browse gallery →
               </Link>
             </div>
             <div
@@ -160,8 +160,8 @@ export default async function ProductPage({ params }: PageProps) {
                     <p style={{ fontSize: 14, fontWeight: 500, margin: "0 0 4px" }}>
                       {rp.name}
                     </p>
-                    <p style={{ fontSize: 13, color: "var(--muted)", margin: 0 }}>
-                      {rp.priceData?.formatted?.price}
+                    <p style={{ fontSize: 12, color: "var(--terracotta)", margin: 0, fontWeight: 500 }}>
+                      Custom order · contact for pricing
                     </p>
                   </Link>
                 );

@@ -5,11 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { collections, navGroups } from "@/lib/data";
-import { useCart } from "@/lib/cartContext";
 import {
   SearchIcon,
-  AccountIcon,
-  CartIcon,
   MenuIcon,
   CloseIcon,
   ArrowIcon,
@@ -17,7 +14,6 @@ import {
 
 export function Nav() {
   const pathname = usePathname();
-  const { cartCount } = useCart();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -48,7 +44,7 @@ export function Nav() {
 
   const navLinks = [
     { label: "Home", href: "/" },
-    { label: "Shop", href: "/shop", hasMega: true },
+    { label: "Gallery", href: "/shop", hasMega: true },
     { label: "Custom Orders", href: "/custom" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
@@ -111,10 +107,10 @@ export function Nav() {
             ))}
           </nav>
 
-          {/* Right icons */}
-          <div style={{ display: "flex", alignItems: "center", gap: 4, color: "#fff" }}>
+          {/* Right: CTA + mobile menu */}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#fff" }}>
             <button
-              className="btn btn-ghost"
+              className="btn btn-ghost desktop-only"
               onClick={() => setSearchOpen(true)}
               style={{ padding: "10px 12px", color: "#fff" }}
               aria-label="Search"
@@ -122,42 +118,11 @@ export function Nav() {
               <SearchIcon />
             </button>
             <Link
-              href="/account"
-              className="btn btn-ghost desktop-only"
-              style={{ padding: "10px 12px", color: "#fff" }}
-              aria-label="Account"
+              href="/custom"
+              className="btn btn-primary desktop-only"
+              style={{ fontSize: 13, padding: "11px 22px", whiteSpace: "nowrap" }}
             >
-              <AccountIcon />
-            </Link>
-            <Link
-              href="/cart"
-              className="btn btn-ghost"
-              style={{ padding: "10px 12px", position: "relative", color: "#fff" }}
-              aria-label={`Cart${cartCount > 0 ? ` (${cartCount} items)` : ""}`}
-            >
-              <CartIcon />
-              {cartCount > 0 && (
-                <span
-                  style={{
-                    position: "absolute",
-                    top: 6,
-                    right: 6,
-                    minWidth: 16,
-                    height: 16,
-                    borderRadius: "var(--r-pill)",
-                    background: "var(--terracotta)",
-                    color: "#fff",
-                    fontSize: 10,
-                    fontWeight: 700,
-                    lineHeight: "16px",
-                    textAlign: "center",
-                    padding: "0 4px",
-                    pointerEvents: "none",
-                  }}
-                >
-                  {cartCount > 99 ? "99+" : cartCount}
-                </span>
-              )}
+              Start Custom Order <ArrowIcon size={12} />
             </Link>
             <button
               className="btn btn-ghost mobile-only"
@@ -199,20 +164,20 @@ export function Nav() {
                 {/* Left: heading */}
                 <div style={{ paddingTop: 4 }}>
                   <p className="eyebrow" style={{ marginBottom: 14 }}>
-                    Shop all
+                    The Gallery
                   </p>
                   <h3
                     className="display"
                     style={{ fontSize: 28, margin: "0 0 20px", lineHeight: 1.1 }}
                   >
-                    Every piece,<br />laser-engraved.
+                    Every piece,<br />made for you.
                   </h3>
                   <Link
                     href="/shop"
                     className="btn btn-secondary"
                     style={{ padding: "9px 16px", fontSize: 12 }}
                   >
-                    Browse all <ArrowIcon size={11} />
+                    Browse gallery <ArrowIcon size={11} />
                   </Link>
                 </div>
 
@@ -271,10 +236,10 @@ export function Nav() {
                   })}
                 </div>
 
-                {/* Right: feature card */}
+                {/* Right: custom order CTA card */}
                 <div
                   style={{
-                    background: "#1a3028",
+                    background: "var(--terracotta)",
                     borderRadius: "var(--r-md)",
                     padding: 24,
                     display: "flex",
@@ -286,33 +251,35 @@ export function Nav() {
                   <div>
                     <p
                       className="eyebrow"
-                      style={{ color: "var(--brass)", marginBottom: 8 }}
+                      style={{ color: "rgba(255,255,255,0.7)", marginBottom: 8 }}
                     >
-                      Popular right now
+                      By commission
                     </p>
                     <h4
                       className="serif"
                       style={{ fontSize: 20, margin: "0 0 8px", color: "#fff" }}
                     >
-                      Custom Orders
+                      Start a Custom Order
                     </h4>
                     <p
-                      style={{ fontSize: 13, color: "rgba(255,255,255,0.65)", margin: 0, lineHeight: 1.5 }}
+                      style={{ fontSize: 13, color: "rgba(255,255,255,0.8)", margin: 0, lineHeight: 1.5 }}
                     >
-                      Got something specific in mind? We engrave logos, artwork, handwriting — anything.
+                      Tell Donna your vision — logos, artwork, handwriting, names. Quotes within 24 hours.
                     </p>
                   </div>
                   <Link
                     href="/custom"
-                    className="btn btn-primary"
+                    className="btn"
                     style={{
                       marginTop: 20,
                       alignSelf: "flex-start",
                       padding: "10px 18px",
                       fontSize: 12,
+                      background: "#fff",
+                      color: "var(--ink)",
                     }}
                   >
-                    Get a quote <ArrowIcon size={12} />
+                    Request a design <ArrowIcon size={12} />
                   </Link>
                 </div>
               </div>
@@ -353,12 +320,20 @@ export function Nav() {
               style={{
                 display: "block",
                 padding: "16px 0",
+                borderBottom: "1px solid var(--line-soft)",
                 fontSize: 14,
                 color: "var(--muted)",
                 textDecoration: "none",
               }}
             >
               Policies & FAQ
+            </Link>
+            <Link
+              href="/custom"
+              className="btn btn-primary"
+              style={{ marginTop: 20, width: "100%", justifyContent: "center", display: "flex" }}
+            >
+              Start Custom Order <ArrowIcon size={14} />
             </Link>
           </div>
         )}

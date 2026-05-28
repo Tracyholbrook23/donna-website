@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { BuyBox } from "@/components/BuyBox";
+import { ProductInquiryPanel } from "@/components/ProductInquiryPanel";
 import { ProductGlyph } from "@/components/ProductGlyph";
 import type { WixProduct, WixMediaItem } from "@/components/BuyBox";
 import type { ProductType } from "@/components/ProductGlyph";
@@ -270,8 +270,8 @@ export function ProductPageClient({ product, glyphType }: ProductPageClientProps
         </div>
       </div>
 
-      {/* ── BuyBox ──────────────────────────────────────────────────────────── */}
-      <BuyBox product={product} onColorSelect={handleColorSelect} colorOverride={colorOverride} />
+      {/* ── Inquiry Panel (replaces BuyBox) ─────────────────────────────── */}
+      <ProductInquiryPanel product={product} />
     </div>
   );
 }

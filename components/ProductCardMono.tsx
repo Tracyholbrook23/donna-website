@@ -32,9 +32,10 @@ interface Props {
   product: CardProduct;
   index?: number;
   glyphType?: ProductType;
+  showPrice?: boolean;
 }
 
-export function ProductCardMono({ product, index = 0, glyphType = "tumbler" }: Props) {
+export function ProductCardMono({ product, index = 0, glyphType = "tumbler", showPrice = false }: Props) {
   const cardRef  = useRef<HTMLDivElement>(null);
   const specRef  = useRef<HTMLDivElement>(null);
   const rafRef   = useRef<number>(0);
@@ -231,7 +232,7 @@ export function ProductCardMono({ product, index = 0, glyphType = "tumbler" }: P
               color: "rgba(255,255,255,0.45)",
             }}
           >
-            Personalize →
+            Request this design →
           </p>
         </div>
       </div>
@@ -249,8 +250,13 @@ export function ProductCardMono({ product, index = 0, glyphType = "tumbler" }: P
         >
           {product.name}
         </p>
-        {price && (
+        {showPrice && price && price !== "$0.00" && (
           <p style={{ fontSize: 14, color: "var(--muted)", margin: 0 }}>{price}</p>
+        )}
+        {!showPrice && (
+          <p style={{ fontSize: 12, color: "var(--terracotta)", margin: 0, fontWeight: 500, letterSpacing: "0.04em" }}>
+            Custom order · contact for pricing
+          </p>
         )}
       </div>
     </Link>

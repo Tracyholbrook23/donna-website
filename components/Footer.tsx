@@ -4,33 +4,33 @@ import { collections } from "@/lib/data";
 import { NewsletterForm } from "@/components/NewsletterForm";
 
 export function Footer() {
-  // Sort collections by catalog order and group into two footer columns for readability
-  const shopCol1 = [...collections]
+  // Sort collections by catalog order and group into two footer columns
+  const galleryCol1 = [...collections]
     .sort((a, b) => a.sortOrder - b.sortOrder)
     .slice(0, 8)
     .map((c) => ({ label: c.name, href: `/shop?collection=${c.id}` }));
-  const shopCol2 = [...collections]
+  const galleryCol2 = [...collections]
     .sort((a, b) => a.sortOrder - b.sortOrder)
     .slice(8)
     .map((c) => ({ label: c.name, href: `/shop?collection=${c.id}` }));
 
   const cols = [
     {
-      title: "Drinkware & Kitchen",
-      items: shopCol1,
+      title: "Gallery — Drinkware",
+      items: galleryCol1,
     },
     {
-      title: "Gifts & More",
-      items: shopCol2,
+      title: "Gallery — Gifts & More",
+      items: galleryCol2,
     },
     {
       title: "Studio",
       items: [
         { label: "About Us", href: "/about" },
-        { label: "Custom Orders", href: "/custom" },
-        { label: "Corporate & Bulk", href: "/custom" },
+        { label: "Start a Custom Order", href: "/custom" },
+        { label: "Corporate & Bulk Gifting", href: "/custom" },
+        { label: "Fan Favorites (Ready to Ship)", href: "/fan-favorites" },
         { label: "Contact", href: "/contact" },
-        { label: "Press & Stockists", href: "/about" },
       ],
     },
     {
@@ -40,7 +40,6 @@ export function Footer() {
         { label: "Returns", href: "/policies/returns" },
         { label: "Custom Order Policy", href: "/policies/custom" },
         { label: "FAQ", href: "/policies/faq" },
-        { label: "Account", href: "/account" },
       ],
     },
   ];
@@ -96,7 +95,7 @@ export function Footer() {
                 maxWidth: 480,
               }}
             >
-              New drops,{" "}
+              New work,{" "}
               <em
                 style={{
                   fontFamily: "var(--font-display)",
@@ -105,7 +104,7 @@ export function Footer() {
               >
                 behind the scenes,
               </em>{" "}
-              early access.
+              fresh ideas.
             </h3>
             <p
               style={{
@@ -115,8 +114,8 @@ export function Footer() {
                 fontSize: 14,
               }}
             >
-              New pieces, holiday lead times, and early-access drops straight
-              from the engraving table. No spam, ever.
+              New designs, holiday availability, and inspiration from the
+              engraving table. No spam, ever.
             </p>
           </div>
 
@@ -136,9 +135,8 @@ export function Footer() {
                 lineHeight: 1.7,
               }}
             >
-              Custom laser engraving — woman owned &amp; operated. Tumblers,
-              boards, knives, wallets, and one-of-a-kind commissions made with
-              precision and care.
+              Custom laser engraving — woman owned &amp; operated out of New Jersey.
+              Every piece is made to order, personally, just for you.
             </p>
             <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
               {[

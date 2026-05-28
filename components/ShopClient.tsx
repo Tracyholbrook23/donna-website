@@ -20,8 +20,6 @@ export interface WixProduct {
   collectionIds?: string[] | null;
 }
 
-type SortKey = "featured" | "price-low" | "price-high";
-
 const GLYPH_TYPES: ProductType[] = [
   "tumbler", "board", "wallet", "tumbler-tall", "decanter", "box",
 ];
@@ -39,64 +37,12 @@ function glyphForProduct(p: WixProduct, idx: number): ProductType {
   return GLYPH_TYPES[idx % GLYPH_TYPES.length];
 }
 
-// Maps product keywords → real product photos. Used when Wix has no image.
-function localPhotoForProduct(p: WixProduct): string | null {
-  const name = (p.name ?? "").toLowerCase();
-  if (name.includes("decanter") && (name.includes("glass") || name.includes("set")))
-    return "/photos/prod-decanter-glasses-etsy.jpg";
-  if (name.includes("decanter") && name.includes("premium"))
-    return "/photos/prod-decanter-premium.jpg";
-  if (name.includes("decanter"))
-    return "/photos/prod-decanter-dad.jpg";
-  if (name.includes("whiskey") && (name.includes("glass") || name.includes("colchester")))
-    return "/photos/prod-whiskey-glasses-colchester.jpg";
-  if (name.includes("whiskey") && name.includes("gift"))
-    return "/photos/prod-whiskey-gift-set-box.jpg";
-  if (name.includes("whiskey") || name.includes("glass"))
-    return "/photos/prod-whiskey-glasses-classic.jpg";
-  if (name.includes("cutting board") || name.includes("charcuterie"))
-    return name.includes("wedding") || name.includes("personalized")
-      ? "/photos/prod-cutting-board-wedding.jpg"
-      : "/photos/prod-cutting-board-custom.jpg";
-  if (name.includes("board"))
-    return "/photos/prod-cutting-board-wedding.jpg";
-  if (name.includes("knife") && name.includes("elk"))
-    return "/photos/prod-knife-elk-ridge.jpg";
-  if (name.includes("knife") || name.includes("pocket"))
-    return "/photos/prod-knife-cupid.jpg";
-  if (name.includes("keychain") && (name.includes("dad") || name.includes("father")))
-    return "/photos/prod-keychain-dad.jpg";
-  if (name.includes("keychain") || name.includes("key chain"))
-    return "/photos/prod-keychain-family.jpg";
-  if (name.includes("passport") || (name.includes("wallet") && name.includes("travel")))
-    return "/photos/prod-passport-wallet.jpg";
-  if (name.includes("wallet") || name.includes("leather"))
-    return "/photos/prod-leather-wallet.jpg";
-  if (name.includes("hammer"))
-    return "/photos/prod-hammer.jpg";
-  if (name.includes("tumbler") || name.includes("mug") || name.includes("drinkware") || name.includes("cup"))
-    return "/photos/prod-tumbler-40oz.jpg";
-  if (name.includes("artwork") || name.includes("unique") || name.includes("custom"))
-    return "/photos/prod-unique-artwork.jpg";
-  return null;
-}
-
 interface Props {
   initialProducts: WixProduct[];
 }
 
 export function ShopClient({ initialProducts }: Props) {
   const [activeCollection, setActiveCollection] = useState("all");
-  const [sort, setSort] = useState<SortKey>("featured");
-  const [maxPrice, setMaxPrice] = useState(200);
-  const [filtersOpen, setFiltersOpen] = useState(true);
-
-  // Close filters by default on mobile so the product grid gets full width
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.innerWidth <= 768) {
-      setFiltersOpen(false);
-    }
-  }, []);
 
   const pillsRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -127,11 +73,6 @@ export function ShopClient({ initialProducts }: Props) {
     el.scrollBy({ left: dir === "right" ? 240 : -240, behavior: "smooth" });
   };
 
-  const handleCollectionChange = (id: string) => {
-    setActiveCollection(id);
-    setMaxPrice(200); // reset price filter on collection change
-  };
-
   // Build collection tabs — sorted by catalog order, only show categories with products
   const allCollections = useMemo(() => {
     const sorted = [...collections].sort((a, b) => a.sortOrder - b.sortOrder);
@@ -149,7 +90,7 @@ export function ShopClient({ initialProducts }: Props) {
         group: "all",
         featured: 0,
         sortOrder: 0,
-        kicker: "Every piece in the studio, ready to engrave.",
+        kicker: "Every style in the studio — all available for custom engraving.",
         count: initialProducts.length,
       },
       ...withCounts.filter((c) => c.count > 0),
@@ -158,28 +99,19 @@ export function ShopClient({ initialProducts }: Props) {
 
   const filtered = useMemo(() => {
     let items = [...initialProducts];
-
-    // Filter by collection client-side using the product's collectionIds array
     if (activeCollection !== "all") {
       const match = collections.find((c) => c.id === activeCollection);
       const wixId = match?.wixId;
       if (wixId) {
         items = items.filter((p) => (p.collectionIds ?? []).includes(wixId));
       } else {
-        items = []; // category exists in Wix but has no products assigned yet
+        items = [];
       }
     }
-
-    if (maxPrice < 200) {
-      items = items.filter((p) => (p.priceData?.price ?? 0) <= maxPrice);
-    }
-    if (sort === "price-low") items.sort((a, b) => (a.priceData?.price ?? 0) - (b.priceData?.price ?? 0));
-    if (sort === "price-high") items.sort((a, b) => (b.priceData?.price ?? 0) - (a.priceData?.price ?? 0));
     return items;
-  }, [initialProducts, activeCollection, sort, maxPrice]);
+  }, [initialProducts, activeCollection]);
 
   const currentCollection = allCollections.find((c) => c.id === activeCollection);
-
 
   return (
     <main className="page-enter">
@@ -197,7 +129,7 @@ export function ShopClient({ initialProducts }: Props) {
           >
             <div>
               <p className="eyebrow" style={{ marginBottom: 12 }}>
-                The shop
+                The Gallery
               </p>
               <h1
                 className="display"
@@ -220,101 +152,51 @@ export function ShopClient({ initialProducts }: Props) {
                 }}
               >
                 {currentCollection?.id === "all"
-                  ? "Every piece in the studio, ready to engrave. Click for the full story."
+                  ? "Every style in the studio — browse for inspiration, then contact Donna to create yours."
                   : (currentCollection as { kicker?: string })?.kicker ?? ""}
               </p>
             </div>
 
-            <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-              <span style={{ fontSize: 13, color: "var(--muted)" }}>
-                {filtered.length} piece{filtered.length !== 1 ? "s" : ""}
-              </span>
-              <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value as SortKey)}
-                style={{
-                  padding: "10px 36px 10px 14px",
-                  fontSize: 13,
-                  border: "1px solid var(--line)",
-                  borderRadius: "var(--r-sm)",
-                  background: "var(--cream)",
-                  color: "var(--ink)",
-                  cursor: "pointer",
-                  outline: "none",
-                  appearance: "none",
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%231F1410'/%3E%3C/svg%3E")`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "right 12px center",
-                }}
-              >
-                <option value="featured">Featured</option>
-                <option value="price-low">Price · low to high</option>
-                <option value="price-high">Price · high to low</option>
-              </select>
-            </div>
+            {/* Inquiry CTA */}
+            <Link href="/custom" className="btn btn-primary reveal">
+              Request a Design <ArrowIcon size={14} />
+            </Link>
           </div>
 
           {/* Collection tabs */}
           <div style={{ position: "relative", marginTop: 36 }}>
-            {/* Left arrow */}
             {canScrollLeft && (
               <button
                 onClick={() => scrollPills("left")}
                 aria-label="Scroll categories left"
                 style={{
-                  position: "absolute",
-                  left: 0,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  zIndex: 2,
-                  width: 32,
-                  height: 32,
-                  borderRadius: "50%",
-                  border: "1px solid var(--line)",
-                  background: "var(--cream)",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 14,
-                  color: "var(--ink)",
+                  position: "absolute", left: 0, top: "50%", transform: "translateY(-50%)",
+                  zIndex: 2, width: 32, height: 32, borderRadius: "50%",
+                  border: "1px solid var(--line)", background: "var(--cream)",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.10)", cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 14, color: "var(--ink)",
                 }}
               >
                 ‹
               </button>
             )}
-
-            {/* Right arrow */}
             {canScrollRight && (
               <button
                 onClick={() => scrollPills("right")}
                 aria-label="Scroll categories right"
                 style={{
-                  position: "absolute",
-                  right: 0,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  zIndex: 2,
-                  width: 32,
-                  height: 32,
-                  borderRadius: "50%",
-                  border: "1px solid var(--line)",
-                  background: "var(--cream)",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 14,
-                  color: "var(--ink)",
+                  position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)",
+                  zIndex: 2, width: 32, height: 32, borderRadius: "50%",
+                  border: "1px solid var(--line)", background: "var(--cream)",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.10)", cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 14, color: "var(--ink)",
                 }}
               >
                 ›
               </button>
             )}
-
-            {/* Fade edges */}
             {canScrollLeft && (
               <div aria-hidden style={{
                 position: "absolute", left: 0, top: 0, bottom: 4, width: 48, zIndex: 1,
@@ -342,181 +224,54 @@ export function ShopClient({ initialProducts }: Props) {
                 paddingRight: canScrollRight ? 40 : 0,
               }}
             >
-            {allCollections.map((c) => (
-              <button
-                key={c.id}
-                onClick={() => handleCollectionChange(c.id)}
-                style={{
-                  padding: "10px 18px",
-                  borderRadius: "var(--r-pill)",
-                  border: `1px solid ${c.id === activeCollection ? "var(--ink)" : "var(--line)"}`,
-                  background: c.id === activeCollection ? "var(--ink)" : "transparent",
-                  color: c.id === activeCollection ? "var(--cream)" : "var(--ink)",
-                  fontSize: 13,
-                  fontWeight: 500,
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  transition: "all .2s var(--ease)",
-                  flexShrink: 0,
-                }}
-              >
-                {c.name}
-                <span style={{ fontSize: 11, opacity: 0.55 }}>{c.count}</span>
-              </button>
-            ))}
-            </div>{/* end scrollable pills */}
-          </div>{/* end pills wrapper */}
-        </div>{/* end container */}
-      </section>
-
-      {/* Body: sidebar + grid */}
-      <section style={{ padding: "40px 0 100px" }}>
-        <div className="container">
-          <div
-            className="layout-shop-body"
-            style={{
-              gridTemplateColumns: filtersOpen ? "240px 1fr" : "1fr",
-            }}
-          >
-            {/* Sidebar */}
-            {filtersOpen && (
-              <aside className="shop-sidebar" style={{ position: "sticky", top: 100 }}>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: 24,
-                  }}
-                >
-                  <h3 className="serif" style={{ fontSize: 18, margin: 0 }}>
-                    Filters
-                  </h3>
-                  <button
-                    onClick={() => setFiltersOpen(false)}
-                    style={{
-                      background: "none",
-                      border: 0,
-                      cursor: "pointer",
-                      fontSize: 13,
-                      color: "var(--muted)",
-                      padding: "4px 8px",
-                    }}
-                  >
-                    ✕
-                  </button>
-                </div>
-
-                <FilterGroup label="Price">
-                  <div
-                    style={{
-                      fontSize: 13,
-                      color: "var(--muted)",
-                      marginBottom: 12,
-                    }}
-                  >
-                    $0 — {maxPrice < 200 ? `$${maxPrice}` : "$200+"}
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="200"
-                    step="5"
-                    value={maxPrice}
-                    onChange={(e) => setMaxPrice(parseInt(e.target.value))}
-                    style={{ width: "100%", accentColor: "var(--terracotta)" }}
-                  />
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontSize: 11,
-                      color: "var(--muted-soft)",
-                      marginTop: 4,
-                    }}
-                  >
-                    <span>$0</span>
-                    <span>$200+</span>
-                  </div>
-                </FilterGroup>
-
+              {allCollections.map((c) => (
                 <button
-                  onClick={() => {
-                    handleCollectionChange("all");
-                    setSort("featured");
-                  }}
+                  key={c.id}
+                  onClick={() => setActiveCollection(c.id)}
                   style={{
-                    marginTop: 12,
-                    background: "none",
-                    border: 0,
-                    fontSize: 12,
-                    color: "var(--muted)",
-                    cursor: "pointer",
-                    padding: "8px 0",
-                    textDecoration: "underline",
-                  }}
-                >
-                  Reset all filters
-                </button>
-              </aside>
-            )}
-
-            {/* Product grid */}
-            <div>
-              {!filtersOpen && (
-                <button
-                  onClick={() => setFiltersOpen(true)}
-                  style={{
-                    marginBottom: 24,
-                    padding: "10px 20px",
-                    border: "1px solid var(--line)",
+                    padding: "10px 18px",
                     borderRadius: "var(--r-pill)",
-                    background: "transparent",
+                    border: `1px solid ${c.id === activeCollection ? "var(--ink)" : "var(--line)"}`,
+                    background: c.id === activeCollection ? "var(--ink)" : "transparent",
+                    color: c.id === activeCollection ? "var(--cream)" : "var(--ink)",
                     fontSize: 13,
                     fontWeight: 500,
                     cursor: "pointer",
-                    color: "var(--ink)",
+                    whiteSpace: "nowrap",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    transition: "all .2s var(--ease)",
+                    flexShrink: 0,
                   }}
                 >
-                  Show filters
+                  {c.name}
+                  <span style={{ fontSize: 11, opacity: 0.55 }}>{c.count}</span>
                 </button>
-              )}
-
-              {filtered.length === 0 ? (
-                <div
-                  style={{
-                    textAlign: "center",
-                    padding: "80px 0",
-                    color: "var(--muted)",
-                  }}
-                >
-                  <p
-                    className="display"
-                    style={{ fontSize: 48, opacity: 0.2, marginBottom: 16 }}
-                  >
-                    ✦
-                  </p>
-                  <p style={{ fontSize: 18, fontWeight: 500 }}>
-                    No pieces match those filters.
-                  </p>
-                  <p style={{ fontSize: 14, marginTop: 8 }}>
-                    Try adjusting the price range or clearing filters.
-                  </p>
-                </div>
-              ) : (
-                <div className="layout-shop-grid">
-                  {filtered.map((p, i) => (
-                    <div key={p._id ?? i} className="reveal" style={{ transitionDelay: `${Math.min(i, 8) * 0.03}s` }}>
-                      <ProductCardMono product={p} index={i} glyphType={glyphForProduct(p, i)} />
-                    </div>
-                  ))}
-                </div>
-              )}
+              ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Gallery grid */}
+      <section style={{ padding: "40px 0 100px" }}>
+        <div className="container">
+          {filtered.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "80px 0", color: "var(--muted)" }}>
+              <p className="display" style={{ fontSize: 48, opacity: 0.2, marginBottom: 16 }}>✦</p>
+              <p style={{ fontSize: 18, fontWeight: 500 }}>No pieces in this category yet.</p>
+              <p style={{ fontSize: 14, marginTop: 8 }}>Check back soon, or contact Donna for anything specific.</p>
+            </div>
+          ) : (
+            <div className="layout-shop-grid">
+              {filtered.map((p, i) => (
+                <div key={p._id ?? i} className="reveal" style={{ transitionDelay: `${Math.min(i, 8) * 0.03}s` }}>
+                  <ProductCardMono product={p} index={i} glyphType={glyphForProduct(p, i)} showPrice={false} />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -526,7 +281,7 @@ export function ShopClient({ initialProducts }: Props) {
           <div
             className="reveal layout-commission-band"
             style={{
-              background: "var(--cream-2)",
+              background: "var(--ink)",
               borderRadius: "var(--r-xl)",
               padding: "clamp(40px, 5vw, 64px)",
               display: "grid",
@@ -537,37 +292,47 @@ export function ShopClient({ initialProducts }: Props) {
           >
             <div>
               <p className="eyebrow" style={{ color: "var(--terracotta)", marginBottom: 12 }}>
-                Can&rsquo;t find it?
+                See something you love?
               </p>
               <h3
                 className="display"
-                style={{ fontSize: "clamp(32px, 4vw, 52px)", margin: "0 0 16px" }}
+                style={{ fontSize: "clamp(32px, 4vw, 52px)", margin: "0 0 16px", color: "var(--cream)" }}
               >
-                Commission a one-off, exactly as you imagine it.
+                Contact Donna to make it yours — personalized exactly the way you want.
               </h3>
               <p
                 style={{
-                  color: "var(--muted)",
+                  color: "rgba(255,255,255,0.6)",
                   fontSize: 16,
                   maxWidth: 540,
                   lineHeight: 1.6,
                   marginBottom: 28,
                 }}
               >
-                Family crests, custom logos, hand-drawn sketches, full-bleed
-                family-tree boards — if you can describe it, we can make it.
-                Quotes within 24 hours.
+                Every piece here is available for custom engraving with your name, date, message,
+                logo, or artwork. Quotes within 24 hours — no order without your approval first.
               </p>
-              <Link href="/custom" className="btn btn-primary">
-                Start a request <ArrowIcon size={14} />
-              </Link>
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                <Link href="/custom" className="btn btn-primary">
+                  Request a design <ArrowIcon size={14} />
+                </Link>
+                <a
+                  href="https://www.instagram.com/outofjerseycreations"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn"
+                  style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.3)", color: "var(--cream)" }}
+                >
+                  DM on Instagram
+                </a>
+              </div>
             </div>
             <div
               style={{
                 borderRadius: "var(--r-lg)",
                 overflow: "hidden",
                 aspectRatio: "4/3",
-                background: "var(--cream-3)",
+                background: "rgba(255,255,255,0.04)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -585,53 +350,5 @@ export function ShopClient({ initialProducts }: Props) {
         </div>
       </section>
     </main>
-  );
-}
-
-function FilterGroup({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  const [open, setOpen] = useState(true);
-  return (
-    <div style={{ borderTop: "1px solid var(--line)", padding: "20px 0" }}>
-      <button
-        onClick={() => setOpen((v) => !v)}
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          width: "100%",
-          background: "none",
-          border: 0,
-          padding: 0,
-          cursor: "pointer",
-          color: "var(--ink)",
-          marginBottom: open ? 14 : 0,
-        }}
-      >
-        <span
-          className="eyebrow"
-          style={{ color: "var(--ink)", letterSpacing: "0.14em" }}
-        >
-          {label}
-        </span>
-        <span
-          style={{
-            transform: open ? "rotate(45deg)" : "rotate(0)",
-            transition: "transform .25s var(--ease)",
-            fontSize: 18,
-            lineHeight: 1,
-            display: "inline-block",
-          }}
-        >
-          +
-        </span>
-      </button>
-      {open && <div>{children}</div>}
-    </div>
   );
 }

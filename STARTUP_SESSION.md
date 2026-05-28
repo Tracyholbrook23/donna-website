@@ -1,6 +1,52 @@
 # STARTUP_SESSION.md
 ### Out of Jersey — Master Session Handoff & Active Task Tracker
-_Last updated: 2026-05-25 (session 9) | Updated by: Claude (Cowork session)_
+_Last updated: 2026-05-28 (session 10) | Updated by: Claude (Cowork session)_
+
+---
+
+## ⚡ MAJOR DIRECTION CHANGE — Session 10 (2026-05-28)
+
+> **The site is no longer an ecommerce store. It is now a portfolio/lead-gen/consultation website.**
+
+### Business Model Summary
+- Customers do NOT directly purchase custom engraved items through the website
+- Donna communicates with customers first before creating orders
+- **A $20 non-refundable design/initiation fee** is collected before beginning custom work
+  - Protects Donna's time/materials if a customer changes their mind
+  - Credited toward the final order total when the piece is completed
+- The website's job: showcase work, build trust, generate inquiry leads
+
+### New Site Architecture
+| Route | Role |
+|---|---|
+| `/` | Portfolio homepage — hero, process, gallery spotlight, video, CTAs |
+| `/shop` | **Gallery** (not a store) — browse designs by category, inquiry CTAs throughout |
+| `/product/[slug]` | **Gallery detail** — images + "Request This Design" inquiry panel (no cart/buy) |
+| `/custom` | **Primary lead-gen page** — 5-step process with $20 fee explanation, inquiry form |
+| `/fan-favorites` | **Only direct-purchase page** — pre-made ready-to-ship items with cart enabled |
+| `/about` | About Donna |
+| `/contact` | Contact page |
+| `/policies/[tab]` | Policies |
+
+### What Changed in Session 10
+- [x] **Homepage redesigned** — hero CTAs now "Start Your Custom Order" + "Browse the Gallery"
+- [x] **New HomeProcess section** — 5-step how-it-works with $20 fee highlighted (dark background strip)
+- [x] **Nav updated** — "Shop" → "Gallery", cart/account icons removed, "Start Custom Order" CTA button added
+- [x] **ShopClient converted to gallery** — price filter/sort removed, "The Gallery" heading, commission band updated
+- [x] **ProductCardMono updated** — "Personalize →" → "Request this design →", showPrice prop (false by default)
+- [x] **HomeBestsellersClient updated** — "Gallery spotlight / Popular designs", no prices, "Request a design" CTA
+- [x] **ProductInquiryPanel created** — replaces BuyBox on product detail pages
+- [x] **ProductPageClient updated** — uses ProductInquiryPanel instead of BuyBox
+- [x] **Custom page updated** — 5-step process (was 4), $20 fee step highlighted in terracotta, callout box, Instagram contact updated
+- [x] **Fan Favorites page created** — `/fan-favorites` — cart-enabled, ready-to-ship only, shows "Add to Cart"
+- [x] **Footer updated** — columns updated, "Account" removed, "Fan Favorites" added, new descriptions
+
+### Cart Infrastructure
+- Cart code (cartContext.tsx, BuyBox.tsx, app/cart/page.tsx) is **preserved in codebase but hidden from gallery UI**
+- Cart is **only used** on `/fan-favorites` page via `FanFavoritesClient.tsx`
+- When Donna adds real priced products to Wix, they'll automatically show on fan-favorites page
+
+---
 
 ---
 
