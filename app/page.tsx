@@ -41,12 +41,21 @@ async function getFeaturedProducts() {
       }
     }
 
-    // Step 3: If still fewer than 8, fill with any remaining products
-    for (const p of items) {
-      if (result.length >= 8) break;
-      if (!seen.has(p._id ?? "")) {
-        seen.add(p._id ?? "");
-        result.push(p);
+    // Step 3: If still fewer than 8, take a second product from each category
+    // (max 2 per category) — prevents one category from flooding the grid
+    if (result.length < 8) {
+      for (const collection of collections) {
+        if (result.length >= 8) break;
+        if (!collection.wixId) continue;
+        const match = items.find(
+          (p) =>
+            ((p as unknown as { collectionIds?: string[] }).collectionIds ?? []).includes(collection.wixId) &&
+            !seen.has(p._id ?? "")
+        );
+        if (match) {
+          seen.add(match._id ?? "");
+          result.push(match);
+        }
       }
     }
 
