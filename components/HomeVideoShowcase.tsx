@@ -333,7 +333,7 @@ export function HomeVideoShowcase() {
           </div>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <a
-              href="/shop"
+              href="/product/40oz-tumbler-with-handle"
               style={{
                 padding: "14px 26px",
                 borderRadius: "var(--r-pill)",
