@@ -6,27 +6,6 @@ import Link from "next/link";
 import { ProductGlyph } from "@/components/ProductGlyph";
 import type { ProductType } from "@/components/ProductGlyph";
 
-// ── Shared noise canvas — generated once per browser session ─────────────────
-let _noiseDataUrl = "";
-function getNoiseDataUrl(): string {
-  if (_noiseDataUrl) return _noiseDataUrl;
-  if (typeof window === "undefined") return "";
-  const sz = 256;
-  const canvas = document.createElement("canvas");
-  canvas.width = sz;
-  canvas.height = sz;
-  const ctx = canvas.getContext("2d")!;
-  const img = ctx.createImageData(sz, sz);
-  for (let i = 0; i < img.data.length; i += 4) {
-    const v = (Math.random() * 255) | 0;
-    img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
-    img.data[i + 3] = 255;
-  }
-  ctx.putImageData(img, 0, 0);
-  _noiseDataUrl = canvas.toDataURL();
-  return _noiseDataUrl;
-}
-
 // ── Tunable constants ─────────────────────────────────────────────────────────
 const TILT_MAX  = 13;    // degrees max tilt
 const PERSP     = 760;   // perspective px
@@ -38,8 +17,6 @@ const SPEC_SH   = 0.36;  // specular sharpness (stop position, 0=hard)
 const SPEC2_SZ  = 80;    // secondary specular radius %
 const SPEC2_BR  = 0.18;  // secondary brightness
 const GLOW_STR  = 0.32;  // white outer glow opacity
-const NOISE_OP  = 0.052; // grain opacity
-const SCAN_OP   = 0.35;  // scan-line opacity
 const EDGE_STR  = 0.62;  // rim highlight opacity
 
 // ── Public types ──────────────────────────────────────────────────────────────
@@ -60,7 +37,6 @@ interface Props {
 export function ProductCardMono({ product, index = 0, glyphType = "tumbler" }: Props) {
   const cardRef  = useRef<HTMLDivElement>(null);
   const specRef  = useRef<HTMLDivElement>(null);
-  const noiseRef = useRef<HTMLDivElement>(null);
   const rafRef   = useRef<number>(0);
 
   // Mouse/hover target (written on every mouse event)
@@ -71,14 +47,6 @@ export function ProductCardMono({ product, index = 0, glyphType = "tumbler" }: P
   const imgUrl = product.media?.mainMedia?.image?.url ?? null;
   const price  = product.priceData?.formatted?.price ?? "";
   const href   = `/product/${product.slug ?? product._id}`;
-
-  // Inject noise texture once on mount
-  useEffect(() => {
-    const url = getNoiseDataUrl();
-    if (noiseRef.current && url) {
-      noiseRef.current.style.backgroundImage = `url(${url})`;
-    }
-  }, []);
 
   // rAF animation loop
   const animate = useCallback(() => {
@@ -212,30 +180,6 @@ export function ProductCardMono({ product, index = 0, glyphType = "tumbler" }: P
             inset: 0,
             background:
               "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 40%, rgba(0,0,0,0.55) 100%)",
-            pointerEvents: "none",
-          }}
-        />
-
-        {/* Noise grain */}
-        <div
-          ref={noiseRef}
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundSize: "256px 256px",
-            backgroundRepeat: "repeat",
-            opacity: NOISE_OP,
-            mixBlendMode: "overlay",
-            pointerEvents: "none",
-          }}
-        />
-
-        {/* Scan lines */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,${SCAN_OP}) 2px, rgba(0,0,0,${SCAN_OP}) 4px)`,
             pointerEvents: "none",
           }}
         />
