@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState } from "react";
 
 const videos = [
   { src: "/videos/laser-engraving-02.mp4", label: "Custom tumbler" },
@@ -20,47 +20,56 @@ const videos = [
   { src: "/videos/laser-engraving-17.mp4", label: "Championship piece" },
 ];
 
+// Duplicate for seamless loop
+const repeated = [...videos, ...videos];
+
 export function HomeVideoShowcase() {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const posRef = useRef(0);
+  const rafRef = useRef<number>(0);
+  const pausedRef = useRef(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  // Arrow visibility
-  const updateArrows = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 8);
-    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 8);
+  // RAF auto-scroll
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const SPEED = 50; // px/sec
+    let lastTime: number | null = null;
+
+    function tick(now: number) {
+      if (lastTime === null) lastTime = now;
+      const delta = (now - lastTime) / 1000;
+      lastTime = now;
+
+      if (!pausedRef.current) {
+        const half = track!.scrollWidth / 2;
+        posRef.current += SPEED * delta;
+        if (posRef.current >= half) posRef.current -= half;
+        track!.style.transform = `translateX(-${posRef.current}px)`;
+      } else {
+        lastTime = now; // reset so no jump on resume
+      }
+
+      rafRef.current = requestAnimationFrame(tick);
+    }
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    updateArrows();
-    el.addEventListener("scroll", updateArrows, { passive: true });
-    window.addEventListener("resize", updateArrows, { passive: true });
-    return () => {
-      el.removeEventListener("scroll", updateArrows);
-      window.removeEventListener("resize", updateArrows);
-    };
-  }, [updateArrows]);
-
-  // Intersection Observer — plays videos when ≥50% visible (fixes mobile autoplay)
+  // Intersection Observer — play videos in view (mobile autoplay fix)
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
     videoRefs.current.forEach((video) => {
       if (!video) return;
       const obs = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
-            video.play().catch(() => {});
-          } else {
-            video.pause();
-          }
+          if (entry.isIntersecting) video.play().catch(() => {});
+          else video.pause();
         },
-        { threshold: 0.5 }
+        { threshold: 0.3 }
       );
       obs.observe(video);
       observers.push(obs);
@@ -86,32 +95,6 @@ export function HomeVideoShowcase() {
     };
   }, [lightboxIndex]);
 
-  const scroll = (dir: "left" | "right") => {
-    scrollRef.current?.scrollBy({ left: dir === "right" ? 320 : -320, behavior: "smooth" });
-  };
-
-  const btnStyle: React.CSSProperties = {
-    position: "absolute",
-    top: "50%",
-    transform: "translateY(-50%)",
-    zIndex: 10,
-    width: 44,
-    height: 44,
-    borderRadius: "50%",
-    border: "1px solid rgba(255,255,255,0.2)",
-    background: "rgba(26,48,40,0.85)",
-    backdropFilter: "blur(6px)",
-    color: "white",
-    fontSize: 22,
-    lineHeight: 1,
-    cursor: "pointer",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    boxShadow: "0 2px 12px rgba(0,0,0,0.3)",
-    transition: "background .2s",
-  };
-
   return (
     <section style={{ padding: "80px 0 60px", overflow: "hidden" }}>
       <div className="container">
@@ -136,88 +119,45 @@ export function HomeVideoShowcase() {
               <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>up close.</em>
             </h2>
           </div>
-          <p
-            style={{ fontSize: 15, color: "var(--muted)", maxWidth: 340, lineHeight: 1.6, margin: 0 }}
-          >
+          <p style={{ fontSize: 15, color: "var(--muted)", maxWidth: 340, lineHeight: 1.6, margin: 0 }}>
             Every mark is intentional. Laser precision, personal care — on every single piece.
           </p>
         </div>
       </div>
 
-      {/* Scroll strip with arrow buttons */}
-      <div style={{ position: "relative" }}>
-        {/* Left arrow */}
-        {canScrollLeft && (
-          <button
-            onClick={() => scroll("left")}
-            aria-label="Scroll left"
-            style={{ ...btnStyle, left: 12 }}
-          >
-            ‹
-          </button>
-        )}
-
-        {/* Right arrow */}
-        {canScrollRight && (
-          <button
-            onClick={() => scroll("right")}
-            aria-label="Scroll right"
-            style={{ ...btnStyle, right: 12 }}
-          >
-            ›
-          </button>
-        )}
-
+      {/* Auto-scrolling strip */}
+      <div
+        style={{ position: "relative", overflow: "hidden" }}
+        onMouseEnter={() => { pausedRef.current = true; }}
+        onMouseLeave={() => { pausedRef.current = false; }}
+      >
         {/* Fade edges */}
-        {canScrollLeft && (
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              left: 0,
-              top: 0,
-              bottom: 8,
-              width: 64,
-              zIndex: 5,
-              background: "linear-gradient(to right, var(--cream) 20%, transparent)",
-              pointerEvents: "none",
-            }}
-          />
-        )}
-        {canScrollRight && (
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              right: 0,
-              top: 0,
-              bottom: 8,
-              width: 64,
-              zIndex: 5,
-              background: "linear-gradient(to left, var(--cream) 20%, transparent)",
-              pointerEvents: "none",
-            }}
-          />
-        )}
+        <div aria-hidden style={{
+          position: "absolute", left: 0, top: 0, bottom: 0, width: 80, zIndex: 5,
+          background: "linear-gradient(to right, var(--cream) 10%, transparent)",
+          pointerEvents: "none",
+        }} />
+        <div aria-hidden style={{
+          position: "absolute", right: 0, top: 0, bottom: 0, width: 80, zIndex: 5,
+          background: "linear-gradient(to left, var(--cream) 10%, transparent)",
+          pointerEvents: "none",
+        }} />
 
-        {/* Scrollable strip */}
+        {/* Track */}
         <div
-          ref={scrollRef}
+          ref={trackRef}
           style={{
             display: "flex",
             gap: 10,
-            overflowX: "auto",
-            paddingLeft: "max(24px, calc((100vw - 1280px) / 2))",
-            paddingRight: "max(24px, calc((100vw - 1280px) / 2))",
-            paddingBottom: 8,
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
+            width: "max-content",
+            willChange: "transform",
+            paddingLeft: 10,
           }}
         >
-          {videos.map((v, i) => (
+          {repeated.map((v, i) => (
             <div
               key={i}
-              onClick={() => setLightboxIndex(i)}
+              onClick={() => setLightboxIndex(i % videos.length)}
               title="Click to enlarge"
               style={{
                 position: "relative",
@@ -240,51 +180,23 @@ export function HomeVideoShowcase() {
                 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                 src={v.src}
               />
-              {/* Label */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  background: "linear-gradient(transparent, rgba(0,0,0,0.65))",
-                  padding: "24px 14px 14px",
-                  color: "var(--cream)",
-                  pointerEvents: "none",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: 11,
-                    fontWeight: 700,
-                    letterSpacing: "0.14em",
-                    textTransform: "uppercase",
-                    margin: 0,
-                  }}
-                >
+              <div style={{
+                position: "absolute", bottom: 0, left: 0, right: 0,
+                background: "linear-gradient(transparent, rgba(0,0,0,0.65))",
+                padding: "24px 14px 14px",
+                color: "var(--cream)",
+                pointerEvents: "none",
+              }}>
+                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", margin: 0 }}>
                   {v.label}
                 </p>
               </div>
-
-              {/* Expand icon hint */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: 10,
-                  right: 10,
-                  background: "rgba(0,0,0,0.4)",
-                  borderRadius: "50%",
-                  width: 28,
-                  height: 28,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  fontSize: 13,
-                  pointerEvents: "none",
-                  opacity: 0.7,
-                }}
-              >
+              <div style={{
+                position: "absolute", top: 10, right: 10,
+                background: "rgba(0,0,0,0.4)", borderRadius: "50%",
+                width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center",
+                color: "white", fontSize: 13, pointerEvents: "none", opacity: 0.7,
+              }}>
                 ⤢
               </div>
             </div>
