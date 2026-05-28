@@ -106,7 +106,7 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
   };
 
   const glyphs = COLLECTION_GLYPHS[activeTab] ?? COLLECTION_GLYPHS["all"];
-  const displayLimit = activeTab === "all" ? 15 : 8;
+  const displayLimit = 8;
   const displayList = loading ? Array(displayLimit).fill(null) : products;
 
   return (

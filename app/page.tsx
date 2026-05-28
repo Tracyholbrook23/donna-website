@@ -14,9 +14,20 @@ async function getFeaturedProducts() {
     // Fetch all products in one call
     const { items } = await wixClient.products.queryProducts().limit(100).find();
 
-    // Pick the first product from each category (catalog order) — gives one per category variety
     const seen = new Set<string>();
     const result = [];
+
+    // Step 1: Pin the 40oz tumbler with handle first — Donna's hero product
+    const hero = items.find((p) => {
+      const name = (p.name ?? "").toLowerCase();
+      return name.includes("40oz") && name.includes("handle");
+    });
+    if (hero) {
+      seen.add(hero._id ?? "");
+      result.push(hero);
+    }
+
+    // Step 2: One product per category (catalog order) for variety
     for (const collection of collections) {
       if (!collection.wixId) continue;
       const match = items.find(
@@ -29,7 +40,17 @@ async function getFeaturedProducts() {
         result.push(match);
       }
     }
-    return result;
+
+    // Step 3: If still fewer than 8, fill with any remaining products
+    for (const p of items) {
+      if (result.length >= 8) break;
+      if (!seen.has(p._id ?? "")) {
+        seen.add(p._id ?? "");
+        result.push(p);
+      }
+    }
+
+    return result.slice(0, 8);
   } catch {
     return [];
   }
