@@ -3,10 +3,10 @@
 import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { collections, navGroups } from "@/lib/data";
-import { ProductGlyph } from "@/components/ProductGlyph";
+import { collections } from "@/lib/data";
 import { ArrowIcon } from "@/components/Icons";
 import type { ProductType } from "@/components/ProductGlyph";
+import { ProductCardMono } from "@/components/ProductCardMono";
 
 // Wix product shape (v1 API — some fields can be null)
 export interface WixProduct {
@@ -80,15 +80,6 @@ function localPhotoForProduct(p: WixProduct): string | null {
     return "/photos/prod-unique-artwork.jpg";
   return null;
 }
-
-const GLYPH_COLORS = [
-  "var(--terracotta)",
-  "var(--forest)",
-  "var(--brass)",
-  "var(--ink-soft)",
-  "var(--terracotta-deep)",
-  "var(--forest-soft)",
-];
 
 interface Props {
   initialProducts: WixProduct[];
@@ -518,7 +509,9 @@ export function ShopClient({ initialProducts }: Props) {
               ) : (
                 <div className="layout-shop-grid">
                   {filtered.map((p, i) => (
-                    <ProductCard key={p._id ?? i} product={p} index={i} />
+                    <div key={p._id ?? i} className="reveal" style={{ transitionDelay: `${Math.min(i, 8) * 0.03}s` }}>
+                      <ProductCardMono product={p} index={i} glyphType={glyphForProduct(p, i)} />
+                    </div>
                   ))}
                 </div>
               )}
@@ -592,91 +585,6 @@ export function ShopClient({ initialProducts }: Props) {
         </div>
       </section>
     </main>
-  );
-}
-
-function ProductCard({ product, index }: { product: WixProduct; index: number }) {
-  const imgUrl = product.media?.mainMedia?.image?.url ?? null;
-  const price = product.priceData?.formatted?.price ?? "";
-  const href = `/product/${product.slug ?? product._id}`;
-  const glyphType = glyphForProduct(product, index);
-  const glyphColor = GLYPH_COLORS[index % GLYPH_COLORS.length];
-
-  return (
-    <Link
-      href={href}
-      className="reveal"
-      style={{
-        textDecoration: "none",
-        color: "var(--ink)",
-        display: "block",
-      }}
-    >
-      <div
-        data-tilt="4"
-        style={{
-          borderRadius: "var(--r-lg)",
-          overflow: "hidden",
-          background: "var(--cream-2)",
-          aspectRatio: "3/4",
-          position: "relative",
-          marginBottom: 14,
-          transition: "box-shadow .3s var(--ease)",
-        }}
-      >
-        {imgUrl ? (
-          <Image
-            src={imgUrl}
-            alt={product.name ?? "Product"}
-            fill
-            style={{ objectFit: "cover" }}
-            sizes="(max-width: 768px) 50vw, 33vw"
-          />
-        ) : (
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <ProductGlyph type={glyphType} size={160} color={glyphColor} />
-          </div>
-        )}
-
-        {/* Hover overlay */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "rgba(31,20,16,0)",
-            transition: "background .3s var(--ease)",
-            display: "flex",
-            alignItems: "flex-end",
-            padding: 16,
-          }}
-          className="product-card-overlay"
-        />
-      </div>
-
-      <div>
-        <p
-          style={{
-            fontSize: 15,
-            fontWeight: 500,
-            margin: "0 0 4px",
-            lineHeight: 1.3,
-          }}
-        >
-          {product.name}
-        </p>
-        {price && (
-          <p style={{ fontSize: 14, color: "var(--muted)", margin: 0 }}>{price}</p>
-        )}
-      </div>
-    </Link>
   );
 }
 

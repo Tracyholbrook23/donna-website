@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { ProductGlyph, ProductType } from "@/components/ProductGlyph";
+import { ProductType } from "@/components/ProductGlyph";
 import { ArrowIcon } from "@/components/Icons";
+import { ProductCardMono } from "@/components/ProductCardMono";
 
 type WixProduct = {
   _id?: string | null;
@@ -64,76 +64,19 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
 
         {/* Product grid */}
         <div className="layout-4col">
-          {initialProducts.slice(0, 8).map((p, i) => {
-            const imageUrl = p?.media?.mainMedia?.image?.url ?? null;
-            const price = p?.priceData?.formatted?.price ?? null;
-            const slug = p?.slug ?? p?._id ?? "";
-            const glyphType = GLYPH_TYPES[i % GLYPH_TYPES.length];
-
-            return (
-              <Link
-                key={p._id ?? i}
-                href={`/product/${slug}`}
-                className="reveal-scale lift-on-hover spring-press"
-                data-tilt="5"
-                style={{
-                  background: "var(--cream)",
-                  borderRadius: "var(--r-md)",
-                  overflow: "hidden",
-                  textDecoration: "none",
-                  color: "var(--ink)",
-                  border: "1px solid var(--line-soft)",
-                  display: "block",
-                  transitionDelay: `${i * 0.04}s`,
-                }}
-              >
-                <div
-                  className="card-hover"
-                  style={{
-                    aspectRatio: "1/1",
-                    background: "#f8f4ed",
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
-                >
-                  {imageUrl ? (
-                    <Image
-                      src={imageUrl}
-                      alt={p.name ?? "Product"}
-                      fill
-                      className="object-cover card-media"
-                      sizes="25vw"
-                    />
-                  ) : (
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        height: "100%",
-                      }}
-                    >
-                      <ProductGlyph type={glyphType} size={160} />
-                    </div>
-                  )}
-                </div>
-                <div style={{ padding: "14px 16px 16px" }}>
-                  <h3
-                    className="serif"
-                    style={{ fontSize: 15, margin: "0 0 6px", fontWeight: 500, lineHeight: 1.3 }}
-                  >
-                    {p.name ?? "Product"}
-                  </h3>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    {price && <span style={{ fontSize: 15, fontWeight: 600 }}>{price}</span>}
-                    <span style={{ fontSize: 12, color: "var(--terracotta)", fontWeight: 500 }}>
-                      Personalize →
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
+          {initialProducts.slice(0, 8).map((p, i) => (
+            <div
+              key={p._id ?? i}
+              className="reveal-scale"
+              style={{ transitionDelay: `${i * 0.04}s` }}
+            >
+              <ProductCardMono
+                product={p}
+                index={i}
+                glyphType={GLYPH_TYPES[i % GLYPH_TYPES.length]}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>
