@@ -191,7 +191,104 @@ export function donnaInquiryEmailHtml(d: InquiryData): string {
   return emailWrapper(content, `New inquiry from ${d.name} — ${d.category} · ${d.submittedAt}`);
 }
 
-// ── Template 2 — Customer confirmation ───────────────────────────────────────
+// ── Template 3 — General contact message (to Donna) ──────────────────────────
+
+export interface ContactData {
+  reason:  string;
+  name:    string;
+  email:   string;
+  message: string;
+  submittedAt: string;
+}
+
+const REASON_LABELS: Record<string, string> = {
+  order:     "Question about an order",
+  custom:    "Custom commission inquiry",
+  corporate: "Corporate / bulk gifting",
+  press:     "Press or stockist inquiry",
+  other:     "Something else",
+};
+
+export function contactEmailHtml(d: ContactData): string {
+  const content = `
+    <tr>
+      <td style="background:#3D5848;padding:14px 36px;text-align:center;">
+        <p style="margin:0;font-size:13px;font-weight:bold;color:#fff;font-family:Arial,sans-serif;letter-spacing:0.04em;">
+          NEW CONTACT MESSAGE
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:36px 36px 28px;">
+        <p style="margin:0 0 6px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(31,20,16,0.45);font-family:Arial,sans-serif;">
+          Received ${d.submittedAt} (PT)
+        </p>
+        <h1 style="margin:0 0 28px;font-family:Georgia,serif;font-size:26px;font-weight:400;color:#1F1410;line-height:1.1;">
+          Message from <em style="color:#3D5848;">${d.name}</em>
+        </h1>
+
+        <table width="100%" cellpadding="0" cellspacing="0" border="0"
+          style="background:#F4EBDB;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
+          <tr>
+            <td>
+              <p style="margin:0 0 4px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(31,20,16,0.45);font-family:Arial,sans-serif;">Contact</p>
+              <p style="margin:0 0 6px;font-size:18px;font-family:Georgia,serif;color:#1F1410;">${d.name}</p>
+              <p style="margin:0 0 4px;font-size:14px;font-family:Arial,sans-serif;color:#1F1410;">
+                📧 <a href="mailto:${d.email}" style="color:#B9533A;">${d.email}</a>
+              </p>
+              <p style="margin:6px 0 0;font-size:12px;color:rgba(31,20,16,0.5);font-family:Arial,sans-serif;">
+                Reason: <strong>${REASON_LABELS[d.reason] ?? d.reason}</strong>
+              </p>
+            </td>
+            <td style="text-align:right;vertical-align:top;">
+              <a href="mailto:${d.email}?subject=Re: Your message to Out of Jersey"
+                style="display:inline-block;background:#1F1410;color:#FBF5EC;text-decoration:none;
+                       font-family:Arial,sans-serif;font-size:13px;font-weight:bold;
+                       padding:10px 18px;border-radius:999px;">
+                Reply →
+              </a>
+            </td>
+          </tr>
+        </table>
+
+        <p style="margin:0 0 10px;font-size:13px;font-weight:bold;letter-spacing:0.06em;text-transform:uppercase;color:#1F1410;font-family:Arial,sans-serif;">
+          Their message
+        </p>
+        <div style="background:#F4EBDB;border-left:3px solid #3D5848;border-radius:0 8px 8px 0;padding:18px 20px;">
+          <p style="margin:0;font-size:15px;font-family:Georgia,serif;color:#1F1410;line-height:1.7;white-space:pre-wrap;">${d.message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
+        </div>
+      </td>
+    </tr>
+  `;
+  return emailWrapper(content, `New message from ${d.name} — ${REASON_LABELS[d.reason] ?? d.reason}`);
+}
+
+// ── Template 4 — Customer confirmation (contact) ──────────────────────────────
+
+export function contactConfirmationEmailHtml({ name }: { name: string }): string {
+  const firstName = name.split(" ")[0] ?? name;
+  const content = `
+    <tr>
+      <td style="padding:48px 36px 40px;text-align:center;">
+        <div style="width:56px;height:56px;border-radius:50%;background:#3D5848;margin:0 auto 20px;line-height:56px;font-size:24px;text-align:center;">✓</div>
+        <h1 style="margin:0 0 14px;font-family:Georgia,serif;font-size:28px;font-weight:400;color:#1F1410;">
+          Got it, <em style="color:#3D5848;">${firstName}.</em>
+        </h1>
+        <p style="margin:0 auto 32px;font-size:15px;color:rgba(31,20,16,0.6);max-width:380px;line-height:1.7;font-family:Arial,sans-serif;">
+          Your message has been received. Donna will reply within
+          <strong style="color:#1F1410;">24 hours</strong>, usually same business day.
+        </p>
+        <p style="margin:0;font-size:13px;color:rgba(31,20,16,0.45);font-family:Arial,sans-serif;">
+          Need something faster? DM on Instagram at
+          <a href="https://www.instagram.com/outofjerseycreations" style="color:#B9533A;">@outofjerseycreations</a>
+        </p>
+      </td>
+    </tr>
+  `;
+  return emailWrapper(content, `Message received — Donna will reply within 24 hours.`);
+}
+
+// ── Template 2 — Customer confirmation (inquiry) ──────────────────────────────
 
 export function customerConfirmationEmailHtml({ name, category }: { name: string; category: string }): string {
   const firstName = name.split(" ")[0] ?? name;
