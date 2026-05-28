@@ -292,6 +292,87 @@ export function HomeVideoShowcase() {
         </div>
       </div>
 
+      {/* CTA strip — below the video scroll, tied to the tumbler showcase */}
+      <div className="container" style={{ marginTop: 36 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: 20,
+            background: "var(--forest)",
+            borderRadius: "var(--r-lg)",
+            padding: "28px 36px",
+          }}
+        >
+          <div>
+            <p
+              style={{
+                color: "rgba(255,255,255,0.55)",
+                fontSize: 12,
+                fontWeight: 700,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                margin: "0 0 6px",
+              }}
+            >
+              Custom 40oz Tumblers with Handle
+            </p>
+            <p
+              className="display"
+              style={{
+                color: "var(--cream)",
+                fontSize: "clamp(18px, 2.5vw, 26px)",
+                margin: 0,
+                fontWeight: 400,
+              }}
+            >
+              Every design made just for you.
+            </p>
+          </div>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <a
+              href="/shop"
+              style={{
+                padding: "14px 26px",
+                borderRadius: "var(--r-pill)",
+                background: "var(--cream)",
+                color: "var(--forest)",
+                fontSize: 14,
+                fontWeight: 600,
+                textDecoration: "none",
+                whiteSpace: "nowrap",
+                transition: "opacity .2s",
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.opacity = "0.88")}
+              onMouseOut={(e) => (e.currentTarget.style.opacity = "1")}
+            >
+              Shop tumblers
+            </a>
+            <a
+              href="/custom"
+              style={{
+                padding: "14px 26px",
+                borderRadius: "var(--r-pill)",
+                background: "transparent",
+                color: "var(--cream)",
+                fontSize: 14,
+                fontWeight: 600,
+                textDecoration: "none",
+                border: "1.5px solid rgba(255,255,255,0.35)",
+                whiteSpace: "nowrap",
+                transition: "border-color .2s",
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)")}
+              onMouseOut={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.35)")}
+            >
+              Request a custom design
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* Lightbox */}
       {lightboxIndex !== null && (
         <div
