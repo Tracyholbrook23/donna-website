@@ -274,7 +274,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
       saveWixTokens(client);
 
       if (redirectSession?.fullUrl) {
-        window.location.assign(redirectSession.fullUrl);
+        let checkoutUrl = redirectSession.fullUrl;
+
+        // Wix builds the checkout URL from its "Wix pages domain" setting, which is
+        // locked to outofjerseycreationshub.com. But that domain's DNS points to
+        // Next.js, not Wix — so we rewrite it to the actual Wix-hosted URL.
+        const wixPagesDomain = process.env.NEXT_PUBLIC_WIX_PAGES_DOMAIN;
+        if (wixPagesDomain) {
+          checkoutUrl = checkoutUrl
+            .replace("https://www.outofjerseycreationshub.com", wixPagesDomain)
+            .replace("https://outofjerseycreationshub.com", wixPagesDomain);
+        }
+
+        window.location.assign(checkoutUrl);
       } else {
         console.error("createRedirectSession response:", redirectSession);
         throw new Error("No checkout URL returned from Wix");
