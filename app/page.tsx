@@ -131,7 +131,7 @@ function HomeHero() {
             className="eyebrow reveal"
             style={{ marginBottom: 24, color: "var(--terracotta)", letterSpacing: "0.18em" }}
           >
-            Woman Owned &amp; Operated · New Jersey
+            Woman Owned &amp; Operated · California
           </p>
 
           <h1
@@ -162,7 +162,7 @@ function HomeHero() {
             }}
           >
             Custom laser engraving on tumblers, boards, knives, wallets &amp; more.
-            Every piece made personally for you — right here in New Jersey.
+            Every piece made personally for you — handcrafted in California.
           </p>
 
           <p
@@ -711,7 +711,7 @@ function HomeCustomCTA() {
 
           <div style={{ position: "relative", zIndex: 1, maxWidth: 680 }}>
             <p className="eyebrow" style={{ color: "var(--blush)" }}>
-              By commission · Woman-made in New Jersey
+              By commission · Woman-made in California
             </p>
             <h2
               className="display"

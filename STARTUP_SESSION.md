@@ -84,7 +84,7 @@ _Last updated: 2026-05-28 (session 10) | Updated by: Claude (Cowork session)_
 
 - Showcase Donna's custom laser engraving work in a modern, premium, highly visual way
 - Convert visitors into buyers — both shop (immediate purchase) and custom orders (quote flow)
-- Build trust for custom work: craftsmanship, woman-owned, NJ-based, real reviews
+- Build trust for custom work: craftsmanship, woman-owned, California-based, real reviews
 - Feel: **modern, colorful, premium, visual** — without overwhelming the products
 - Secondary: attract corporate/bulk gifting clients
 - Inspiration reference: [www.everythingetched.com](https://www.everythingetched.com) _(screenshots saved in `/Inspiartion/` folder — note the typo in folder name)_
@@ -533,7 +533,7 @@ To re-enable if ever wanted: add `import { MeshGradient } from "@/components/Mes
 - [ ] Gift message / card customization at checkout
 - [ ] Loyalty / repeat customer program
 - [ ] Blog or "Behind the Studio" content section
-- [ ] SEO optimization pass (meta tags, structured data for products, local NJ business schema)
+- [ ] SEO optimization pass (meta tags, structured data for products, local California business schema)
 
 ---
 

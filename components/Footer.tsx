@@ -135,7 +135,7 @@ export function Footer() {
                 lineHeight: 1.7,
               }}
             >
-              Custom laser engraving — woman owned &amp; operated out of New Jersey.
+              Custom laser engraving — woman owned &amp; operated out of California.
               Every piece is made to order, personally, just for you.
             </p>
             <div style={{ display: "flex", gap: 10, marginTop: 24 }}>

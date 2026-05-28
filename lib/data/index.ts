@@ -326,7 +326,7 @@ export const policies = [
 export const announcementMessages = [
   "Free US shipping on orders over $125",
   "Custom commissions open — 2 slots left in November",
-  "Woman owned & operated · Custom laser engraving out of New Jersey",
+  "Woman owned & operated · Custom laser engraving out of California",
 ];
 
 // Lifestyle photos — real Out of Jersey product photography

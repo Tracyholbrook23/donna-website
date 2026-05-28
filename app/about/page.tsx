@@ -149,7 +149,7 @@ export default function AboutPage() {
                 style={{ marginTop: 32, borderTop: "1px solid var(--line)" }}
               >
                 {[
-                  { label: "Based in", value: "New Jersey" },
+                  { label: "Based in", value: "California" },
                   { label: "Pieces engraved", value: "14,200+" },
                   { label: "5-star reviews", value: "1,840+" },
                   { label: "Ownership", value: "Woman Owned" },
