@@ -95,7 +95,7 @@ function HomeHero() {
     >
       <Image
         src="/photos/prod-tumbler-40oz.jpg"
-        alt="Custom engraved 40oz tumbler — Out of Jersey"
+        alt="Custom engraved 40oz tumbler — Out of Jersey Creations"
         fill
         style={{ objectFit: "cover", objectPosition: "center center" }}
         priority
@@ -128,14 +128,14 @@ function HomeHero() {
       <div className="container" style={{ position: "relative", zIndex: 2, padding: "80px 28px" }}>
         <div style={{ maxWidth: 740 }}>
           <p
-            className="eyebrow reveal"
+            className="eyebrow reveal-skew"
             style={{ marginBottom: 24, color: "var(--terracotta)", letterSpacing: "0.18em" }}
           >
             Woman Owned &amp; Operated · California
           </p>
 
           <h1
-            className="display reveal reveal-delay-1"
+            className="display reveal-bounce reveal-delay-1"
             data-parallax="-0.04"
             style={{
               fontSize: "clamp(60px, 9vw, 130px)",
@@ -152,7 +152,7 @@ function HomeHero() {
           </h1>
 
           <p
-            className="reveal reveal-delay-2"
+            className="reveal-skew reveal-delay-2"
             style={{
               fontSize: 18,
               lineHeight: 1.65,
@@ -337,7 +337,7 @@ function HomeProcess() {
             gap: 24,
           }}
         >
-          <div className="reveal-left">
+          <div className="reveal-skew">
             <p className="eyebrow" style={{ color: "var(--brass-light)", marginBottom: 12 }}>
               How it works
             </p>
@@ -373,13 +373,13 @@ function HomeProcess() {
           {steps.map((s, i) => (
             <div
               key={s.num}
-              className="reveal"
+              className="reveal-bounce"
               style={{
                 background: s.highlight ? "var(--terracotta)" : "rgba(255,255,255,0.04)",
                 border: s.highlight ? "none" : "1px solid rgba(255,255,255,0.08)",
                 borderRadius: i === 0 ? "var(--r-md) 0 0 var(--r-md)" : i === steps.length - 1 ? "0 var(--r-md) var(--r-md) 0" : 0,
                 padding: "32px 28px",
-                transitionDelay: `${i * 0.07}s`,
+                transitionDelay: `${i * 0.1}s`,
               }}
             >
               <span
@@ -467,7 +467,7 @@ function HomeTwoTiles() {
         <div className="layout-2col">
           <Link
             href="/custom"
-            className="card-hover tile-card reveal-left hover-float"
+            className="card-hover tile-card reveal-flip hover-float"
             style={{
               position: "relative",
               borderRadius: "var(--r-lg)",
@@ -516,8 +516,9 @@ function HomeTwoTiles() {
 
           <Link
             href="/custom"
-            className="card-hover tile-card reveal-right hover-float"
+            className="card-hover tile-card reveal-flip hover-float"
             style={{
+              transitionDelay: "0.12s",
               position: "relative",
               borderRadius: "var(--r-lg)",
               overflow: "hidden",
@@ -583,7 +584,7 @@ function HomeOccasions() {
             gap: 20,
           }}
         >
-          <div className="reveal-left">
+          <div className="reveal-skew">
             <p className="eyebrow">What would you like made?</p>
             <h2
               className="display"
@@ -594,7 +595,7 @@ function HomeOccasions() {
             </h2>
           </div>
           <p
-            className="reveal-right"
+            className="reveal-skew-right"
             style={{ fontSize: 15, color: "var(--muted)", maxWidth: 320, lineHeight: 1.6, margin: 0 }}
           >
             Every custom piece starts with an occasion. Find your reason to engrave.
@@ -606,7 +607,7 @@ function HomeOccasions() {
             <Link
               key={occ.id}
               href="/custom"
-              className="card-hover reveal-scale spring-press"
+              className="card-hover reveal-bounce spring-press"
               style={{
                 position: "relative",
                 borderRadius: "var(--r-md)",
@@ -617,7 +618,7 @@ function HomeOccasions() {
                 justifyContent: "flex-end",
                 textDecoration: "none",
                 color: "var(--cream)",
-                transitionDelay: `${i * 0.06}s`,
+                transitionDelay: `${i * 0.08}s`,
               }}
             >
               <Image
@@ -658,7 +659,7 @@ function HomeCustomCTA() {
     <section style={{ padding: "100px 0 80px" }}>
       <div className="container">
         <div
-          className="reveal-scale"
+          className="reveal-zoom"
           style={{
             background: "var(--terracotta)",
             color: "var(--cream)",

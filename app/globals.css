@@ -234,6 +234,85 @@ select.field {
 .reveal-delay-3.visible { transition-delay: .24s; }
 .reveal-delay-4.visible { transition-delay: .32s; }
 
+/* ── Extra reveal variants ───────────────────────── */
+
+/* Bounce — springs past then settles */
+.reveal-bounce {
+  opacity: 0;
+  transform: translateY(48px) scale(0.94);
+  transition: opacity .7s var(--ease-out), transform 1s cubic-bezier(.34,1.56,.64,1);
+}
+.reveal-bounce.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+/* Flip — 3-D card flip in from bottom */
+.reveal-flip {
+  opacity: 0;
+  transform: perspective(800px) rotateX(22deg) translateY(32px);
+  transition: opacity .8s var(--ease-out), transform .9s var(--ease-out);
+  transform-origin: bottom center;
+}
+.reveal-flip.visible { opacity: 1; transform: perspective(800px) rotateX(0deg) translateY(0); }
+
+/* Skew — slide in with a lean that straightens */
+.reveal-skew {
+  opacity: 0;
+  transform: translateX(-36px) skewX(6deg);
+  transition: opacity .8s var(--ease-out), transform .85s var(--ease-out);
+}
+.reveal-skew.visible { opacity: 1; transform: translateX(0) skewX(0deg); }
+.reveal-skew-right {
+  opacity: 0;
+  transform: translateX(36px) skewX(-6deg);
+  transition: opacity .8s var(--ease-out), transform .85s var(--ease-out);
+}
+.reveal-skew-right.visible { opacity: 1; transform: translateX(0) skewX(0deg); }
+
+/* Zoom — zooms in from slightly large, blurry */
+.reveal-zoom {
+  opacity: 0;
+  transform: scale(1.12);
+  filter: blur(10px);
+  transition: opacity .9s var(--ease-out), transform 1s var(--ease-out), filter .85s var(--ease-out);
+}
+.reveal-zoom.visible { opacity: 1; transform: scale(1); filter: blur(0); }
+
+/* Laser draw — a horizontal line that grows from left to right (on-brand) */
+.laser-draw {
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform .9s cubic-bezier(.22, .61, .36, 1);
+}
+.laser-draw.visible { transform: scaleX(1); }
+
+/* Word-by-word split heading */
+.split-words .word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.split-words .word-inner {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(110%);
+  transition: opacity .6s var(--ease-out), transform .75s cubic-bezier(.34,1.38,.64,1);
+}
+.split-words.visible .word-inner { opacity: 1; transform: translateY(0); }
+
+/* Char-by-char */
+.split-chars .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(60%) rotate(8deg) scale(0.7);
+  transition: opacity .5s var(--ease-out), transform .6s cubic-bezier(.34,1.5,.64,1);
+}
+.split-chars.visible .char { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+
+/* Scroll-velocity lean — applied by JS */
+.velocity-lean {
+  transition: transform .25s linear;
+  will-change: transform;
+}
+
 /* ── Reveal stagger ──────────────────────────────── */
 .reveal-stagger > * {
   opacity: 0;

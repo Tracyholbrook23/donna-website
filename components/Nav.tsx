@@ -355,11 +355,11 @@ function Wordmark() {
         alignItems: "center",
         flexShrink: 0,
       }}
-      aria-label="Out of Jersey — Home"
+      aria-label="Out of Jersey Creations — Home"
     >
       <Image
           src="/logo-transparent.png"
-          alt="Out of Jersey Custom Laser Engraving"
+          alt="Out of Jersey Creations Custom Laser Engraving"
           width={140}
           height={56}
           style={{ objectFit: "contain", display: "block" }}

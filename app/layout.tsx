@@ -22,11 +22,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Out of Jersey | Custom Laser Engraving — Woman Owned & Operated",
+  title: "Out of Jersey Creations | Custom Laser Engraving — Woman Owned & Operated",
   description:
     "Custom laser engraving on tumblers, boards, knives, wallets, and one-of-a-kind commissions. Woman-owned & operated. Personalized gifts done with precision and care.",
   openGraph: {
-    title: "Out of Jersey | Custom Laser Engraving",
+    title: "Out of Jersey Creations | Custom Laser Engraving",
     description:
       "Custom laser engraving on tumblers, boards, knives, wallets, and commissions. Woman-owned & operated.",
     type: "website",

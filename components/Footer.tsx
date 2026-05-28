@@ -220,7 +220,7 @@ export function Footer() {
           }}
         >
           <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
-            <span>&copy; {new Date().getFullYear()} Out of Jersey Custom Laser Engraving &middot; Woman Owned &amp; Operated.</span>
+            <span>&copy; {new Date().getFullYear()} Out of Jersey Creations &middot; Custom Laser Engraving &middot; Woman Owned &amp; Operated.</span>
             <span>Site by Tracy</span>
           </div>
           <div style={{ display: "flex", gap: 24 }}>
@@ -257,12 +257,12 @@ function FooterWordmark() {
         textDecoration: "none",
         display: "inline-block",
       }}
-      aria-label="Out of Jersey — Home"
+      aria-label="Out of Jersey Creations — Home"
     >
       {/* On the dark footer the logo renders perfectly as-is */}
       <Image
         src="/logo.png"
-        alt="Out of Jersey Custom Laser Engraving"
+        alt="Out of Jersey Creations Custom Laser Engraving"
         width={180}
         height={90}
         style={{ objectFit: "contain", display: "block" }}

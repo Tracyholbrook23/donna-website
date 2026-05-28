@@ -39,7 +39,7 @@ const TEAM = [
   {
     name: "Founder & Lead Engraver",
     role: "Custom commissions · studio direction",
-    bio: "Started Out of Jersey with a laser, a vision, and a passion for making gifts that actually mean something. Runs intake, design, and every custom commission.",
+    bio: "Started Out of Jersey Creations with a laser, a vision, and a passion for making gifts that actually mean something. Runs intake, design, and every custom commission.",
     img: "/photos/bff-tumblers.jpg",
   },
   {
@@ -63,11 +63,11 @@ export default function AboutPage() {
       <section style={{ padding: "60px 0 0" }}>
         <div className="container">
           <div
-            className="reveal"
+            className="reveal-bounce"
             style={{ textAlign: "center", maxWidth: 980, margin: "0 auto" }}
           >
             <p className="eyebrow" style={{ marginBottom: 16 }}>
-              About Out of Jersey
+              About Out of Jersey Creations
             </p>
             <h1
               className="display"
@@ -91,7 +91,7 @@ export default function AboutPage() {
             </h1>
           </div>
 
-          <div className="reveal" style={{ marginTop: 64 }}>
+          <div className="reveal-zoom" style={{ marginTop: 64 }}>
             <div
               style={{
                 width: "100%",
@@ -104,7 +104,7 @@ export default function AboutPage() {
             >
               <Image
                 src="/photos/prod-cutting-board-wedding.jpg"
-                alt="Out of Jersey — custom engraved wedding cutting board"
+                alt="Out of Jersey Creations — custom engraved wedding cutting board"
                 fill
                 style={{ objectFit: "cover", objectPosition: "center center" }}
                 priority
@@ -118,7 +118,7 @@ export default function AboutPage() {
       <section style={{ padding: "80px 0 100px" }}>
         <div className="container">
           <div className="layout-story">
-            <div className="reveal" style={{ position: "sticky", top: 100 }}>
+            <div className="reveal-skew" style={{ position: "sticky", top: 100 }}>
               <p className="eyebrow" style={{ marginBottom: 16 }}>
                 Our story
               </p>
@@ -142,7 +142,7 @@ export default function AboutPage() {
                   marginTop: 24,
                 }}
               >
-                — Out of Jersey, woman owned &amp; operated
+                — Out of Jersey Creations, woman owned &amp; operated
               </p>
 
               <div
@@ -152,7 +152,7 @@ export default function AboutPage() {
                   { label: "Based in", value: "California" },
                   { label: "Pieces engraved", value: "14,200+" },
                   { label: "5-star reviews", value: "1,840+" },
-                  { label: "Ownership", value: "Woman Owned" },
+                  { label: "Ownership", value: "Woman Owned & Operated" },
                 ].map((s) => (
                   <div
                     key={s.label}
@@ -184,7 +184,7 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="reveal">
+            <div className="reveal-skew-right">
               <div
                 style={{
                   fontSize: 19,
@@ -193,7 +193,7 @@ export default function AboutPage() {
                 }}
               >
                 <p style={{ marginTop: 0 }}>
-                  Out of Jersey started with a laser and a clear vision: make
+                  Out of Jersey Creations started with a laser and a clear vision: make
                   personalized gifts that are actually worth giving. Not the
                   kind you wrap in a bag and forget — the kind that sit on a
                   shelf for thirty years because they mean something.
@@ -205,7 +205,7 @@ export default function AboutPage() {
                 </p>
                 <p>
                   <strong style={{ color: "var(--ink)", fontWeight: 600 }}>
-                    Out of Jersey exists for a simple reason:
+                    Out of Jersey Creations exists for a simple reason:
                   </strong>{" "}
                   a gift with your name on it is different. A gift that carries
                   a name, a date, initials, a quote — something just for that
@@ -230,7 +230,7 @@ export default function AboutPage() {
                     lineHeight: 1,
                   }}
                 >
-                  — Out of Jersey
+                  — Out of Jersey Creations
                 </p>
               </div>
             </div>
@@ -271,11 +271,11 @@ export default function AboutPage() {
           </div>
 
           <div className="layout-3col">
-            {VALUES.map((v) => (
+            {VALUES.map((v, i) => (
               <div
                 key={v.n}
-                className="reveal"
-                style={{ background: "var(--ink)", padding: 40 }}
+                className="reveal-bounce"
+                style={{ background: "var(--ink)", padding: 40, transitionDelay: `${i * 0.08}s` }}
               >
                 <span
                   style={{
@@ -316,7 +316,7 @@ export default function AboutPage() {
       {/* Team */}
       <section style={{ padding: "120px 0" }}>
         <div className="container">
-          <div className="reveal" style={{ marginBottom: 56 }}>
+          <div className="reveal-skew" style={{ marginBottom: 56 }}>
             <p className="eyebrow" style={{ marginBottom: 12 }}>
               The studio
             </p>
@@ -334,7 +334,7 @@ export default function AboutPage() {
 
           <div className="layout-3col-team">
             {TEAM.map((m, i) => (
-              <div key={i} className="reveal">
+              <div key={i} className="reveal-flip" style={{ transitionDelay: `${i * 0.12}s` }}>
                 <div
                   style={{
                     aspectRatio: "3/4",

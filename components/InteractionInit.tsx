@@ -229,6 +229,14 @@ export function InteractionInit() {
       ".reveal-scale:not(.visible)",
       ".reveal-blur:not(.visible)",
       ".reveal-rotate:not(.visible)",
+      ".reveal-bounce:not(.visible)",
+      ".reveal-flip:not(.visible)",
+      ".reveal-skew:not(.visible)",
+      ".reveal-skew-right:not(.visible)",
+      ".reveal-zoom:not(.visible)",
+      ".laser-draw:not(.visible)",
+      ".split-words:not(.visible)",
+      ".split-chars:not(.visible)",
     ].join(", ");
 
     const attachReveal = () => {
@@ -242,10 +250,73 @@ export function InteractionInit() {
             }
           });
         },
-        { threshold: 0.08, rootMargin: "0px 0px -50px 0px" }
+        { threshold: 0.08, rootMargin: "0px 0px -60px 0px" }
       );
       els.forEach((el) => obs.observe(el));
     };
+
+    // ─────────────────────────────────────────────
+    // 9b. Word-split headings (data-split="words")
+    // ─────────────────────────────────────────────
+    const attachWordSplit = () => {
+      document
+        .querySelectorAll<HTMLElement>("[data-split='words']:not(.split-ready)")
+        .forEach((el) => {
+          el.classList.add("split-ready", "split-words");
+          const raw = el.innerHTML;
+          // Split by spaces but preserve HTML tags
+          const parts = raw.split(/(\s+)/);
+          el.innerHTML = parts
+            .map((chunk) => {
+              if (/^\s+$/.test(chunk)) return " ";
+              if (chunk.startsWith("<")) return chunk; // preserve tags
+              return `<span class="word"><span class="word-inner">${chunk}</span></span>`;
+            })
+            .join("");
+          // Stagger each word-inner
+          el.querySelectorAll<HTMLElement>(".word-inner").forEach((w, i) => {
+            w.style.transitionDelay = `${i * 55}ms`;
+          });
+        });
+    };
+
+    // ─────────────────────────────────────────────
+    // 9c. Char-split text (data-split="chars")
+    // ─────────────────────────────────────────────
+    const attachCharSplit = () => {
+      document
+        .querySelectorAll<HTMLElement>("[data-split='chars']:not(.split-ready)")
+        .forEach((el) => {
+          el.classList.add("split-ready", "split-chars");
+          const text = el.textContent ?? "";
+          el.innerHTML = text
+            .split("")
+            .map((ch, i) =>
+              ch === " "
+                ? " "
+                : `<span class="char" style="transition-delay:${i * 32}ms">${ch}</span>`
+            )
+            .join("");
+        });
+    };
+
+    // ─────────────────────────────────────────────
+    // 9d. Scroll-velocity lean on sections
+    // ─────────────────────────────────────────────
+    let lastScrollY = window.scrollY;
+    let velocity = 0;
+    let leanRaf: number;
+    const updateLean = () => {
+      const sy = window.scrollY;
+      velocity = (sy - lastScrollY) * 0.018;
+      lastScrollY = sy;
+      const clampedV = Math.max(-3, Math.min(3, velocity));
+      document.querySelectorAll<HTMLElement>(".velocity-lean").forEach((el) => {
+        el.style.transform = `skewY(${clampedV}deg)`;
+      });
+      leanRaf = requestAnimationFrame(updateLean);
+    };
+    updateLean();
 
     // ─────────────────────────────────────────────
     // 10. Auto-add shimmer to product images on hover
@@ -262,6 +333,8 @@ export function InteractionInit() {
     const reattach = () => {
       attachTilt();
       animateCounters();
+      attachWordSplit();
+      attachCharSplit();
       attachReveal();
       addShimmer();
     };
@@ -282,6 +355,7 @@ export function InteractionInit() {
       window.removeEventListener("scroll", updateParallax);
       window.removeEventListener("pointermove", updateGlow);
       cancelAnimationFrame(glowRaf);
+      cancelAnimationFrame(leanRaf);
       progressBar.remove();
       glow.remove();
       mo.disconnect();
