@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowIcon } from "@/components/Icons";
 
@@ -21,6 +21,29 @@ const CATEGORIES = [
   { id: "gifts",         emoji: "🎁", label: "Gifts & Keepsakes",       desc: "Laserette, acrylic, one-offs" },
   { id: "other",         emoji: "✦",  label: "Something Else",          desc: "Describe it — we'll figure it out" },
 ] as const;
+
+// Maps product name keywords → category id
+const CATEGORY_KEYWORDS: { keywords: string[]; id: string }[] = [
+  { id: "tumblers",       keywords: ["tumbler", "oz", "cooler", "shaker", "cup", "mug", "stainless", "sublimation", "powder coated", "drinkware", "bottle", "flask", "can cooler"] },
+  { id: "cutting-boards", keywords: ["board", "cutting", "charcuterie", "serving", "butcher"] },
+  { id: "kitchen",        keywords: ["decanter", "knife set", "gourmet", "barware", "wine", "whiskey", "cocktail", "bar set"] },
+  { id: "bbq",            keywords: ["bbq", "grill", "grilling", "smoker", "outdoor"] },
+  { id: "knives",         keywords: ["pocket knife", "pocket knives", "blade", "switchblade", "folding knife"] },
+  { id: "wood-boxes",     keywords: ["box", "chest", "valet", "keepsake box", "memory box", "crate"] },
+  { id: "jewelry",        keywords: ["pendant", "earring", "necklace", "bracelet", "jewelry", "jewellery"] },
+  { id: "pens",           keywords: ["pen", "pencil", "stylus", "writing"] },
+  { id: "corporate",      keywords: ["corporate", "business", "bulk", "logo", "branded", "company"] },
+  { id: "wedding",        keywords: ["wedding", "anniversary", "favor", "bridal", "engagement", "bride", "groom"] },
+  { id: "gifts",          keywords: ["laserette", "acrylic", "blank", "keychain", "ornament"] },
+];
+
+function guessCategoryFromName(name: string): string {
+  const lower = name.toLowerCase();
+  for (const { id, keywords } of CATEGORY_KEYWORDS) {
+    if (keywords.some((kw) => lower.includes(kw))) return id;
+  }
+  return "";
+}
 
 const BUDGETS = [
   { value: "",         label: "Select a range" },
@@ -120,7 +143,16 @@ function BackBtn({ onClick }: { onClick: () => void }) {
 
 export default function CustomInquiryForm() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const piece = searchParams.get("piece") ?? "";
+  const guessedCategory = piece ? guessCategoryFromName(piece) : "";
+  const [activePiece, setActivePiece] = useState(piece);
+
+  const dismissPiece = () => {
+    setActivePiece("");
+    setForm((p) => ({ ...p, category: "", description: "" }));
+    router.replace("/custom", { scroll: false });
+  };
 
   const [step, setStep]           = useState(1);
   const [submitted, setSubmitted] = useState(false);
@@ -132,7 +164,7 @@ export default function CustomInquiryForm() {
   const fileInputRef              = useRef<HTMLInputElement>(null);
 
   const [form, setForm] = useState<FormValues>({
-    category: "",
+    category: guessedCategory,
     description: piece ? `I'm interested in the ${piece}. ` : "",
     quantity: "1",
     budget: "",
@@ -261,7 +293,7 @@ export default function CustomInquiryForm() {
   return (
     <div id="inquiry-form-anchor">
       {/* Pre-filled product badge */}
-      {piece && (
+      {activePiece && (
         <div style={{
           display: "inline-flex",
           alignItems: "center",
@@ -275,7 +307,28 @@ export default function CustomInquiryForm() {
           marginBottom: 28,
         }}>
           <span style={{ color: "var(--terracotta)", fontSize: 10 }}>✦</span>
-          Requesting: {piece}
+          Requesting: {activePiece}
+          <button
+            type="button"
+            onClick={dismissPiece}
+            aria-label="Remove selected item"
+            style={{
+              background: "rgba(255,255,255,0.2)",
+              border: "none",
+              borderRadius: "50%",
+              width: 18,
+              height: 18,
+              cursor: "pointer",
+              color: "#fff",
+              fontSize: 12,
+              lineHeight: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 0,
+              marginLeft: 2,
+            }}
+          >×</button>
         </div>
       )}
 
