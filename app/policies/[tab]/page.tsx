@@ -91,6 +91,28 @@ export default async function PoliciesPage({ params }: PageProps) {
                 {t.label}
               </Link>
             ))}
+            {[
+              { label: "Terms & Conditions", href: "/terms" },
+              { label: "Privacy Policy", href: "/privacy" },
+            ].map((t) => (
+              <Link
+                key={t.href}
+                href={t.href}
+                style={{
+                  padding: "12px 20px",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: "var(--muted)",
+                  textDecoration: "none",
+                  borderBottom: "2px solid transparent",
+                  whiteSpace: "nowrap",
+                  transition: "color .2s, border-color .2s",
+                  marginBottom: -1,
+                }}
+              >
+                {t.label}
+              </Link>
+            ))}
           </div>
         </div>
       </section>

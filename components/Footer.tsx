@@ -34,12 +34,14 @@ export function Footer() {
       ],
     },
     {
-      title: "Help",
+      title: "Help & Legal",
       items: [
         { label: "Shipping", href: "/policies/shipping" },
-        { label: "Returns", href: "/policies/returns" },
+        { label: "Returns & Refunds", href: "/policies/returns" },
         { label: "Custom Order Policy", href: "/policies/custom" },
         { label: "FAQ", href: "/policies/faq" },
+        { label: "Terms & Conditions", href: "/terms" },
+        { label: "Privacy Policy", href: "/privacy" },
       ],
     },
   ];
@@ -225,22 +227,22 @@ export function Footer() {
           </div>
           <div style={{ display: "flex", gap: 24 }}>
             <Link
+              href="/privacy"
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms"
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              Terms &amp; Conditions
+            </Link>
+            <Link
               href="/policies/shipping"
               style={{ color: "inherit", textDecoration: "none" }}
             >
-              Privacy
-            </Link>
-            <Link
-              href="/policies/returns"
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              Terms
-            </Link>
-            <Link
-              href="/policies"
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              Accessibility
+              Shipping &amp; Returns
             </Link>
           </div>
         </div>
