@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowIcon } from "@/components/Icons";
 
@@ -118,6 +119,9 @@ function BackBtn({ onClick }: { onClick: () => void }) {
 // ── Main component ────────────────────────────────────────────────────────────
 
 export default function CustomInquiryForm() {
+  const searchParams = useSearchParams();
+  const piece = searchParams.get("piece") ?? "";
+
   const [step, setStep]           = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -129,7 +133,7 @@ export default function CustomInquiryForm() {
 
   const [form, setForm] = useState<FormValues>({
     category: "",
-    description: "",
+    description: piece ? `I'm interested in the ${piece}. ` : "",
     quantity: "1",
     budget: "",
     deadline: "",
@@ -256,6 +260,25 @@ export default function CustomInquiryForm() {
 
   return (
     <div id="inquiry-form-anchor">
+      {/* Pre-filled product badge */}
+      {piece && (
+        <div style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 8,
+          background: "var(--forest)",
+          color: "#fff",
+          borderRadius: "var(--r-pill)",
+          padding: "8px 16px",
+          fontSize: 13,
+          fontWeight: 600,
+          marginBottom: 28,
+        }}>
+          <span style={{ color: "var(--terracotta)", fontSize: 10 }}>✦</span>
+          Requesting: {piece}
+        </div>
+      )}
+
       {/* Progress bar */}
       <div style={{ marginBottom: 36 }}>
         <div style={{ display: "flex", gap: 6, marginBottom: 10 }}>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import CustomInquiryForm from "@/components/CustomInquiryForm";
 
 // ── Process steps data ────────────────────────────────────────────────────────
@@ -270,7 +271,9 @@ export default function CustomPage() {
                 padding: "40px 36px",
                 boxShadow: "var(--shadow-md)",
               }}>
-                <CustomInquiryForm />
+                <Suspense fallback={null}>
+                  <CustomInquiryForm />
+                </Suspense>
               </div>
             </div>
 

@@ -39,52 +39,13 @@ Last updated: 2026-05-27
 
 ---
 
-## Checkout — BLOCKED (waiting on Donna)
+## Checkout — N/A (business pivot)
 
-### The Problem
-
-Wix Headless generates checkout redirect URLs using the **Wix Pages Domain**, which is automatically set to the connected custom domain: `outofjerseycreationshub.com`.
-
-Because DNS for `outofjerseycreationshub.com` points to **Vercel** (our Next.js app), not Wix, checkout redirect URLs like:
-
-```
-https://www.outofjerseycreationshub.com/_api/redirect-session/...
-```
-
-hit Next.js and 404 or fail — they should be hitting Wix's servers.
-
-### What Was Tried (and doesn't fully solve it)
-
-- **Next.js rewrites** in `next.config.ts` to proxy `/_api/*`, `/checkout/*`, `/account/*` to the wixsite.com URL — helps somewhat but Wix embeds the domain in session tokens for every hop in the redirect chain, including the dynamic checkout URL itself. The URL cannot be pre-registered.
-- **Removing callback URLs** from `createRedirectSession` — avoids the `INVALID_REDIRECT_URL` error on that call, but the underlying Pages Domain issue remains.
-
-### The Real Fix (requires Donna)
-
-The Wix Pages Domain is locked to `outofjerseycreationshub.com` because that domain is connected to the site. The domain was registered/connected under **Donna's account (wvpet311@gmail.com)**, who is the site Owner.
-
-**Tracy (Co-Owner) cannot unassign it. Only the Owner can.**
-
-### What Donna Needs to Do
-
-1. Go to **manage.wix.com** and log in as wvpet311@gmail.com
-2. Click **Domains** in the left menu
-3. Find **outofjerseycreationshub.com**
-4. Click the **⋯ (three dots)** next to it
-5. Click **"Unassign from this site"**
-6. Confirm
-
-Once unassigned, the Wix Pages Domain will no longer be outofjerseycreationshub.com and checkout can route correctly.
-
-> ⚠️ People can still visit the site at https://www.outofjerseycreationshub.com — DNS still points to Vercel/Next.js. Only the Wix backend checkout routing changes.
-
----
-
-## After Donna Unassigns the Domain — Cleanup Steps
-
-1. **Remove rewrites from `next.config.ts`** (the `/_api/*`, `/checkout/*`, `/account/*` blocks — no longer needed)
-2. **Remove `NEXT_PUBLIC_WIX_PAGES_DOMAIN`** from `.env.local`
-3. **Test**: Click "Buy Now" on a product → should go to Wix-hosted checkout and complete
-4. **Test**: Add to cart → go to cart → click "Checkout" → same flow
+> **No longer relevant.** The site pivoted in Session 10 (2026-05-28) from an ecommerce store to a portfolio/lead-gen site. Customers do not purchase directly through the website. The Wix checkout flow is not used.
+>
+> Cart infrastructure is preserved in the codebase (`cartContext.tsx`, `BuyBox.tsx`, `app/cart/page.tsx`) for potential future use on `/fan-favorites`, but checkout routing is not a concern right now.
+>
+> Cleanup already done (2026-05-31): Wix proxy rewrites removed from `next.config.ts`, `NEXT_PUBLIC_WIX_PAGES_DOMAIN` removed from `.env.local`. Donna also unassigned the domain from Wix Pages.
 
 ---
 
