@@ -18,7 +18,7 @@ const sections = [
   },
   {
     h: "Custom Order Process",
-    p: "All orders begin with a custom inquiry. We'll reply within 24 hours with a quote and estimated timeline. A 50% deposit is required to reserve your spot in the production queue. The remaining balance is due before your order ships. Quotes are valid for 14 days.",
+    p: "All orders begin with a custom inquiry. We'll reply within 24 hours with a quote and estimated timeline. A $20 design fee is required to begin work on your custom order. The remaining balance is due before your order ships. Quotes are valid for 14 days.",
   },
   {
     h: "Customer-Submitted Designs & Artwork",

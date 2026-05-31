@@ -305,7 +305,7 @@ export const policies = [
       },
       {
         h: "Quote and timeline",
-        p: "I respond within 24 hours with a quote and timeline. Quotes are valid for 14 days. 50% deposit reserves your slot in the studio queue.",
+        p: "I respond within 24 hours with a quote and timeline. Quotes are valid for 14 days. A $20 design fee reserves your slot in the studio queue.",
       },
       {
         h: "Proofs and revisions",
