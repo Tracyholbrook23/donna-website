@@ -95,8 +95,8 @@ function HomeHero() {
       }}
     >
       <Image
-        src="/photos/prod-tumbler-40oz.jpg"
-        alt="Custom engraved 40oz tumbler — Out of Jersey Creations"
+        src="/photos/donna-headshot.jpg"
+        alt="Donna — founder of Out of Jersey Creations"
         fill
         style={{ objectFit: "cover", objectPosition: "center center" }}
         priority

@@ -103,8 +103,8 @@ export default function AboutPage() {
               }}
             >
               <Image
-                src="/photos/prod-cutting-board-wedding.jpg"
-                alt="Out of Jersey Creations — custom engraved wedding cutting board"
+                src="/photos/donna-headshot.jpg"
+                alt="Donna — founder of Out of Jersey Creations"
                 fill
                 style={{ objectFit: "cover", objectPosition: "center center" }}
                 priority

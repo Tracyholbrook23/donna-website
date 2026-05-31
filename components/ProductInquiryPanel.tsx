@@ -14,7 +14,7 @@ export function ProductInquiryPanel({ product }: Props) {
   const options = product.productOptions ?? [];
 
   // Build a pre-filled custom request URL
-  const inquiryHref = `/custom?piece=${encodeURIComponent(productName)}`;
+  const inquiryHref = `/custom?piece=${encodeURIComponent(productName)}#inquiry-form-anchor`;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
