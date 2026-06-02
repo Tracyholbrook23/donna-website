@@ -1,30 +1,33 @@
 /**
  * POST /api/checkout
  *
- * Creates a Stripe Checkout session and returns the session URL.
+ * Creates a Square Payment Link and returns the checkout URL.
  *
  * Required environment variables (set in .env.local and Vercel dashboard):
- *   STRIPE_SECRET_KEY   — your Stripe secret key  (sk_live_… or sk_test_…)
+ *   SQUARE_ACCESS_TOKEN  — from Square Developer Dashboard → your app → Access Tokens
+ *   SQUARE_LOCATION_ID   — from Square Developer Dashboard → Locations
+ *   SQUARE_ENVIRONMENT   — "production" for live, anything else uses sandbox
  *   NEXT_PUBLIC_SITE_URL — full origin, e.g. https://outofjerseycreations.com
  *
- * NEVER expose STRIPE_SECRET_KEY in frontend / client code.
+ * NEVER expose SQUARE_ACCESS_TOKEN in frontend / client code.
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
+import { SquareClient, SquareEnvironment } from "square";
+import { randomUUID } from "crypto";
 
-// Stripe is instantiated inside the handler (not at module level) so that
-// Vercel's build step doesn't fail when the env var isn't present yet.
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://outofjerseycreations.com";
 
 export async function POST(req: NextRequest) {
-  // Lazy-init so the module loads fine at build time without the env var
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    // @ts-ignore
-    apiVersion: "2024-06-20",
+  // Lazy-init so the module loads fine at build time without env vars present
+  const client = new SquareClient({
+    token: process.env.SQUARE_ACCESS_TOKEN!,
+    environment:
+      process.env.SQUARE_ENVIRONMENT === "production"
+        ? SquareEnvironment.Production
+        : SquareEnvironment.Sandbox,
   });
-
-  const SITE_URL =
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://outofjerseycreations.com";
 
   try {
     const body = await req.json();
@@ -35,80 +38,71 @@ export async function POST(req: NextRequest) {
       phone?: string;
       orderRef?: string;
       note?: string;
-      amount?: number; // in dollars, e.g. 45.00
+      amount?: number; // dollars
     };
 
-    // ── Validate ─────────────────────────────────────────────────────────────
     if (!["deposit", "balance", "invoice"].includes(type)) {
       return NextResponse.json({ error: "Invalid payment type." }, { status: 400 });
     }
 
-    let unitAmount: number;
-    let productName: string;
-    let description: string;
-    const metadata: Record<string, string> = { type };
-
-    if (name)     metadata.customer_name  = name;
-    if (email)    metadata.customer_email = email;
-    if (phone)    metadata.customer_phone = phone;
-    if (orderRef) metadata.order_ref      = orderRef;
-    if (note)     metadata.note           = note;
+    let amountCents: bigint;
+    let itemName: string;
+    let itemNote: string;
 
     if (type === "deposit") {
-      // Fixed $20 design fee
-      unitAmount  = 2000; // cents
-      productName = "Custom Order Deposit — Out of Jersey Creations";
-      description =
-        "Non-refundable $20 design fee. Reserves your studio slot and covers initial design work. Applied toward your final order total per Donna's custom order policy.";
+      amountCents = BigInt(2000); // $20.00
+      itemName    = "Custom Order Deposit — Out of Jersey Creations";
+      itemNote    =
+        "Non-refundable $20 design fee. Reserves your studio slot and covers initial design work. Applied toward your final order total.";
     } else {
-      // balance or invoice — customer-supplied amount
       if (!amount || isNaN(amount) || amount < 1) {
         return NextResponse.json(
           { error: "Please enter a valid payment amount." },
           { status: 400 }
         );
       }
-      unitAmount = Math.round(amount * 100); // dollars → cents
+      amountCents = BigInt(Math.round(amount * 100));
 
       if (type === "balance") {
-        productName = "Remaining Balance Payment — Out of Jersey Creations";
-        description =
-          orderRef
-            ? `Final balance for order: ${orderRef}`
-            : "Final balance payment for a confirmed custom order.";
+        itemName = "Remaining Balance — Out of Jersey Creations";
+        itemNote = orderRef
+          ? `Final balance for order: ${orderRef}`
+          : "Final balance for a confirmed custom order.";
       } else {
-        productName = "Custom Invoice Payment — Out of Jersey Creations";
-        description = note
-          ? `Custom invoice: ${note}`
-          : "Custom or bulk order payment.";
+        itemName = "Custom Invoice — Out of Jersey Creations";
+        itemNote = note ? `Invoice: ${note}` : "Custom or bulk order payment.";
       }
     }
 
-    // ── Create session ────────────────────────────────────────────────────────
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            unit_amount: unitAmount,
-            product_data: {
-              name: productName,
-              description,
-              images: [`${SITE_URL}/og-image.jpg`],
-            },
-          },
-          quantity: 1,
-        },
-      ],
-      mode: "payment",
-      customer_email: email ?? undefined,
-      metadata,
-      success_url: `${SITE_URL}/pay/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url:  `${SITE_URL}/pay?canceled=1`,
+    // ── Create Square Payment Link (quickPay = simplest single-item flow) ─────
+    const response = await client.checkout.paymentLinks.create({
+      idempotencyKey: randomUUID(),
+      quickPay: {
+        name:       itemName,
+        priceMoney: { amount: amountCents, currency: "USD" },
+        locationId: process.env.SQUARE_LOCATION_ID!,
+      },
+      checkoutOptions: {
+        redirectUrl: `${SITE_URL}/pay/success`,
+      },
+      prePopulatedData: {
+        ...(email ? { buyerEmail: email } : {}),
+        ...(name  ? { buyerPhoneNumber: phone } : {}),
+      },
+      description: [
+        itemNote,
+        name     && `Customer: ${name}`,
+        email    && `Email: ${email}`,
+        phone    && `Phone: ${phone}`,
+        orderRef && `Ref: ${orderRef}`,
+        note     && `Note: ${note}`,
+      ].filter(Boolean).join(" | "),
     });
 
-    return NextResponse.json({ url: session.url });
+    const url = response.paymentLink?.url;
+    if (!url) throw new Error("Square did not return a checkout URL.");
+
+    return NextResponse.json({ url });
   } catch (err) {
     console.error("[/api/checkout]", err);
     return NextResponse.json(
