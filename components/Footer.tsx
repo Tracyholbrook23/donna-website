@@ -223,7 +223,7 @@ export function Footer() {
         >
           <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
             <span>&copy; {new Date().getFullYear()} Out of Jersey Creations &middot; Custom Laser Engraving &middot; Woman Owned &amp; Operated.</span>
-            <span>Site by Tracy</span>
+            <span>Site by Tracy Holbrook</span>
           </div>
           <div style={{ display: "flex", gap: 24 }}>
             <Link
