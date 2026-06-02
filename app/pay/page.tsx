@@ -23,8 +23,8 @@ const btnPrimary: React.CSSProperties = {
   width: "100%",
 };
 
-// ── Deposit card ──────────────────────────────────────────────────────────────
-function DepositCard() {
+// ── Commission Fee card ──────────────────────────────────────────────────────────────
+function CommissionFeeCard() {
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState("");
 
@@ -83,15 +83,15 @@ function DepositCard() {
           lineHeight: 1.05,
         }}>
           Custom Order{" "}
-          <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>Deposit</em>
+          <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>Commission Fee</em>
         </h2>
         <p style={{ fontSize: 15, color: "var(--muted)", lineHeight: 1.6, margin: 0 }}>
-          Ready to start your custom piece? A $20 design fee reserves your studio slot and
-          covers Donna&rsquo;s initial design work. It&rsquo;s non-refundable and applied to
-          your final total per{" "}
+          Ready to start your custom piece? The $20 commission fee reserves your studio slot
+          and covers Donna&rsquo;s design time. It&rsquo;s non-refundable and is separate from
+          your final order total. See{" "}
           <Link href="/policies" style={{ color: "var(--terracotta)", textDecoration: "underline" }}>
             our custom order policy
-          </Link>.
+          </Link>{" "}for full details.
         </p>
       </div>
 
@@ -108,7 +108,7 @@ function DepositCard() {
           <p style={{ margin: "0 0 2px", fontSize: 13, fontWeight: 600, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Design fee</p>
           <p style={{ margin: 0, fontSize: 36, fontWeight: 700, fontFamily: "var(--font-display)", color: "var(--ink)" }}>$20.00</p>
         </div>
-        <p style={{ margin: 0, fontSize: 13, color: "var(--muted)", lineHeight: 1.5, textAlign: "right" }}>Applied to your<br />final balance</p>
+        <p style={{ margin: 0, fontSize: 13, color: "var(--muted)", lineHeight: 1.5, textAlign: "right" }}>Non-refundable<br />separate from final total</p>
       </div>
 
       {/* Tip */}
@@ -136,7 +136,7 @@ function DepositCard() {
         disabled={loading}
         style={{ ...btnPrimary, opacity: loading ? 0.7 : 1 }}
       >
-        {loading ? "Redirecting…" : "Pay $20 Deposit — Secure Checkout"}
+        {loading ? "Redirecting…" : "Pay $20 — Secure Checkout"}
       </button>
 
       <p style={{ fontSize: 12, color: "var(--muted-soft)", textAlign: "center", margin: 0 }}>
@@ -187,7 +187,7 @@ export default function PayPage() {
               </em>
             </h1>
             <p style={{ fontSize: 18, color: "var(--muted)", maxWidth: 500, lineHeight: 1.6, margin: "0 auto" }}>
-              Pay your $20 design deposit to get your custom order started.
+              Pay the $20 commission fee to get your custom order started.
               Donna will be in touch within 24 hours.
             </p>
           </div>
@@ -209,7 +209,7 @@ export default function PayPage() {
             {[
               { n: "01", t: "Submit an inquiry", d: "Fill out the custom order form or DM on Instagram." },
               { n: "02", t: "Get your quote",    d: "Donna confirms your design and price within 24 hrs." },
-              { n: "03", t: "Pay deposit",       d: "Pay $20 here to reserve your slot and kick things off." },
+              { n: "03", t: "Pay commission fee",  d: "Pay $20 here to reserve your slot and kick things off." },
             ].map(s => (
               <div key={s.n} style={{ background: "var(--cream-2)", padding: "24px 20px" }}>
                 <p style={{ margin: "0 0 6px", fontFamily: "var(--font-display)", fontSize: 13, color: "var(--terracotta)", fontWeight: 600 }}>{s.n}</p>
@@ -228,10 +228,10 @@ export default function PayPage() {
         </Suspense>
       </div>
 
-      {/* ── Deposit card ────────────────────────────────────────────────── */}
+      {/* ── Commission Fee card ────────────────────────────────────────────────── */}
       <section style={{ padding: "0 0 80px" }}>
         <div className="container reveal">
-          <DepositCard />
+          <CommissionFeeCard />
         </div>
       </section>
 

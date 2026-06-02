@@ -299,10 +299,10 @@ export default function CustomPage() {
               <p className="eyebrow" style={{ marginBottom: 10 }}>Already got your quote?</p>
               <h3 className="display" style={{ fontSize: "clamp(24px, 3vw, 36px)", margin: "0 0 8px", fontWeight: 400 }}>
                 Ready to pay your{" "}
-                <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>deposit or balance?</em>
+                <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>commission fee?</em>
               </h3>
               <p style={{ fontSize: 15, color: "var(--muted)", margin: 0 }}>
-                Once Donna confirms your design and price, head to the payment page to get started.
+                Once Donna confirms your order, head to the payment page to pay your commission fee and get started.
               </p>
             </div>
             <Link

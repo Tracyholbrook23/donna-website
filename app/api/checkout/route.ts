@@ -51,9 +51,9 @@ export async function POST(req: NextRequest) {
 
     if (type === "deposit") {
       amountCents = BigInt(2000); // $20.00
-      itemName    = "Custom Order Deposit — Out of Jersey Creations";
+      itemName    = "Custom Commission Fee — Out of Jersey Creations";
       itemNote    =
-        "Non-refundable $20 design fee. Reserves your studio slot and covers initial design work. Applied toward your final order total.";
+        "Non-refundable $20 commission fee. Reserves your studio slot and covers Donna's design time. This fee is not applied toward your final total.";
     } else {
       if (!amount || isNaN(amount) || amount < 1) {
         return NextResponse.json(
