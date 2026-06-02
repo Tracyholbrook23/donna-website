@@ -281,6 +281,41 @@ export default function CustomPage() {
         </div>
       </section>
 
+      {/* ── Already have a quote? Pay here ───────────────────────────────── */}
+      <section style={{ padding: "0 0 80px" }}>
+        <div className="container" style={{ maxWidth: 960 }}>
+          <div style={{
+            background: "var(--cream-2)",
+            border: "1.5px solid var(--line)",
+            borderRadius: "var(--r-lg)",
+            padding: "36px 40px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 32,
+            flexWrap: "wrap",
+          }}>
+            <div>
+              <p className="eyebrow" style={{ marginBottom: 10 }}>Already got your quote?</p>
+              <h3 className="display" style={{ fontSize: "clamp(24px, 3vw, 36px)", margin: "0 0 8px", fontWeight: 400 }}>
+                Ready to pay your{" "}
+                <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>deposit or balance?</em>
+              </h3>
+              <p style={{ fontSize: 15, color: "var(--muted)", margin: 0 }}>
+                Once Donna confirms your design and price, head to the payment page to get started.
+              </p>
+            </div>
+            <Link
+              href="/pay"
+              className="btn btn-primary"
+              style={{ whiteSpace: "nowrap", padding: "14px 28px", fontSize: 15 }}
+            >
+              Go to Payment Page →
+            </Link>
+          </div>
+        </div>
+      </section>
+
     </main>
   );
 }

@@ -48,6 +48,7 @@ export function Nav() {
     { label: "Custom Orders", href: "/custom" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
+    { label: "Pay", href: "/pay" },
   ];
 
   return (
@@ -328,13 +329,22 @@ export function Nav() {
             >
               Policies & FAQ
             </Link>
-            <Link
-              href="/custom"
-              className="btn btn-primary"
-              style={{ marginTop: 20, width: "100%", justifyContent: "center", display: "flex" }}
-            >
-              Start Custom Order <ArrowIcon size={14} />
-            </Link>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
+              <Link
+                href="/custom"
+                className="btn btn-primary"
+                style={{ width: "100%", justifyContent: "center", display: "flex" }}
+              >
+                Start Custom Order <ArrowIcon size={14} />
+              </Link>
+              <Link
+                href="/pay"
+                className="btn btn-secondary"
+                style={{ width: "100%", justifyContent: "center", display: "flex" }}
+              >
+                Pay for My Order <ArrowIcon size={14} />
+              </Link>
+            </div>
           </div>
         )}
       </header>
