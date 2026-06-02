@@ -13,17 +13,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
-// ── Stripe client (server-side only) ──────────────────────────────────────────
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore — pin to a recent API version
-  apiVersion: "2024-06-20",
-});
-
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://outofjerseycreations.com";
+// Stripe is instantiated inside the handler (not at module level) so that
+// Vercel's build step doesn't fail when the env var isn't present yet.
 
 export async function POST(req: NextRequest) {
+  // Lazy-init so the module loads fine at build time without the env var
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    // @ts-ignore
+    apiVersion: "2024-06-20",
+  });
+
+  const SITE_URL =
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://outofjerseycreations.com";
+
   try {
     const body = await req.json();
     const { type, name, email, phone, orderRef, note, amount } = body as {
