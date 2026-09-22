@@ -534,7 +534,6 @@ select.field {
 .video-scroll-strip {
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x proximity;
   overscroll-behavior-x: contain;
   scrollbar-width: auto;
   scrollbar-color: var(--terracotta) var(--cream-2);

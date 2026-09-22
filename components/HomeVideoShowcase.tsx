@@ -25,6 +25,10 @@ const videos = [
 export function HomeVideoShowcase() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const directionRef = useRef<1 | -1>(1);
+  const manualPauseUntilRef = useRef(0);
+  const hoveredRef = useRef(false);
+  const pointerDownRef = useRef(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -55,7 +59,43 @@ export function HomeVideoShowcase() {
     return () => window.removeEventListener("resize", updateActiveIndex);
   }, [updateActiveIndex]);
 
+  const pauseAutoScroll = useCallback(() => {
+    manualPauseUntilRef.current = performance.now() + 8000;
+  }, []);
+
+  // Keep the row moving gently until someone browses it manually.
+  useEffect(() => {
+    const scroller = scrollRef.current;
+    if (!scroller) return;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let visible = false;
+    let frame = 0;
+    let previousTime = 0;
+    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; });
+    observer.observe(scroller);
+
+    const tick = (now: number) => {
+      const elapsed = previousTime ? Math.min((now - previousTime) / 1000, 0.05) : 0;
+      previousTime = now;
+      const hasFocus = scroller.contains(document.activeElement);
+      if (visible && !reducedMotion && lightboxIndex === null && !hoveredRef.current &&
+          !pointerDownRef.current && !hasFocus && now >= manualPauseUntilRef.current) {
+        const end = scroller.scrollWidth - scroller.clientWidth;
+        if (end > 0) {
+          let next = scroller.scrollLeft + directionRef.current * 50 * elapsed;
+          if (next >= end) { next = end; directionRef.current = -1; }
+          if (next <= 0) { next = 0; directionRef.current = 1; }
+          scroller.scrollLeft = next;
+        }
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => { observer.disconnect(); cancelAnimationFrame(frame); };
+  }, [lightboxIndex]);
+
   const scrollVideos = (direction: -1 | 1) => {
+    pauseAutoScroll();
     const scroller = scrollRef.current;
     const firstCard = scroller?.querySelector<HTMLElement>("[data-video-card]");
     if (!scroller || !firstCard) return;
@@ -144,6 +184,13 @@ export function HomeVideoShowcase() {
         ref={scrollRef}
         className="video-scroll-strip"
         onScroll={updateActiveIndex}
+        onMouseEnter={() => { if (window.matchMedia("(hover: hover)").matches) hoveredRef.current = true; }}
+        onMouseLeave={() => { hoveredRef.current = false; pauseAutoScroll(); }}
+        onPointerDown={() => { pointerDownRef.current = true; pauseAutoScroll(); }}
+        onPointerUp={() => { pointerDownRef.current = false; pauseAutoScroll(); }}
+        onPointerCancel={() => { pointerDownRef.current = false; pauseAutoScroll(); }}
+        onWheel={pauseAutoScroll}
+        onKeyDownCapture={pauseAutoScroll}
         aria-label="Watch us work videos"
       >
         {/* Track */}
