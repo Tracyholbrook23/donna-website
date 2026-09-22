@@ -1,6 +1,8 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
+import Image from "next/image";
+import { ArrowIcon, SiteIcon } from "@/components/Icons";
 
 const videos = [
   { src: "/videos/laser-engraving-02.mp4", label: "Custom tumbler" },
@@ -20,47 +22,50 @@ const videos = [
   { src: "/videos/laser-engraving-17.mp4", label: "Championship piece" },
 ];
 
-// Duplicate for seamless loop
-const repeated = [...videos, ...videos];
-
 export function HomeVideoShowcase() {
-  const trackRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const posRef = useRef(0);
-  const rafRef = useRef<number>(0);
-  const pausedRef = useRef(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(true);
 
-  // RAF auto-scroll
   useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    const SPEED = 50; // px/sec
-    let lastTime: number | null = null;
-
-    function tick(now: number) {
-      if (lastTime === null) lastTime = now;
-      const delta = (now - lastTime) / 1000;
-      lastTime = now;
-
-      if (!pausedRef.current) {
-        const half = track!.scrollWidth / 2;
-        posRef.current += SPEED * delta;
-        if (posRef.current >= half) posRef.current -= half;
-        track!.style.transform = `translateX(-${posRef.current}px)`;
-      } else {
-        lastTime = now; // reset so no jump on resume
-      }
-
-      rafRef.current = requestAnimationFrame(tick);
-    }
-
-    rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
+    const media = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
   }, []);
 
-  // Intersection Observer - play videos in view (mobile autoplay fix)
+  const updateActiveIndex = useCallback(() => {
+    const scroller = scrollRef.current;
+    const firstCard = scroller?.querySelector<HTMLElement>("[data-video-card]");
+    if (!scroller || !firstCard) return;
+    const step = firstCard.offsetWidth + 10;
+    setActiveIndex(Math.min(videos.length - 1, Math.round(scroller.scrollLeft / step)));
+    setCanScrollPrev(scroller.scrollLeft > 2);
+    setCanScrollNext(scroller.scrollLeft + scroller.clientWidth < scroller.scrollWidth - 2);
+  }, []);
+
   useEffect(() => {
+    updateActiveIndex();
+    window.addEventListener("resize", updateActiveIndex);
+    return () => window.removeEventListener("resize", updateActiveIndex);
+  }, [updateActiveIndex]);
+
+  const scrollVideos = (direction: -1 | 1) => {
+    const scroller = scrollRef.current;
+    const firstCard = scroller?.querySelector<HTMLElement>("[data-video-card]");
+    if (!scroller || !firstCard) return;
+    const cardsPerClick = window.innerWidth < 768 ? 1 : 3;
+    scroller.scrollBy({ left: direction * (firstCard.offsetWidth + 10) * cardsPerClick, behavior: "smooth" });
+  };
+
+  // Desktop videos load only when their cards enter the viewport.
+  useEffect(() => {
+    if (isMobile) return;
     const observers: IntersectionObserver[] = [];
     videoRefs.current.forEach((video) => {
       if (!video) return;
@@ -75,7 +80,7 @@ export function HomeVideoShowcase() {
       observers.push(obs);
     });
     return () => observers.forEach((o) => o.disconnect());
-  }, []);
+  }, [isMobile]);
 
   // Lightbox keyboard nav
   useEffect(() => {
@@ -96,7 +101,7 @@ export function HomeVideoShowcase() {
   }, [lightboxIndex]);
 
   return (
-    <section style={{ padding: "80px 0 60px", overflow: "hidden" }}>
+    <section id="watch-us-work" style={{ padding: "80px 0 60px", overflow: "hidden" }}>
       <div className="container">
         <div
           className="reveal"
@@ -125,40 +130,47 @@ export function HomeVideoShowcase() {
         </div>
       </div>
 
-      {/* Auto-scrolling strip */}
-      <div
-        style={{ position: "relative", overflow: "hidden" }}
-        onMouseEnter={() => { pausedRef.current = true; }}
-        onMouseLeave={() => { pausedRef.current = false; }}
-      >
-        {/* Fade edges */}
-        <div aria-hidden style={{
-          position: "absolute", left: 0, top: 0, bottom: 0, width: 80, zIndex: 5,
-          background: "linear-gradient(to right, var(--cream) 10%, transparent)",
-          pointerEvents: "none",
-        }} />
-        <div aria-hidden style={{
-          position: "absolute", right: 0, top: 0, bottom: 0, width: 80, zIndex: 5,
-          background: "linear-gradient(to left, var(--cream) 10%, transparent)",
-          pointerEvents: "none",
-        }} />
+      <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 14, marginBottom: 16 }}>
+        <p style={{ margin: 0, color: "var(--muted)", fontSize: 13 }}>Swipe or use the arrows to browse all {videos.length} videos.</p>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <button type="button" onClick={() => scrollVideos(-1)} aria-label="Previous videos" disabled={!canScrollPrev} style={{ width: 40, height: 40, borderRadius: "50%", border: "1px solid var(--line)", background: "var(--cream)", color: "var(--ink)", display: "grid", placeItems: "center", cursor: !canScrollPrev ? "default" : "pointer", opacity: !canScrollPrev ? .4 : 1 }}><ArrowIcon dir="left" size={19} /></button>
+          <span aria-live="polite" style={{ minWidth: 55, textAlign: "center", fontSize: 13, color: "var(--muted)" }}>{activeIndex + 1} / {videos.length}</span>
+          <button type="button" onClick={() => scrollVideos(1)} aria-label="Next videos" disabled={!canScrollNext} style={{ width: 40, height: 40, borderRadius: "50%", border: "1px solid var(--line)", background: "var(--cream)", color: "var(--ink)", display: "grid", placeItems: "center", cursor: !canScrollNext ? "default" : "pointer", opacity: !canScrollNext ? .4 : 1 }}><ArrowIcon size={19} /></button>
+        </div>
+      </div>
 
+      {/* Native horizontal scrolling supports touch, trackpads, and a visible scrollbar. */}
+      <div
+        ref={scrollRef}
+        className="video-scroll-strip"
+        onScroll={updateActiveIndex}
+        aria-label="Watch us work videos"
+      >
         {/* Track */}
         <div
-          ref={trackRef}
           style={{
             display: "flex",
             gap: 10,
             width: "max-content",
-            willChange: "transform",
-            paddingLeft: 10,
+            padding: "0 24px 14px",
           }}
         >
-          {repeated.map((v, i) => (
-            <div
-              key={i}
-              onClick={() => setLightboxIndex(i % videos.length)}
-              title="Click to enlarge"
+          {videos.map((v, i) => {
+            const poster = v.src.replace("/videos/", "/video-posters/").replace(".mp4", ".webp");
+            return <div
+              key={v.src}
+              data-video-card
+              onClick={() => setLightboxIndex(i)}
+              title={`Play ${v.label} video`}
+              role="button"
+              tabIndex={0}
+              aria-label={`Play ${v.label} video`}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setLightboxIndex(i);
+                }
+              }}
               style={{
                 position: "relative",
                 borderRadius: "var(--r-md)",
@@ -168,18 +180,29 @@ export function HomeVideoShowcase() {
                 flexShrink: 0,
                 background: "var(--ink)",
                 cursor: "zoom-in",
+                scrollSnapAlign: "start",
               }}
             >
-              <video
-                ref={(el) => { videoRefs.current[i] = el; }}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                src={v.src}
-              />
+              {isMobile ? (
+                <Image
+                  src={poster}
+                  alt={v.label}
+                  fill
+                  sizes="250px"
+                  style={{ objectFit: "cover" }}
+                />
+              ) : (
+                <video
+                  ref={(el) => { videoRefs.current[i] = el; }}
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  poster={poster}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  src={v.src}
+                />
+              )}
               <div style={{
                 position: "absolute", bottom: 0, left: 0, right: 0,
                 background: "linear-gradient(transparent, rgba(0,0,0,0.65))",
@@ -197,10 +220,10 @@ export function HomeVideoShowcase() {
                 width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center",
                 color: "white", fontSize: 13, pointerEvents: "none", opacity: 0.7,
               }}>
-                ⤢
+                <SiteIcon name="expand" size={13} />
               </div>
-            </div>
-          ))}
+            </div>;
+          })}
         </div>
       </div>
 
@@ -385,6 +408,9 @@ export function HomeVideoShowcase() {
               muted
               loop
               playsInline
+              controls
+              preload="metadata"
+              poster={videos[lightboxIndex].src.replace("/videos/", "/video-posters/").replace(".mp4", ".webp")}
               style={{
                 width: "100%",
                 height: "100%",

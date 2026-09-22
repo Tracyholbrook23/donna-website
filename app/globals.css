@@ -530,9 +530,19 @@ select.field {
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--clay); }
 
-/* ── Hide scrollbar on video strip ──────────────── */
-.video-scroll-strip::-webkit-scrollbar { display: none; }
-.video-scroll-strip { scrollbar-width: none; -ms-overflow-style: none; }
+/* Video gallery: keep touch scrolling and its progress bar visible. */
+.video-scroll-strip {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+  scrollbar-width: auto;
+  scrollbar-color: var(--terracotta) var(--cream-2);
+  touch-action: pan-x;
+}
+.video-scroll-strip::-webkit-scrollbar { height: 10px; }
+.video-scroll-strip::-webkit-scrollbar-track { background: var(--cream-2); }
+.video-scroll-strip::-webkit-scrollbar-thumb { background: var(--terracotta); border-radius: 999px; }
 
 /* ── Selection ───────────────────────────────────── */
 ::selection { background: var(--terracotta); color: var(--cream); }

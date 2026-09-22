@@ -95,7 +95,7 @@ export type SiteIconName =
   | "drinkware" | "board" | "wine" | "flame" | "knife" | "box"
   | "jewelry" | "pen" | "briefcase" | "ring" | "gift" | "sparkle"
   | "file" | "clock" | "lock" | "mail" | "card" | "check"
-  | "info" | "truck" | "shield" | "pencil";
+  | "info" | "truck" | "shield" | "pencil" | "expand";
 
 /** Consistent line icons for category cards and small site callouts. */
 export function SiteIcon({ name, size = 22 }: { name: SiteIconName; size?: number }) {
@@ -122,6 +122,7 @@ export function SiteIcon({ name, size = 22 }: { name: SiteIconName; size?: numbe
     truck: <><path d="M2 5h12v12H2zM14 9h4l4 4v4h-8M2 17h2M14 17h2"/><circle cx="7" cy="18" r="2"/><circle cx="19" cy="18" r="2"/></>,
     shield: <><path d="m12 2 8 3v6c0 5-3 9-8 11-5-2-8-6-8-11V5l8-3Z"/><path d="m8 12 3 3 5-6"/></>,
     pencil: <><path d="m3 21 4.5-1 12-12a2 2 0 0 0-3-3l-12 12L3 21ZM15 7l3 3"/></>,
+    expand: <><path d="M9 3H3v6M15 3h6v6M3 15v6h6M21 15v6h-6"/><path d="m3 3 7 7m11-7-7 7M3 21l7-7m11 7-7-7"/></>,
   };
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">{paths[name]}</svg>;
 }
