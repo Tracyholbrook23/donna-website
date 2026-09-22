@@ -4,6 +4,7 @@ import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { collections } from "@/lib/data";
+import { belongsToCollection } from "@/lib/productCollection";
 import { ArrowIcon, SiteIcon } from "@/components/Icons";
 import type { ProductType } from "@/components/ProductGlyph";
 import { ProductCardMono } from "@/components/ProductCardMono";
@@ -81,7 +82,7 @@ export function ShopClient({ initialProducts, initialCollection }: Props) {
     const withCounts = sorted.map((c) => ({
       ...c,
       count: c.wixId
-        ? initialProducts.filter((p) => (p.collectionIds ?? []).includes(c.wixId)).length
+        ? initialProducts.filter((p) => belongsToCollection(p, c)).length
         : 0,
     }));
     return [
@@ -105,7 +106,7 @@ export function ShopClient({ initialProducts, initialCollection }: Props) {
       const match = collections.find((c) => c.id === activeCollection);
       const wixId = match?.wixId;
       if (wixId) {
-        items = items.filter((p) => (p.collectionIds ?? []).includes(wixId));
+        items = items.filter((p) => belongsToCollection(p, match));
       } else {
         items = [];
       }

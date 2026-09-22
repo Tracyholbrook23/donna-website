@@ -1,5 +1,6 @@
 import { wixClient } from "@/lib/wixClient";
 import { collections } from "@/lib/data";
+import { belongsToCollection } from "@/lib/productCollection";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -39,11 +40,7 @@ export async function GET(req: NextRequest) {
     }
 
     const all = [...page1.items, ...page2items];
-    const filtered = all.filter((p) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const ids: string[] = (p as any).collectionIds ?? [];
-      return ids.includes(wixId);
-    });
+    const filtered = all.filter((p) => belongsToCollection(p, match));
 
     return NextResponse.json(filtered);
   } catch (err) {
