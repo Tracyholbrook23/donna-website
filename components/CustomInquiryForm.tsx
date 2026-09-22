@@ -19,7 +19,7 @@ const CATEGORIES = [
   { id: "corporate",     emoji: "💼", label: "Corporate / Business",    desc: "Bulk branded gifts, logo engraving" },
   { id: "wedding",       emoji: "💍", label: "Wedding & Events",        desc: "Party sets, favors, anniversary" },
   { id: "gifts",         emoji: "🎁", label: "Gifts & Keepsakes",       desc: "Laserette, acrylic, one-offs" },
-  { id: "other",         emoji: "✦",  label: "Something Else",          desc: "Describe it — we'll figure it out" },
+  { id: "other",         emoji: "✦",  label: "Something Else",          desc: "Describe it - we'll figure it out" },
 ] as const;
 
 // Maps product name keywords → category id
@@ -266,7 +266,7 @@ export default function CustomInquiryForm() {
           <em style={{ fontFamily: "var(--font-display)", fontStyle: "italic", color: "var(--terracotta)" }}>good hands.</em>
         </h3>
         <p style={{ fontSize: 16, color: "var(--muted)", maxWidth: 440, margin: "0 auto 12px", lineHeight: 1.65 }}>
-          Donna will review your vision and reach out within 24 hours — usually faster. Once you connect,
+          Donna will review your vision and reach out within 24 hours - usually faster. Once you connect,
           she&rsquo;ll send a personalized quote and next steps.
         </p>
         <p style={{ fontSize: 13, color: "var(--muted-soft)", maxWidth: 380, margin: "0 auto 40px", lineHeight: 1.6 }}>
@@ -413,7 +413,7 @@ export default function CustomInquiryForm() {
             Tell me your vision.
           </h3>
           <p style={{ fontSize: 14, color: "var(--muted)", marginBottom: 28, lineHeight: 1.5 }}>
-            The more detail, the better — but a rough idea is all you need. Donna will fill in the rest.
+            The more detail, the better - but a rough idea is all you need. Donna will fill in the rest.
           </p>
 
           {/* Description */}
@@ -422,7 +422,7 @@ export default function CustomInquiryForm() {
             <textarea
               value={form.description}
               onChange={(e) => set("description", e.target.value)}
-              placeholder={"Who is this for? What should it say or show?\nWhat material, size, or style do you have in mind?\nAny specific words, dates, artwork, or logo?\n\nRough ideas are totally fine — we'll work through the details together."}
+              placeholder={"Who is this for? What should it say or show?\nWhat material, size, or style do you have in mind?\nAny specific words, dates, artwork, or logo?\n\nRough ideas are totally fine - we'll work through the details together."}
               rows={6}
               required
               style={{ ...inputBase, resize: "vertical", minHeight: 140 }}
@@ -695,7 +695,7 @@ export default function CustomInquiryForm() {
               </p>
               <p style={{ fontSize: 12, color: "var(--ink)", margin: 0, lineHeight: 1.6, opacity: 0.8 }}>
                 After Donna reviews your brief, she&rsquo;ll send a quote. A $20 non-refundable initiation fee is
-                collected before design work begins — it&rsquo;s credited toward your final total when
+                collected before design work begins - it&rsquo;s credited toward your final total when
                 the piece is completed.
               </p>
             </div>

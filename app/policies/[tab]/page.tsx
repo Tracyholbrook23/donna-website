@@ -55,7 +55,7 @@ export default async function PoliciesPage({ params }: PageProps) {
               maxWidth: 540,
             }}
           >
-            Everything you need to know — no legalese, no surprises.
+            Everything you need to know - no legalese, no surprises.
           </p>
 
           {/* Tab navigation */}
@@ -282,7 +282,7 @@ function FaqRow({
   a: string;
   isLast: boolean;
 }) {
-  // Server-rendered accordion — static expanded for now
+  // Server-rendered accordion - static expanded for now
   // (For interactive accordion, wrap FaqContent in a client component)
   return (
     <div

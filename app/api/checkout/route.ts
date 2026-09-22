@@ -4,10 +4,10 @@
  * Creates a Square Payment Link and returns the checkout URL.
  *
  * Required environment variables (set in .env.local and Vercel dashboard):
- *   SQUARE_ACCESS_TOKEN  — from Square Developer Dashboard → your app → Access Tokens
- *   SQUARE_LOCATION_ID   — from Square Developer Dashboard → Locations
- *   SQUARE_ENVIRONMENT   — "production" for live, anything else uses sandbox
- *   NEXT_PUBLIC_SITE_URL — full origin, e.g. https://outofjerseycreations.com
+ *   SQUARE_ACCESS_TOKEN - from Square Developer Dashboard → your app → Access Tokens
+ *   SQUARE_LOCATION_ID - from Square Developer Dashboard → Locations
+ *   SQUARE_ENVIRONMENT - "production" for live, anything else uses sandbox
+ *   NEXT_PUBLIC_SITE_URL - full origin, e.g. https://outofjerseycreations.com
  *
  * NEVER expose SQUARE_ACCESS_TOKEN in frontend / client code.
  */
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
 
     if (type === "deposit") {
       amountCents = BigInt(2000); // $20.00
-      itemName    = "Custom Commission Fee — Out of Jersey Creations";
+      itemName    = "Custom Commission Fee - Out of Jersey Creations";
       itemNote    =
         "Non-refundable $20 commission fee. Reserves your studio slot and covers Donna's design time. This fee is not applied toward your final total.";
     } else {
@@ -64,12 +64,12 @@ export async function POST(req: NextRequest) {
       amountCents = BigInt(Math.round(amount * 100));
 
       if (type === "balance") {
-        itemName = "Remaining Balance — Out of Jersey Creations";
+        itemName = "Remaining Balance - Out of Jersey Creations";
         itemNote = orderRef
           ? `Final balance for order: ${orderRef}`
           : "Final balance for a confirmed custom order.";
       } else {
-        itemName = "Custom Invoice — Out of Jersey Creations";
+        itemName = "Custom Invoice - Out of Jersey Creations";
         itemNote = note ? `Invoice: ${note}` : "Custom or bulk order payment.";
       }
     }

@@ -9,7 +9,7 @@ const PROCESS_STEPS = [
   {
     n: "01",
     t: "Share your vision",
-    d: "Use the form below, DM on Instagram, or email directly. A rough idea is all you need — Donna will help shape the rest.",
+    d: "Use the form below, DM on Instagram, or email directly. A rough idea is all you need - Donna will help shape the rest.",
     time: "5 min · you",
   },
   {
@@ -63,7 +63,7 @@ export default function CustomPage() {
               </h1>
               <p style={{ fontSize: 18, color: "var(--muted)", lineHeight: 1.6, maxWidth: 520 }}>
                 Single pieces, family heirlooms, wedding sets, or bulk corporate gifts. Every order
-                starts with a conversation — no shopping carts, no templates. Quotes within 24 hours.
+                starts with a conversation - no shopping carts, no templates. Quotes within 24 hours.
               </p>
             </div>
 
@@ -77,7 +77,7 @@ export default function CustomPage() {
               }}>
                 <Image
                   src="/photos/cutting-boards-family.jpg"
-                  alt="Custom commission — engraved family tree board"
+                  alt="Custom commission - engraved family tree board"
                   width={700}
                   height={875}
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
@@ -196,7 +196,7 @@ export default function CustomPage() {
               <p style={{ fontSize: 14, color: "var(--muted)", margin: 0, lineHeight: 1.65 }}>
                 Before Donna begins custom work, a $20 initiation fee is collected. This covers time spent
                 creating your initial design concept, digital proof, and reserving your studio slot. It&rsquo;s
-                non-refundable because real work starts immediately — but it is{" "}
+                non-refundable because real work starts immediately - but it is{" "}
                 <strong>credited toward your final order total</strong> when the piece is completed.
               </p>
             </div>
@@ -219,7 +219,7 @@ export default function CustomPage() {
                 </em>
               </h2>
               <p style={{ fontSize: 16, color: "var(--muted)", lineHeight: 1.65, marginBottom: 36 }}>
-                Don&rsquo;t overthink it. Even a rough idea is enough — Donna will come back with options,
+                Don&rsquo;t overthink it. Even a rough idea is enough - Donna will come back with options,
                 questions, and a personalized quote within 24 hours.
               </p>
 

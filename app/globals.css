@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 /* ───────────────────────────────────────────────
-   Out of Jersey — Design Tokens
+   Out of Jersey - Design Tokens
    Editorial · warm · handcrafted · premium
    ─────────────────────────────────────────────── */
 
 :root {
-  /* Palette — terracotta + cream + forest, with brass engraving accent */
+  /* Palette - terracotta + cream + forest, with brass engraving accent */
   --ink: #1F1410;
   --ink-soft: #3A2A21;
   --cream: #FBF5EC;
@@ -38,7 +38,7 @@
   --r-xl: 32px;
   --r-pill: 999px;
 
-  /* Shadows — warm brown, never blue */
+  /* Shadows - warm brown, never blue */
   --shadow-sm: 0 1px 2px rgba(70, 30, 14, 0.06), 0 1px 1px rgba(70, 30, 14, 0.04);
   --shadow-md: 0 8px 24px -8px rgba(70, 30, 14, 0.14), 0 2px 6px rgba(70, 30, 14, 0.06);
   --shadow-lg: 0 24px 60px -20px rgba(70, 30, 14, 0.22), 0 6px 18px rgba(70, 30, 14, 0.08);
@@ -236,7 +236,7 @@ select.field {
 
 /* ── Extra reveal variants ───────────────────────── */
 
-/* Bounce — springs past then settles */
+/* Bounce - springs past then settles */
 .reveal-bounce {
   opacity: 0;
   transform: translateY(48px) scale(0.94);
@@ -244,7 +244,7 @@ select.field {
 }
 .reveal-bounce.visible { opacity: 1; transform: translateY(0) scale(1); }
 
-/* Flip — 3-D card flip in from bottom */
+/* Flip - 3-D card flip in from bottom */
 .reveal-flip {
   opacity: 0;
   transform: perspective(800px) rotateX(22deg) translateY(32px);
@@ -253,7 +253,7 @@ select.field {
 }
 .reveal-flip.visible { opacity: 1; transform: perspective(800px) rotateX(0deg) translateY(0); }
 
-/* Skew — slide in with a lean that straightens */
+/* Skew - slide in with a lean that straightens */
 .reveal-skew {
   opacity: 0;
   transform: translateX(-36px) skewX(6deg);
@@ -267,7 +267,7 @@ select.field {
 }
 .reveal-skew-right.visible { opacity: 1; transform: translateX(0) skewX(0deg); }
 
-/* Zoom — zooms in from slightly large, blurry */
+/* Zoom - zooms in from slightly large, blurry */
 .reveal-zoom {
   opacity: 0;
   transform: scale(1.12);
@@ -276,7 +276,7 @@ select.field {
 }
 .reveal-zoom.visible { opacity: 1; transform: scale(1); filter: blur(0); }
 
-/* Laser draw — a horizontal line that grows from left to right (on-brand) */
+/* Laser draw - a horizontal line that grows from left to right (on-brand) */
 .laser-draw {
   transform-origin: left center;
   transform: scaleX(0);
@@ -307,7 +307,7 @@ select.field {
 }
 .split-chars.visible .char { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
 
-/* Scroll-velocity lean — applied by JS */
+/* Scroll-velocity lean - applied by JS */
 .velocity-lean {
   transition: transform .25s linear;
   will-change: transform;
@@ -555,7 +555,7 @@ select.field {
 
 /* ── Responsive grid layouts ─────────────────────── */
 
-/* Hero — 2-col split */
+/* Hero - 2-col split */
 .layout-hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -571,28 +571,28 @@ select.field {
   gap: 16px;
 }
 
-/* Product grid — 4 columns */
+/* Product grid - 4 columns */
 .layout-4col {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
 
-/* Occasions — 5 columns */
+/* Occasions - 5 columns */
 .occasions-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 14px;
 }
 
-/* Photo grid — 6 columns */
+/* Photo grid - 6 columns */
 .layout-6col {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 10px;
 }
 
-/* About — story prose split */
+/* About - story prose split */
 .layout-story {
   display: grid;
   grid-template-columns: 1fr 1.3fr;
@@ -600,7 +600,7 @@ select.field {
   align-items: start;
 }
 
-/* About — values 3-col */
+/* About - values 3-col */
 .layout-3col {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -609,7 +609,7 @@ select.field {
   border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* About — team 3-col */
+/* About - team 3-col */
 .layout-3col-team {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -670,7 +670,7 @@ select.field {
   .layout-footer-links { grid-template-columns: 1fr 1fr; }
 }
 
-/* Home photo grid — masonry-style, responsive */
+/* Home photo grid - masonry-style, responsive */
 .layout-photo-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -683,7 +683,7 @@ select.field {
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: 150px;
   }
-  /* Reset tall/wide spans on tablet — not enough columns */
+  /* Reset tall/wide spans on tablet - not enough columns */
   .layout-photo-grid .photo-grid-item {
     grid-row: span 1 !important;
     grid-column: span 1 !important;
@@ -719,7 +719,7 @@ select.field {
   align-items: start;
 }
 
-/* Product detail page — image + info split */
+/* Product detail page - image + info split */
 .layout-product-page {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -735,14 +735,14 @@ select.field {
   align-items: start;
 }
 
-/* Custom page — order type cards (4 col) */
+/* Custom page - order type cards (4 col) */
 .layout-custom-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
 }
 
-/* Custom page — form + photo split */
+/* Custom page - form + photo split */
 .layout-custom-form {
   display: grid;
   grid-template-columns: 0.8fr 1.2fr;
@@ -828,7 +828,7 @@ select.field {
   section { padding-top: 60px !important; padding-bottom: 60px !important; }
   section[style*="padding: \"120px"] { padding: 60px 0 !important; }
 
-  /* Hero section — less top padding on mobile */
+  /* Hero section - less top padding on mobile */
   .layout-hero { padding: 20px 0 40px; }
 }
 
@@ -846,7 +846,7 @@ select.field {
 }
 
 /* ═══════════════════════════════════════════════════════
-   MESH GRADIENT BACKGROUND — WebGL canvas (MeshGradient.tsx)
+   MESH GRADIENT BACKGROUND - WebGL canvas (MeshGradient.tsx)
    No CSS needed; the canvas handles everything via WebGL shader.
    ══════════════════════════════════════════════════════ */
 
@@ -1037,7 +1037,7 @@ select.field {
 }
 
 /* ═══════════════════════════════════════════════════════
-   GLINT — runs once on page load for hero text
+   GLINT - runs once on page load for hero text
    ══════════════════════════════════════════════════════ */
 
 @keyframes glint {

@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────
-// Out of Jersey — Static catalog and content data
+// Out of Jersey - Static catalog and content data
 // ─────────────────────────────────────────────
 
 // ── Navigation groups ─────────────────────────────────────────────────────
@@ -8,13 +8,13 @@ export const navGroups = [
   {
     id: "drinkware",
     label: "Drinkware",
-    description: "Tumblers in every finish, size, and style — all ready for your name.",
+    description: "Tumblers in every finish, size, and style - all ready for your name.",
     collections: ["powder-coated-tumblers", "stainless-steel-tumblers", "sublimation-tumblers-blanks"],
   },
   {
     id: "kitchen-bar",
     label: "Kitchen & Bar",
-    description: "From charcuterie to cocktail hour — pieces built for the table.",
+    description: "From charcuterie to cocktail hour - pieces built for the table.",
     collections: ["cutting-boards", "marble-wood", "gourmet-knife-set", "grill-bbq", "decanters-sets"],
   },
   {
@@ -26,14 +26,14 @@ export const navGroups = [
   {
     id: "specialty",
     label: "Specialty & Blanks",
-    description: "Tools, crafts, and custom blanks — for every occasion.",
+    description: "Tools, crafts, and custom blanks - for every occasion.",
     collections: ["hammer-set", "acrylics"],
   },
 ] as const;
 
 export type NavGroupId = typeof navGroups[number]["id"];
 
-// ── The 15 product categories — exactly matching the wholesale catalog ────
+// ── The 15 product categories - exactly matching the wholesale catalog ────
 // group     = navGroups id (for mega-menu clustering)
 // wixId     = Wix collection _id (confirmed in Wix dashboard)
 // featured  = recommended number of products to upload first for launch-readiness
@@ -74,7 +74,7 @@ export const collections = [
     wixId: "5bd92e78-f534-4c55-939f-8b5ff36d61a4",
     group: "kitchen-bar",
     featured: 3,
-    kicker: "Bamboo, walnut, maple — made to engrave",
+    kicker: "Bamboo, walnut, maple - made to engrave",
     sortOrder: 4,
   },
   {
@@ -129,7 +129,7 @@ export const collections = [
     wixId: "b5043d32-becc-465b-a1f1-f00e1e4f80c2",
     group: "gifts-accessories",
     featured: 3,
-    kicker: "Wearable keepsakes — hearts, circles, bars",
+    kicker: "Wearable keepsakes - hearts, circles, bars",
     sortOrder: 10,
   },
   {
@@ -166,7 +166,7 @@ export const collections = [
     wixId: "faaa201b-f309-4e15-8a7f-f8fdd727217f",
     group: "specialty",
     featured: 1,
-    kicker: "16oz engraved hammer set — unique gift",
+    kicker: "16oz engraved hammer set - unique gift",
     sortOrder: 14,
   },
   {
@@ -175,7 +175,7 @@ export const collections = [
     wixId: "9d3eab66-cad4-48be-a7d9-6b57471a38b9",
     group: "specialty",
     featured: 3,
-    kicker: "Shaped blanks — circles, hearts, stars & more",
+    kicker: "Shaped blanks - circles, hearts, stars & more",
     sortOrder: 15,
   },
 ] as const;
@@ -192,11 +192,11 @@ export const testimonials: ReadonlyArray<{
 export const faqs = [
   {
     q: "How does personalization work?",
-    a: "On every product page, you'll see a 'Make it yours' panel. Type your text, choose a font and a placement, and watch a live preview update in real time. Want something more complex — a family crest, a hand-drawn sketch, a logo? Send a custom request and replies within 24 hours.",
+    a: "On every product page, you'll see a 'Make it yours' panel. Type your text, choose a font and a placement, and watch a live preview update in real time. Want something more complex - a family crest, a hand-drawn sketch, a logo? Send a custom request and replies within 24 hours.",
   },
   {
     q: "How long does an order take?",
-    a: "Stock pieces with personalization ship in 3–5 business days. Fully custom commissions take 2–3 weeks depending on scope. Holiday and wedding rushes — talk to me directly and we'll work it out.",
+    a: "Stock pieces with personalization ship in 3–5 business days. Fully custom commissions take 2–3 weeks depending on scope. Holiday and wedding rushes - talk to me directly and we'll work it out.",
   },
   {
     q: "Can I see a proof before you engrave?",
@@ -204,15 +204,15 @@ export const faqs = [
   },
   {
     q: "Do you ship outside the US?",
-    a: "Yes — to Canada, the UK, the EU, and a growing list of countries. Shipping calculates at checkout. Wood and glass items are insured.",
+    a: "Yes - to Canada, the UK, the EU, and a growing list of countries. Shipping calculates at checkout. Wood and glass items are insured.",
   },
   {
     q: "Returns and exchanges?",
-    a: "Stock items can be returned within 30 days, unused, in original packaging. Personalized or custom items can't be returned (they're made for you), but if there's a defect or I made a mistake, I make it right — no questions.",
+    a: "Stock items can be returned within 30 days, unused, in original packaging. Personalized or custom items can't be returned (they're made for you), but if there's a defect or I made a mistake, I make it right - no questions.",
   },
   {
     q: "Can you do corporate or bulk orders?",
-    a: "Yes, and I love them. Branded tumblers for new hires, monogrammed boards for client gifts, wedding party sets of 20+ — fill out the corporate inquiry form or email me directly.",
+    a: "Yes, and I love them. Branded tumblers for new hires, monogrammed boards for client gifts, wedding party sets of 20+ - fill out the corporate inquiry form or email me directly.",
   },
   {
     q: "What materials do you work with?",
@@ -278,15 +278,15 @@ export const policies = [
     sections: [
       {
         h: "Stock items",
-        p: "Unused, in original packaging — return within 30 days for a full refund minus return shipping. Email hello@outofjersey.com for a return label.",
+        p: "Unused, in original packaging - return within 30 days for a full refund minus return shipping. Email hello@outofjersey.com for a return label.",
       },
       {
         h: "Personalized & custom",
-        p: "Personalized items can't be returned — they're made for you. If I made a mistake (wrong spelling, wrong placement, defect), I replace it free. No questions, no proof needed.",
+        p: "Personalized items can't be returned - they're made for you. If I made a mistake (wrong spelling, wrong placement, defect), I replace it free. No questions, no proof needed.",
       },
       {
         h: "Damaged in transit",
-        p: "Photos within 48 hours of delivery — I'll replace it, no return needed. Insured carriers reimburse me, not you.",
+        p: "Photos within 48 hours of delivery - I'll replace it, no return needed. Insured carriers reimburse me, not you.",
       },
       {
         h: "Gift returns",
@@ -309,11 +309,11 @@ export const policies = [
       },
       {
         h: "Proofs and revisions",
-        p: "Two rounds of revisions included. Additional rounds are $25 each. I won't engrave until you sign off — protect both of us.",
+        p: "Two rounds of revisions included. Additional rounds are $25 each. I won't engrave until you sign off - protect both of us.",
       },
       {
         h: "Rush orders",
-        p: "Rushes available for an additional 25% depending on studio load. Ask before assuming — sometimes I have capacity, sometimes I genuinely don't.",
+        p: "Rushes available for an additional 25% depending on studio load. Ask before assuming - sometimes I have capacity, sometimes I genuinely don't.",
       },
       {
         h: "IP and originality",
@@ -325,52 +325,52 @@ export const policies = [
 
 export const announcementMessages = [
   "Free US shipping on orders over $125",
-  "Custom commission slots are filling fast — inquire today",
+  "Custom commission slots are filling fast - inquire today",
   "Woman owned & operated · Custom laser engraving out of California",
   "Handcrafted to order · Every piece is one of a kind",
 ];
 
-// Lifestyle photos — real Out of Jersey product photography
+// Lifestyle photos - real Out of Jersey product photography
 export const lifestyleScenes = [
   {
     id: "ls-bff",
-    caption: "BFF tumblers — because some bonds deserve a permanent mark",
+    caption: "BFF tumblers - because some bonds deserve a permanent mark",
     tag: "TUMBLERS",
     src: "/photos/bff-tumblers.jpg",
   },
   {
     id: "ls-wedding-board",
-    caption: "The Wilsons' first board — wedding gift, forever keepsake",
+    caption: "The Wilsons' first board - wedding gift, forever keepsake",
     tag: "WEDDING",
     src: "/photos/wedding-board-couple.jpg",
   },
   {
     id: "ls-family-boards",
-    caption: "Engraved family boards — Sunday dinners, made personal",
+    caption: "Engraved family boards - Sunday dinners, made personal",
     tag: "BOARDS",
     src: "/photos/cutting-boards-family.jpg",
   },
   {
     id: "ls-whiskey-bar",
-    caption: "Monogrammed whiskey glasses — Father's Day, second pour",
+    caption: "Monogrammed whiskey glasses - Father's Day, second pour",
     tag: "HOME",
     src: "/photos/whiskey-glasses-bar.jpg",
   },
   {
     id: "ls-knife",
-    caption: "Through Thick & Thin — a knife engraved for the journey",
+    caption: "Through Thick & Thin - a knife engraved for the journey",
     tag: "ACCESSORIES",
     src: "/photos/knife-engraved.jpg",
   },
   {
     id: "ls-artwork-tumbler",
-    caption: "Custom artwork tumbler — your vision, laser-precise",
+    caption: "Custom artwork tumbler - your vision, laser-precise",
     tag: "CUSTOM",
     src: "/photos/custom-artwork-tumbler.jpg",
   },
 ] as const;
 
-// Gift occasions — for the "Shop by Moment" homepage section
+// Gift occasions - for the "Shop by Moment" homepage section
 // hrefs point to real collection IDs that exist in the 15-category architecture
 export const giftOccasions = [
   {

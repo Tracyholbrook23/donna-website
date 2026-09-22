@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   const collectionId = req.nextUrl.searchParams.get("collection");
 
   try {
-    // No filter or "all" — return everything
+    // No filter or "all" - return everything
     if (!collectionId || collectionId === "all") {
       const { items } = await wixClient.products
         .queryProducts()

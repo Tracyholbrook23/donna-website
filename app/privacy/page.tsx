@@ -22,7 +22,7 @@ const sections = [
   },
   {
     h: "We Never Sell Your Data",
-    p: "Your personal information is never sold, rented, or traded to any third party. Full stop. We're a small business — we're not in the data business.",
+    p: "Your personal information is never sold, rented, or traded to any third party. Full stop. We're a small business - we're not in the data business.",
   },
   {
     h: "Third-Party Services",
@@ -38,7 +38,7 @@ const sections = [
   },
   {
     h: "Data Retention",
-    p: "We keep order-related information for as long as reasonably necessary for business records and to handle any follow-up questions. If you'd like us to delete your information, just ask — see the contact section below.",
+    p: "We keep order-related information for as long as reasonably necessary for business records and to handle any follow-up questions. If you'd like us to delete your information, just ask - see the contact section below.",
   },
   {
     h: "Your Rights",
@@ -50,7 +50,7 @@ const sections = [
   },
   {
     h: "Contact Us",
-    p: "Questions about this policy or your data? Contact Donna Wilson directly — Out of Jersey Creations · outofjerseycreations@icloud.com · (657) 633-6994",
+    p: "Questions about this policy or your data? Contact Donna Wilson directly - Out of Jersey Creations · outofjerseycreations@icloud.com · (657) 633-6994",
   },
   {
     h: "Updates to This Policy",
@@ -94,7 +94,7 @@ export default function PrivacyPage() {
               maxWidth: 540,
             }}
           >
-            Your information is used to make your order happen — nothing more.
+            Your information is used to make your order happen - nothing more.
             Here's exactly how we handle it.
           </p>
 
@@ -254,7 +254,7 @@ export default function PrivacyPage() {
                   color: "var(--ink)",
                 }}
               >
-                Email us directly — we'll reply personally.
+                Email us directly - we'll reply personally.
               </p>
             </div>
             <Link href="/contact" className="btn btn-primary">

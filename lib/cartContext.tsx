@@ -148,7 +148,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       setCartCount(count);
       setCartSubtotal(subtotal);
     } catch {
-      // Cart doesn't exist yet (empty) — that's fine
+      // Cart doesn't exist yet (empty) - that's fine
       setCartItems([]);
       setCartCount(0);
       setCartSubtotal("$0.00");
@@ -174,7 +174,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         customTextFields.push({ title: "Placement", value: params.engravingPlacement });
       }
 
-      // addToCurrentCart returns the full updated cart — use it directly instead
+      // addToCurrentCart returns the full updated cart - use it directly instead
       // of calling getCurrentCart() separately (which can silently fail and reset state).
       const response = await client.currentCart.addToCurrentCart({
         lineItems: [
@@ -294,7 +294,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ── Buy Now — add then immediately checkout ─────────────────────────────────
+  // ── Buy Now - add then immediately checkout ─────────────────────────────────
   const buyNow = useCallback(async (params: AddToCartParams) => {
     await addToCart(params);
     await goToCheckout();

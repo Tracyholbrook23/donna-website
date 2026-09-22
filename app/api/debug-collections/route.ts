@@ -1,7 +1,7 @@
 import { wixClient } from "@/lib/wixClient";
 import { NextResponse } from "next/server";
 
-// Temp debug route — visit /api/debug-collections to see real Wix collection IDs
+// Temp debug route - visit /api/debug-collections to see real Wix collection IDs
 export async function GET() {
   try {
     const page1 = await wixClient.products.queryProducts().limit(100).find();

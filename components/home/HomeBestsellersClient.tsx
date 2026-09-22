@@ -65,7 +65,7 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
               <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>designs.</em>
             </h2>
             <p style={{ fontSize: 15, color: "var(--muted)", marginTop: 12, maxWidth: 480, lineHeight: 1.6 }}>
-              Browse for inspiration — every piece can be made custom for you.
+              Browse for inspiration - every piece can be made custom for you.
               See starting prices for Donna’s signature pieces, then request a custom quote.
             </p>
           </div>

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 const ITEMS = [
-  "Custom laser engraving — woman owned & operated",
+  "Custom laser engraving - woman owned & operated",
   "Every piece made to order · no two are alike",
   "1,840+ five-star reviews",
   "Tumblers · Boards · Knives · Wallets · More",

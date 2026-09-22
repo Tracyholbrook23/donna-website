@@ -1,8 +1,8 @@
 // ── Email templates for custom order inquiries ────────────────────────────────
 //
 // Two templates:
-//  1. donnaInquiryEmailHtml  — sent to Donna with full inquiry details
-//  2. customerConfirmationEmailHtml — auto-reply to the customer
+//  1. donnaInquiryEmailHtml - sent to Donna with full inquiry details
+//  2. customerConfirmationEmailHtml - auto-reply to the customer
 //
 // Both use inline styles (required for broad email client support).
 // Brand colors: terracotta #B9533A, forest #3D5848, ink #1F1410, cream #FBF5EC
@@ -100,7 +100,7 @@ function row(label: string, value: string, highlight = false) {
   </tr>`;
 }
 
-// ── Template 1 — Donna's notification ────────────────────────────────────────
+// ── Template 1 - Donna's notification ────────────────────────────────────────
 
 export function donnaInquiryEmailHtml(d: InquiryData): string {
   const content = `
@@ -188,10 +188,10 @@ export function donnaInquiryEmailHtml(d: InquiryData): string {
     </tr>
   `;
 
-  return emailWrapper(content, `New inquiry from ${d.name} — ${d.category} · ${d.submittedAt}`);
+  return emailWrapper(content, `New inquiry from ${d.name} - ${d.category} · ${d.submittedAt}`);
 }
 
-// ── Template 3 — General contact message (to Donna) ──────────────────────────
+// ── Template 3 - General contact message (to Donna) ──────────────────────────
 
 export interface ContactData {
   reason:  string;
@@ -260,10 +260,10 @@ export function contactEmailHtml(d: ContactData): string {
       </td>
     </tr>
   `;
-  return emailWrapper(content, `New message from ${d.name} — ${REASON_LABELS[d.reason] ?? d.reason}`);
+  return emailWrapper(content, `New message from ${d.name} - ${REASON_LABELS[d.reason] ?? d.reason}`);
 }
 
-// ── Template 4 — Customer confirmation (contact) ──────────────────────────────
+// ── Template 4 - Customer confirmation (contact) ──────────────────────────────
 
 export function contactConfirmationEmailHtml({ name }: { name: string }): string {
   const firstName = name.split(" ")[0] ?? name;
@@ -285,10 +285,10 @@ export function contactConfirmationEmailHtml({ name }: { name: string }): string
       </td>
     </tr>
   `;
-  return emailWrapper(content, `Message received — Donna will reply within 24 hours.`);
+  return emailWrapper(content, `Message received - Donna will reply within 24 hours.`);
 }
 
-// ── Template 2 — Customer confirmation (inquiry) ──────────────────────────────
+// ── Template 2 - Customer confirmation (inquiry) ──────────────────────────────
 
 export function customerConfirmationEmailHtml({ name, category }: { name: string; category: string }): string {
   const firstName = name.split(" ")[0] ?? name;
@@ -309,7 +309,7 @@ export function customerConfirmationEmailHtml({ name, category }: { name: string
 
         <p style="margin:0 auto 32px;font-size:16px;color:rgba(31,20,16,0.6);max-width:420px;line-height:1.7;font-family:Arial,sans-serif;">
           Donna has received your custom <strong style="color:#1F1410;">${category}</strong> request
-          and will reach out within <strong style="color:#1F1410;">24 hours</strong> — usually faster —
+          and will reach out within <strong style="color:#1F1410;">24 hours</strong> - usually faster -
           with a personalized quote and next steps.
         </p>
 
@@ -324,7 +324,7 @@ export function customerConfirmationEmailHtml({ name, category }: { name: string
             ${[
               ["📬", "Donna reviews your brief and reaches out within 24 hours"],
               ["💬", "She'll share a personalized quote, timeline, and any questions"],
-              ["✦",  "A $20 initiation fee is collected before design work begins — this is credited to your final total"],
+              ["✦",  "A $20 initiation fee is collected before design work begins - this is credited to your final total"],
               ["✏️",  "You review and approve a digital proof before anything is engraved"],
               ["📦", "Your piece is made, photographed, and shipped gift-ready"],
             ].map(([icon, text]) => `
@@ -354,5 +354,5 @@ export function customerConfirmationEmailHtml({ name, category }: { name: string
     </tr>
   `;
 
-  return emailWrapper(content, `Brief received — Donna will be in touch within 24 hours about your ${category} request.`);
+  return emailWrapper(content, `Brief received - Donna will be in touch within 24 hours about your ${category} request.`);
 }

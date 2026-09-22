@@ -1,4 +1,4 @@
-// Single-weight hand-drawn icons — matches the prototype exactly
+// Single-weight hand-drawn icons - matches the prototype exactly
 
 export function SearchIcon({ size = 18 }: { size?: number }) {
   return (

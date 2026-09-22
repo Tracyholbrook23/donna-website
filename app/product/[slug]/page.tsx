@@ -70,7 +70,7 @@ export default async function ProductPage({ params }: PageProps) {
         <span style={{ color: "var(--ink)" }}>{product.name}</span>
       </div>
 
-      {/* Hero — gallery + buybox */}
+      {/* Hero - gallery + buybox */}
       <section style={{ padding: "32px 0 80px" }}>
         <div className="container">
           <ProductPageClient product={product} glyphType={glyphType} />

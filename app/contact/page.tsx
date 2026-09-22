@@ -61,7 +61,7 @@ export default function ContactPage() {
               </em>
             </h1>
             <p style={{ fontSize: 18, color: "var(--muted)", maxWidth: 520, lineHeight: 1.6 }}>
-              Questions, commissions, wholesale — use the form or reach out directly.
+              Questions, commissions, wholesale - use the form or reach out directly.
               We reply within 24 hours.
             </p>
           </div>
@@ -93,7 +93,7 @@ export default function ContactPage() {
                   note="DMs open · usually fastest"
                 />
 
-                {/* Email — placeholder until Donna confirms */}
+                {/* Email - placeholder until Donna confirms */}
                 <ContactDetail
                   label="Email"
                   value="hello@outofjerseycreationshub.com"
@@ -133,7 +133,7 @@ export default function ContactPage() {
                 <Link href="/custom" style={{ color: "var(--ink)", textDecoration: "underline" }}>
                   dedicated brief form
                 </Link>{" "}
-                — it&rsquo;s faster than email.
+ - it&rsquo;s faster than email.
               </p>
             </div>
 
@@ -208,7 +208,7 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    {/* Commission nudge — shown when "Custom commission inquiry" is selected */}
+                    {/* Commission nudge - shown when "Custom commission inquiry" is selected */}
                     {isCustom && (
                       <div style={{
                         background: "rgba(185,83,58,0.07)",
@@ -227,7 +227,7 @@ export default function ContactPage() {
                           </p>
                           <p style={{ fontSize: 13, color: "var(--ink)", margin: 0, lineHeight: 1.55, opacity: 0.8 }}>
                             Our dedicated custom order form lets you share product details, upload inspiration,
-                            and describe your vision — so Donna can send a quote right away.
+                            and describe your vision - so Donna can send a quote right away.
                           </p>
                         </div>
                         <Link

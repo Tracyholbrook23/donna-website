@@ -212,7 +212,7 @@ export function ProductPageClient({ product, glyphType }: ProductPageClientProps
           </div>
         )}
 
-        {/* Main image — hover effect applied here */}
+        {/* Main image - hover effect applied here */}
         <div
           ref={imgRef}
           onMouseMove={onMouseMove}

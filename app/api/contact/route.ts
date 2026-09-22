@@ -41,18 +41,18 @@ export async function POST(req: Request) {
         from:    FROM_EMAIL,
         to:      DONNA_EMAIL,
         replyTo: email,
-        subject: `New message from ${name} — ${data.submittedAt}`,
+        subject: `New message from ${name} - ${data.submittedAt}`,
         html:    contactEmailHtml(data),
       });
 
       await resend.emails.send({
         from:    FROM_EMAIL,
         to:      email,
-        subject: "We got your message — Out of Jersey",
+        subject: "We got your message - Out of Jersey",
         html:    contactConfirmationEmailHtml({ name }),
       });
     } else {
-      console.warn("[Contact Form] Email not sent — add RESEND_API_KEY and DONNA_EMAIL to .env.local");
+      console.warn("[Contact Form] Email not sent - add RESEND_API_KEY and DONNA_EMAIL to .env.local");
     }
 
     return NextResponse.json({ success: true });

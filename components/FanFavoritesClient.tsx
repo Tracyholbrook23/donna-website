@@ -47,7 +47,7 @@ export function FanFavoritesClient({ products }: Props) {
             >
               A small selection of pieces Donna has already engraved and ready
               to ship. These are the only items on the site available for direct
-              purchase — no custom consultation needed.
+              purchase - no custom consultation needed.
             </p>
           </div>
 
@@ -139,7 +139,7 @@ export function FanFavoritesClient({ products }: Props) {
                 className="display"
                 style={{ fontSize: "clamp(28px, 4vw, 44px)", margin: "0 0 12px", fontWeight: 400 }}
               >
-                Every piece here can be made custom — with your name, date, or design.
+                Every piece here can be made custom - with your name, date, or design.
               </h3>
               <p style={{ fontSize: 15, color: "var(--muted)", lineHeight: 1.6, margin: 0 }}>
                 Contact Donna with your idea and get a personalized quote within 24 hours.

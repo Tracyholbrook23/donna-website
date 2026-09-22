@@ -59,7 +59,7 @@ export function HomeVideoShowcase() {
     return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
-  // Intersection Observer — play videos in view (mobile autoplay fix)
+  // Intersection Observer - play videos in view (mobile autoplay fix)
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
     videoRefs.current.forEach((video) => {
@@ -120,7 +120,7 @@ export function HomeVideoShowcase() {
             </h2>
           </div>
           <p style={{ fontSize: 15, color: "var(--muted)", maxWidth: 340, lineHeight: 1.6, margin: 0 }}>
-            Every mark is intentional. Laser precision, personal care — on every single piece.
+            Every mark is intentional. Laser precision, personal care - on every single piece.
           </p>
         </div>
       </div>
@@ -204,7 +204,7 @@ export function HomeVideoShowcase() {
         </div>
       </div>
 
-      {/* CTA strip — below the video scroll, tied to the tumbler showcase */}
+      {/* CTA strip - below the video scroll, tied to the tumbler showcase */}
       <div className="container" style={{ marginTop: 36 }}>
         <div
           style={{

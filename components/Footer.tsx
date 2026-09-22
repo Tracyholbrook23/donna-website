@@ -16,11 +16,11 @@ export function Footer() {
 
   const cols = [
     {
-      title: "Gallery — Drinkware",
+      title: "Gallery - Drinkware",
       items: galleryCol1,
     },
     {
-      title: "Gallery — Gifts & More",
+      title: "Gallery - Gifts & More",
       items: galleryCol2,
     },
     {
@@ -137,7 +137,7 @@ export function Footer() {
                 lineHeight: 1.7,
               }}
             >
-              Custom laser engraving — woman owned &amp; operated out of California.
+              Custom laser engraving - woman owned &amp; operated out of California.
               Every piece is made to order, personally, just for you.
             </p>
             <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
@@ -259,7 +259,7 @@ function FooterWordmark() {
         textDecoration: "none",
         display: "inline-block",
       }}
-      aria-label="Out of Jersey Creations — Home"
+      aria-label="Out of Jersey Creations - Home"
     >
       {/* On the dark footer the logo renders perfectly as-is */}
       <Image

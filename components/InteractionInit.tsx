@@ -3,17 +3,17 @@
 import { useEffect } from "react";
 
 /**
- * InteractionInit — wires up all client-side micro-interactions.
+ * InteractionInit - wires up all client-side micro-interactions.
  *
  * Effects:
  *  1. Button click ripple (existing)
  *  2. Magnetic hover (existing)
  *  3. Tilt cards (existing)
  *  4. Counter animation (existing)
- *  5. Scroll reveal — now also handles reveal-left / reveal-right / reveal-scale / reveal-blur / reveal-rotate
+ *  5. Scroll reveal - now also handles reveal-left / reveal-right / reveal-scale / reveal-blur / reveal-rotate
  *  6. Scroll progress bar
  *  7. Cursor glow that follows the pointer
- *  8. Parallax — elements with [data-parallax="<speed>"]
+ *  8. Parallax - elements with [data-parallax="<speed>"]
  *  9. Click particle burst
  * 10. Image hover shimmer (class added automatically)
  */
@@ -59,7 +59,7 @@ export function InteractionInit() {
     const updateGlow = (e: PointerEvent) => {
       glowTargetX = e.clientX;
       glowTargetY = e.clientY;
-      // Detect if hovering over a dark bg — flip blend mode
+      // Detect if hovering over a dark bg - flip blend mode
       const el = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null;
       if (el) {
         const bg = getComputedStyle(el).backgroundColor;
@@ -220,7 +220,7 @@ export function InteractionInit() {
     };
 
     // ─────────────────────────────────────────────
-    // 9. Scroll reveal — handles all variants
+    // 9. Scroll reveal - handles all variants
     // ─────────────────────────────────────────────
     const REVEAL_SELECTORS = [
       ".reveal:not(.visible)",

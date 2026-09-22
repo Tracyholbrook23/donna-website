@@ -136,7 +136,7 @@ function CommissionFeeCard() {
         disabled={loading}
         style={{ ...btnPrimary, opacity: loading ? 0.7 : 1 }}
       >
-        {loading ? "Redirecting…" : "Pay $20 — Secure Checkout"}
+        {loading ? "Redirecting…" : "Pay $20 - Secure Checkout"}
       </button>
 
       <p style={{ fontSize: 12, color: "var(--muted-soft)", textAlign: "center", margin: 0 }}>
@@ -162,7 +162,7 @@ function CanceledBanner() {
       maxWidth: 600,
       margin: "0 auto 32px",
     }}>
-      <strong>Payment canceled.</strong> No charge was made. Take your time — we&rsquo;re here when you&rsquo;re ready.
+      <strong>Payment canceled.</strong> No charge was made. Take your time - we&rsquo;re here when you&rsquo;re ready.
     </div>
   );
 }
@@ -240,7 +240,7 @@ export default function PayPage() {
         <div className="container" style={{ textAlign: "center" }}>
           <p style={{ fontSize: 14, color: "var(--muted)", maxWidth: 480, margin: "0 auto 20px", lineHeight: 1.7 }}>
             Questions before paying?{" "}
-            <Link href="/contact" style={{ color: "var(--terracotta)" }}>Contact Donna</Link> — she&rsquo;ll
+            <Link href="/contact" style={{ color: "var(--terracotta)" }}>Contact Donna</Link> - she&rsquo;ll
             never charge anything without your knowledge and approval.
           </p>
           <div style={{ display: "flex", gap: 24, justifyContent: "center", flexWrap: "wrap" }}>

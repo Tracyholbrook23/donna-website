@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 /**
- * CursorTrail — custom laser-dot cursor + ember particle trail.
+ * CursorTrail - custom laser-dot cursor + ember particle trail.
  * Only activates on fine-pointer (mouse) devices; touch screens are unaffected.
  *
  * Visual design:

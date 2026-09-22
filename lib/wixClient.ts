@@ -4,8 +4,8 @@ import { currentCart, checkout } from "@wix/ecom";
 import { redirects } from "@wix/redirects";
 
 /**
- * Wix Headless client — products, cart, checkout, redirects.
- * Uses anonymous OAuth (client ID only) — safe to expose publicly.
+ * Wix Headless client - products, cart, checkout, redirects.
+ * Uses anonymous OAuth (client ID only) - safe to expose publicly.
  *
  * Two flavors:
  *  - wixClient        → singleton for server components & API routes (no token persistence)
@@ -48,7 +48,7 @@ export function saveWixTokens(client: typeof wixClient) {
     const tokens = client.auth.getTokens();
     if (tokens) localStorage.setItem(WIX_TOKENS_KEY, JSON.stringify(tokens));
   } catch {
-    // noop — localStorage might be unavailable
+    // noop - localStorage might be unavailable
   }
 }
 

@@ -68,7 +68,7 @@ export function ProductInquiryPanel({ product }: Props) {
         )}
       </div>
 
-      {/* Available variants (read-only — for reference) */}
+      {/* Available variants (read-only - for reference) */}
       {options.length > 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {options.map((opt) => (
@@ -141,7 +141,7 @@ export function ProductInquiryPanel({ product }: Props) {
           }}
         >
           {[
-            "Tell Donna what you'd like engraved — names, dates, artwork, or a message",
+            "Tell Donna what you'd like engraved - names, dates, artwork, or a message",
             "She'll reply within 24 hours with a quote and timeline",
             "A $20 design fee kicks off your custom slot (applied to your total)",
             "You approve a digital proof before anything is engraved",

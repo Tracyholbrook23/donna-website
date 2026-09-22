@@ -6,7 +6,7 @@ const VALUES = [
   {
     n: "01",
     t: "The maker matters.",
-    d: "Every piece that leaves our studio passes through the hands of someone who cares about it — no exceptions.",
+    d: "Every piece that leaves our studio passes through the hands of someone who cares about it - no exceptions.",
   },
   {
     n: "02",
@@ -21,7 +21,7 @@ const VALUES = [
   {
     n: "04",
     t: "Quality materials.",
-    d: "Walnut, acacia, leather, steel, crystal — sourced for durability and beauty. Nothing cheap, ever.",
+    d: "Walnut, acacia, leather, steel, crystal - sourced for durability and beauty. Nothing cheap, ever.",
   },
   {
     n: "05",
@@ -104,7 +104,7 @@ export default function AboutPage() {
             >
               <Image
                 src="/photos/donna-headshot.jpg"
-                alt="Donna — founder of Out of Jersey Creations"
+                alt="Donna - founder of Out of Jersey Creations"
                 fill
                 style={{ objectFit: "cover", objectPosition: "center center" }}
                 priority
@@ -142,7 +142,7 @@ export default function AboutPage() {
                   marginTop: 24,
                 }}
               >
-                — Out of Jersey Creations, woman owned &amp; operated
+ - Out of Jersey Creations, woman owned &amp; operated
               </p>
 
               <div
@@ -195,7 +195,7 @@ export default function AboutPage() {
                 <p style={{ marginTop: 0 }}>
                   Out of Jersey Creations started with a laser and a clear vision: make
                   personalized gifts that are actually worth giving. Not the
-                  kind you wrap in a bag and forget — the kind that sit on a
+                  kind you wrap in a bag and forget - the kind that sit on a
                   shelf for thirty years because they mean something.
                 </p>
                 <p>
@@ -208,13 +208,13 @@ export default function AboutPage() {
                     Out of Jersey Creations exists for a simple reason:
                   </strong>{" "}
                   a gift with your name on it is different. A gift that carries
-                  a name, a date, initials, a quote — something just for that
-                  person — outlasts the holiday it was given for.
+                  a name, a date, initials, a quote - something just for that
+                  person - outlasts the holiday it was given for.
                 </p>
                 <p>
                   We ship across the US and internationally. Some weeks we
                   engrave eighty pieces, some weeks we engrave eight. Every
-                  single one is treated the same way — with care.
+                  single one is treated the same way - with care.
                 </p>
                 <p>
                   Woman owned and operated. We are proud of every piece that
@@ -230,7 +230,7 @@ export default function AboutPage() {
                     lineHeight: 1,
                   }}
                 >
-                  — Out of Jersey Creations
+ - Out of Jersey Creations
                 </p>
               </div>
             </div>

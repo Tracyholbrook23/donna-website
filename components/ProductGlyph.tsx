@@ -30,7 +30,7 @@ interface ProductGlyphProps {
   bg?: string;
 }
 
-// Unique-enough id seed without crypto — avoids SSR/client mismatch
+// Unique-enough id seed without crypto - avoids SSR/client mismatch
 let _idCounter = 0;
 function nextId() {
   return `pg-${++_idCounter}`;

@@ -17,7 +17,7 @@ async function getFeaturedProducts() {
     const seen = new Set<string>();
     const result = [];
 
-    // Pin the 40oz tumbler with handle first — Donna's hero product
+    // Pin the 40oz tumbler with handle first - Donna's hero product
     const hero = items.find((p) => {
       const name = (p.name ?? "").toLowerCase();
       return name.includes("40oz") && name.includes("handle");
@@ -96,7 +96,7 @@ function HomeHero() {
     >
       <Image
         src="/photos/donna-headshot.jpg"
-        alt="Donna — founder of Out of Jersey Creations"
+        alt="Donna - founder of Out of Jersey Creations"
         fill
         style={{ objectFit: "cover", objectPosition: "center center" }}
         priority
@@ -163,7 +163,7 @@ function HomeHero() {
             }}
           >
             Custom laser engraving on tumblers, boards, knives, wallets &amp; more.
-            Every piece made personally for you — handcrafted in California.
+            Every piece made personally for you - handcrafted in California.
           </p>
 
           <p
@@ -176,7 +176,7 @@ function HomeHero() {
               margin: "0 0 40px",
             }}
           >
-            Donna works with you directly — no shopping cart, no templates.
+            Donna works with you directly - no shopping cart, no templates.
             Contact her with your vision and she&apos;ll create something one-of-a-kind.
           </p>
 
@@ -252,7 +252,7 @@ function HomeHero() {
 }
 
 
-/* ── HOW IT WORKS — condensed process strip ──────────────────────────────── */
+/* ── HOW IT WORKS - condensed process strip ──────────────────────────────── */
 function HomeProcess() {
   const steps = [
     {
@@ -462,7 +462,7 @@ function HomeTwoTiles() {
                 Corporate Teams &amp; Gifting
               </h2>
               <p style={{ fontSize: 14, opacity: 0.8, margin: "0 0 24px", lineHeight: 1.55, maxWidth: 360 }}>
-                Brand awareness, client gifts, employee recognition — at any quantity.
+                Brand awareness, client gifts, employee recognition - at any quantity.
               </p>
               <span
                 className="btn"
@@ -512,7 +512,7 @@ function HomeTwoTiles() {
                 Custom Commissions
               </h2>
               <p style={{ fontSize: 14, opacity: 0.8, margin: "0 0 24px", lineHeight: 1.55, maxWidth: 360 }}>
-                Wedding gifts, family heirlooms, personal artwork — send a brief, get a quote in 24 hours.
+                Wedding gifts, family heirlooms, personal artwork - send a brief, get a quote in 24 hours.
               </p>
               <span
                 className="btn"

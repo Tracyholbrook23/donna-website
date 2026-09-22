@@ -7,7 +7,7 @@ import { donnaInquiryEmailHtml, customerConfirmationEmailHtml } from "@/lib/emai
 // ─────────────────────────────────────────────────────────────────────────────
 //
 // To wire up email delivery:
-//   1. Sign up at resend.com (free — 3,000 emails/month)
+//   1. Sign up at resend.com (free - 3,000 emails/month)
 //   2. Add to your .env.local:
 //        RESEND_API_KEY=re_xxxxxxxxxxxx
 //        DONNA_EMAIL=donna@example.com          ← replace with Donna's real email
@@ -17,7 +17,7 @@ import { donnaInquiryEmailHtml, customerConfirmationEmailHtml } from "@/lib/emai
 //      Add the DNS records they give you. Until verified, keep FROM_EMAIL as
 //      onboarding@resend.dev (works for testing without domain setup).
 //
-// Until DONNA_EMAIL is set, submissions are logged to console only — no data lost.
+// Until DONNA_EMAIL is set, submissions are logged to console only - no data lost.
 // ─────────────────────────────────────────────────────────────────────────────
 
 const resend = process.env.RESEND_API_KEY
@@ -129,7 +129,7 @@ export async function POST(req: Request) {
         from:        FROM_EMAIL,
         to:          DONNA_EMAIL,
         replyTo:     email,
-        subject:     `✦ New Custom Order Inquiry — ${inquiry.category} from ${name}`,
+        subject:     `✦ New Custom Order Inquiry - ${inquiry.category} from ${name}`,
         html:        donnaInquiryEmailHtml(inquiry),
         attachments: attachments.map((a) => ({ filename: a.filename, content: a.content })),
       });
@@ -138,13 +138,13 @@ export async function POST(req: Request) {
       await resend.emails.send({
         from:    FROM_EMAIL,
         to:      email,
-        subject: "Your custom order brief was received — Out of Jersey",
+        subject: "Your custom order brief was received - Out of Jersey",
         html:    customerConfirmationEmailHtml({ name, category: inquiry.category }),
       });
 
     } else {
       console.warn(
-        "[Custom Inquiry] Email not sent — add RESEND_API_KEY and DONNA_EMAIL to .env.local to enable."
+        "[Custom Inquiry] Email not sent - add RESEND_API_KEY and DONNA_EMAIL to .env.local to enable."
       );
     }
 

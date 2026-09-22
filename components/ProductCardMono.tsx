@@ -176,7 +176,7 @@ export function ProductCardMono({ product, index = 0, glyphType = "tumbler", sho
           </div>
         )}
 
-        {/* Vignette — darkens edges so text pops */}
+        {/* Vignette - darkens edges so text pops */}
         <div
           style={{
             position: "absolute",
@@ -187,7 +187,7 @@ export function ProductCardMono({ product, index = 0, glyphType = "tumbler", sho
           }}
         />
 
-        {/* Specular highlight — tracks mouse, mixes via screen */}
+        {/* Specular highlight - tracks mouse, mixes via screen */}
         <div
           ref={specRef}
           style={{
@@ -199,7 +199,7 @@ export function ProductCardMono({ product, index = 0, glyphType = "tumbler", sho
           }}
         />
 
-        {/* Rim — top edge highlight */}
+        {/* Rim - top edge highlight */}
         <div
           style={{
             position: "absolute",

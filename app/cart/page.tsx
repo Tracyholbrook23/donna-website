@@ -337,7 +337,7 @@ function CartItem({
           className="serif"
           style={{ fontSize: 18, fontWeight: 500 }}
         >
-          {item.price ?? "—"}
+          {item.price ?? " - "}
         </span>
       </div>
     </div>

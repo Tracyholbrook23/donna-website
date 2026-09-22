@@ -8,7 +8,7 @@ import { ArrowIcon } from "@/components/Icons";
 import type { ProductType } from "@/components/ProductGlyph";
 import { ProductCardMono } from "@/components/ProductCardMono";
 
-// Wix product shape (v1 API — some fields can be null)
+// Wix product shape (v1 API - some fields can be null)
 export interface WixProduct {
   _id?: string | null;
   name?: string | null;
@@ -75,7 +75,7 @@ export function ShopClient({ initialProducts, initialCollection }: Props) {
     el.scrollBy({ left: dir === "right" ? 240 : -240, behavior: "smooth" });
   };
 
-  // Build collection tabs — sorted by catalog order, only show categories with products
+  // Build collection tabs - sorted by catalog order, only show categories with products
   const allCollections = useMemo(() => {
     const sorted = [...collections].sort((a, b) => a.sortOrder - b.sortOrder);
     const withCounts = sorted.map((c) => ({
@@ -92,7 +92,7 @@ export function ShopClient({ initialProducts, initialCollection }: Props) {
         group: "all",
         featured: 0,
         sortOrder: 0,
-        kicker: "Every style in the studio — all available for custom engraving.",
+        kicker: "Every style in the studio - all available for custom engraving.",
         count: initialProducts.length,
       },
       ...withCounts.filter((c) => c.count > 0),
@@ -154,7 +154,7 @@ export function ShopClient({ initialProducts, initialCollection }: Props) {
                 }}
               >
                 {currentCollection?.id === "all"
-                  ? "Every style in the studio — browse for inspiration, then contact Donna to create yours."
+                  ? "Every style in the studio - browse for inspiration, then contact Donna to create yours."
                   : (currentCollection as { kicker?: string })?.kicker ?? ""}
               </p>
             </div>
@@ -300,7 +300,7 @@ export function ShopClient({ initialProducts, initialCollection }: Props) {
                 className="display"
                 style={{ fontSize: "clamp(32px, 4vw, 52px)", margin: "0 0 16px", color: "var(--cream)" }}
               >
-                Contact Donna to make it yours — personalized exactly the way you want.
+                Contact Donna to make it yours - personalized exactly the way you want.
               </h3>
               <p
                 style={{
@@ -312,7 +312,7 @@ export function ShopClient({ initialProducts, initialCollection }: Props) {
                 }}
               >
                 Every piece here is available for custom engraving with your name, date, message,
-                logo, or artwork. Quotes within 24 hours — no order without your approval first.
+                logo, or artwork. Quotes within 24 hours - no order without your approval first.
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <Link href="/custom" className="btn btn-primary">
@@ -342,7 +342,7 @@ export function ShopClient({ initialProducts, initialCollection }: Props) {
             >
               <Image
                 src="/photos/cutting-boards-family.jpg"
-                alt="Custom commission example — family tree board"
+                alt="Custom commission example - family tree board"
                 width={700}
                 height={525}
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}

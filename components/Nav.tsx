@@ -266,7 +266,7 @@ export function Nav() {
                     <p
                       style={{ fontSize: 13, color: "rgba(255,255,255,0.8)", margin: 0, lineHeight: 1.5 }}
                     >
-                      Tell Donna your vision — logos, artwork, handwriting, names. Quotes within 24 hours.
+                      Tell Donna your vision - logos, artwork, handwriting, names. Quotes within 24 hours.
                     </p>
                   </div>
                   <Link
@@ -366,7 +366,7 @@ function Wordmark() {
         alignItems: "center",
         flexShrink: 0,
       }}
-      aria-label="Out of Jersey Creations — Home"
+      aria-label="Out of Jersey Creations - Home"
     >
       <Image
           src="/logo-transparent.png"

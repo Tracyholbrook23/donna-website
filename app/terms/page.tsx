@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const sections = [
   {
     h: "Acceptance of Terms",
-    p: "By visiting this website or submitting a custom order inquiry, you agree to these terms. If you don't agree, please don't use the site. We may update these terms occasionally — the date at the bottom of this page reflects the most recent version.",
+    p: "By visiting this website or submitting a custom order inquiry, you agree to these terms. If you don't agree, please don't use the site. We may update these terms occasionally - the date at the bottom of this page reflects the most recent version.",
   },
   {
     h: "Website Use",
@@ -30,7 +30,7 @@ const sections = [
   },
   {
     h: "Product Customization Disclaimer",
-    p: "Custom and personalized products are made specifically for you. We send a digital proof before engraving begins — please review it carefully. Once you approve a proof, we are not responsible for errors in the text or layout that were present in the approved design.",
+    p: "Custom and personalized products are made specifically for you. We send a digital proof before engraving begins - please review it carefully. Once you approve a proof, we are not responsible for errors in the text or layout that were present in the approved design.",
   },
   {
     h: "Color & Material Variation",
@@ -50,7 +50,7 @@ const sections = [
   },
   {
     h: "Right to Refuse Service",
-    p: "We reserve the right to decline any order at our discretion — including requests involving offensive, infringing, or inappropriate content. If we decline an order after a deposit has been made, we will issue a full refund of that deposit.",
+    p: "We reserve the right to decline any order at our discretion - including requests involving offensive, infringing, or inappropriate content. If we decline an order after a deposit has been made, we will issue a full refund of that deposit.",
   },
   {
     h: "Accuracy of Information",
@@ -58,7 +58,7 @@ const sections = [
   },
   {
     h: "Contact Us",
-    p: "Questions about these terms? Reach out anytime — Donna Wilson, Out of Jersey Creations · outofjerseycreations@icloud.com · (657) 633-6994",
+    p: "Questions about these terms? Reach out anytime - Donna Wilson, Out of Jersey Creations · outofjerseycreations@icloud.com · (657) 633-6994",
   },
 ];
 

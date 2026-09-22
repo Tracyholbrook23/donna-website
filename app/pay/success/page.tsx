@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Payment Received — Out of Jersey Creations",
+  title: "Payment Received - Out of Jersey Creations",
 };
 
 export default function PaySuccessPage() {

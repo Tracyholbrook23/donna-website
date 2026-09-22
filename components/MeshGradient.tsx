@@ -30,7 +30,7 @@ vec2 hash2(vec2 p) {
   return vec2(hash(p), hash(p * 1.37 + 57.3));
 }
 
-/* Brand palette — terracotta / clay / brass / blush / deep terracotta */
+/* Brand palette - terracotta / clay / brass / blush / deep terracotta */
 vec3 palette(float t) {
   t = fract(t);
   float s = t * 6.0;
@@ -63,7 +63,7 @@ void main() {
     1.0 - u_mouse.y / u_res.y
   ) * 4.0;
 
-  /* Voronoi — scan 5×5 neighbourhood */
+  /* Voronoi - scan 5×5 neighbourhood */
   float md = 10.0, sd = 10.0;
   vec2  mc = vec2(0.0);
 
@@ -176,7 +176,7 @@ export function MeshGradient() {
     const t0 = performance.now();
 
     const resize = () => {
-      /* Render at half resolution for performance — still crisp on screen */
+      /* Render at half resolution for performance - still crisp on screen */
       const dpr = Math.min(window.devicePixelRatio ?? 1, 2);
       W = Math.floor(window.innerWidth  * dpr * 0.6);
       H = Math.floor(window.innerHeight * dpr * 0.6);

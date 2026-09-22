@@ -11,7 +11,7 @@ const photos = [
   { src: "/photos/prod-cutting-board-wedding.jpg",     alt: "Personalized wedding cutting board" },
   { src: "/photos/prod-whiskey-glasses-colchester.jpg",alt: "Personalized whiskey glasses" },
   { src: "/photos/prod-leather-wallet.jpg",            alt: "Custom engraved leather wallet" },
-  { src: "/photos/prod-knife-cupid.jpg",               alt: "Engraved knife — Cupid style" },
+  { src: "/photos/prod-knife-cupid.jpg",               alt: "Engraved knife - Cupid style" },
   { src: "/photos/prod-keychain-dad.jpg",              alt: "Engraved dad keychain" },
   { src: "/photos/prod-decanter-glasses-etsy.jpg",     alt: "Custom whiskey decanter and glasses" },
   { src: "/photos/prod-cutting-board-custom.jpg",      alt: "Custom engraved cutting board" },
@@ -79,7 +79,7 @@ export function HomePhotoGrid() {
               <em style={{ fontStyle: "italic", color: "var(--terracotta)" }}>up close.</em>
             </h2>
             <p style={{ marginTop: 14, fontSize: 15, color: "var(--ink-60, #666)", maxWidth: 480, lineHeight: 1.6 }}>
-              Every piece is made to order. These are examples of styles and products we engrave — if you can dream it, we can etch it.
+              Every piece is made to order. These are examples of styles and products we engrave - if you can dream it, we can etch it.
             </p>
           </div>
           <a

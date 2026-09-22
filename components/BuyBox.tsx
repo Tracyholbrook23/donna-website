@@ -5,7 +5,7 @@ import { engravingPlacements } from "@/lib/data";
 import { StarIcon, PlusIcon } from "@/components/Icons";
 import { useCart } from "@/lib/cartContext";
 
-// Wix product type (v1 API — some fields can be null)
+// Wix product type (v1 API - some fields can be null)
 export interface WixMediaItem {
   _id?: string | null;
   title?: string | null;
@@ -277,7 +277,7 @@ export function BuyBox({ product, onColorSelect, colorOverride }: BuyBoxProps) {
       {/* Price */}
       <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 28 }}>
         <span className="serif" style={{ fontSize: 30, fontWeight: 500 }}>
-          {product.priceData?.formatted?.price ?? "—"}
+          {product.priceData?.formatted?.price ?? " - "}
         </span>
         <span
           style={{
@@ -323,7 +323,7 @@ export function BuyBox({ product, onColorSelect, colorOverride }: BuyBoxProps) {
               </span>
             </div>
 
-            {/* Color option — circles removed; color is chosen via the thumbnail rail.
+            {/* Color option - circles removed; color is chosen via the thumbnail rail.
                 Non-color options (size, finish, etc.) still render as pill buttons. */}
             {!isColor && (
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
