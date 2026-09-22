@@ -39,10 +39,12 @@ function glyphForProduct(p: WixProduct, idx: number): ProductType {
 
 interface Props {
   initialProducts: WixProduct[];
+  initialCollection?: string;
 }
 
-export function ShopClient({ initialProducts }: Props) {
-  const [activeCollection, setActiveCollection] = useState("all");
+export function ShopClient({ initialProducts, initialCollection }: Props) {
+  const validCollection = collections.some(c => c.id === initialCollection) ? initialCollection! : "all";
+  const [activeCollection, setActiveCollection] = useState(validCollection);
 
   const pillsRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);

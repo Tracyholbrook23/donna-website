@@ -23,7 +23,7 @@ async function getAllProducts(): Promise<WixProduct[]> {
   }
 }
 
-export default async function ShopPage() {
-  const products = await getAllProducts();
-  return <ShopClient initialProducts={products} />;
+export default async function ShopPage({ searchParams }: { searchParams: Promise<{ collection?: string }> }) {
+  const [{ collection }, products] = await Promise.all([searchParams, getAllProducts()]);
+  return <ShopClient key={collection ?? "all"} initialProducts={products} initialCollection={collection} />;
 }

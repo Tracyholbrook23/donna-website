@@ -4,14 +4,35 @@ import Link from "next/link";
 import { ProductType } from "@/components/ProductGlyph";
 import { ArrowIcon } from "@/components/Icons";
 import { ProductCardMono } from "@/components/ProductCardMono";
+import { collections } from "@/lib/data";
 
 type WixProduct = {
   _id?: string | null;
+  collectionIds?: string[] | null;
   name?: string | null;
   slug?: string | null;
   priceData?: { formatted?: { price?: string | null } } | null;
   media?: { mainMedia?: { image?: { url?: string | null } } } | null;
 };
+
+const STARTING_PRICES: Record<string, string> = {
+  "powder-coated-tumblers": "$26",
+  "cutting-boards": "$55",
+  "marble-wood": "$55",
+  "decanters-sets": "$28",
+  "wood-boxes": "$40",
+  "laserette": "$18",
+};
+
+function startingPrice(product: WixProduct) {
+  const name = (product.name ?? "").toLowerCase();
+  if (name.includes("40oz") && name.includes("handle")) return "$45";
+  if (name.includes("30oz") && name.includes("tumbler")) return "$40";
+  if (name.includes("20oz") && name.includes("skinny")) return "$36";
+  if (name.includes("12oz") && name.includes("wine")) return "$30";
+  const collection = collections.find(c => product.collectionIds?.includes(c.wixId) && STARTING_PRICES[c.id]);
+  return collection ? STARTING_PRICES[collection.id] : undefined;
+}
 
 const GLYPH_TYPES: ProductType[] = ["tumbler", "board", "decanter", "wallet", "box", "tumbler-tall", "tumbler", "board"];
 
@@ -45,14 +66,14 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
             </h2>
             <p style={{ fontSize: 15, color: "var(--muted)", marginTop: 12, maxWidth: 480, lineHeight: 1.6 }}>
               Browse for inspiration — every piece can be made custom for you.
-              Contact Donna with your vision and get a quote within 24 hours.
+              See starting prices for Donna’s signature pieces, then request a custom quote.
             </p>
           </div>
           <Link
-            href="/custom"
+            href="/pricing"
             className="btn btn-primary reveal"
           >
-            Request a design <ArrowIcon size={14} />
+            See starting prices <ArrowIcon size={14} />
           </Link>
         </div>
 
@@ -69,6 +90,8 @@ export function HomeBestsellersClient({ initialProducts }: Props) {
                 index={i}
                 glyphType={GLYPH_TYPES[i % GLYPH_TYPES.length]}
                 showPrice={false}
+                startingPrice={startingPrice(p)}
+                hrefOverride="/pricing"
               />
             </div>
           ))}

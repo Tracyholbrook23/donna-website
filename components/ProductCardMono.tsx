@@ -33,9 +33,11 @@ interface Props {
   index?: number;
   glyphType?: ProductType;
   showPrice?: boolean;
+  startingPrice?: string;
+  hrefOverride?: string;
 }
 
-export function ProductCardMono({ product, index = 0, glyphType = "tumbler", showPrice = false }: Props) {
+export function ProductCardMono({ product, index = 0, glyphType = "tumbler", showPrice = false, startingPrice, hrefOverride }: Props) {
   const cardRef  = useRef<HTMLDivElement>(null);
   const specRef  = useRef<HTMLDivElement>(null);
   const rafRef   = useRef<number>(0);
@@ -47,7 +49,7 @@ export function ProductCardMono({ product, index = 0, glyphType = "tumbler", sho
 
   const imgUrl = product.media?.mainMedia?.image?.url ?? null;
   const price  = product.priceData?.formatted?.price ?? "";
-  const href   = `/product/${product.slug ?? product._id}`;
+  const href   = hrefOverride ?? `/product/${product.slug ?? product._id}`;
 
   // rAF animation loop
   const animate = useCallback(() => {
@@ -232,7 +234,7 @@ export function ProductCardMono({ product, index = 0, glyphType = "tumbler", sho
               color: "rgba(255,255,255,0.45)",
             }}
           >
-            Request this design →
+            {hrefOverride ? "See starting prices →" : "Request this design →"}
           </p>
         </div>
       </div>
@@ -255,7 +257,7 @@ export function ProductCardMono({ product, index = 0, glyphType = "tumbler", sho
         )}
         {!showPrice && (
           <p style={{ fontSize: 12, color: "var(--terracotta)", margin: 0, fontWeight: 500, letterSpacing: "0.04em" }}>
-            Custom order · contact for pricing
+            {startingPrice ? `From ${startingPrice} · see pricing` : "See signature pieces & pricing"}
           </p>
         )}
       </div>
