@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { SiteIcon } from "@/components/Icons";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
@@ -120,7 +121,7 @@ function CommissionFeeCard() {
         borderRadius: "var(--r-sm)",
         border: "1px solid var(--line)",
       }}>
-        <span style={{ fontSize: 18, flexShrink: 0 }}>💡</span>
+        <span style={{ flexShrink: 0, color: "var(--terracotta)" }}><SiteIcon name="info" size={19} /></span>
         <p style={{ margin: 0, fontSize: 13, color: "var(--muted)", lineHeight: 1.5 }}>
           <strong style={{ color: "var(--ink)" }}>Haven&rsquo;t submitted an inquiry yet?</strong>{" "}
           <Link href="/custom" style={{ color: "var(--terracotta)" }}>Start with the custom form first →</Link>
@@ -244,8 +245,8 @@ export default function PayPage() {
             never charge anything without your knowledge and approval.
           </p>
           <div style={{ display: "flex", gap: 24, justifyContent: "center", flexWrap: "wrap" }}>
-            {["🔒 SSL encrypted", "💳 Square secure checkout", "📧 Receipt emailed to you"].map(t => (
-              <span key={t} style={{ fontSize: 13, color: "var(--muted-soft)", fontWeight: 500 }}>{t}</span>
+            {([{ icon: "lock", text: "SSL encrypted" }, { icon: "card", text: "Square secure checkout" }, { icon: "mail", text: "Receipt emailed to you" }] as const).map(t => (
+              <span key={t.text} style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 13, color: "var(--muted-soft)", fontWeight: 500 }}><SiteIcon name={t.icon} size={16} />{t.text}</span>
             ))}
           </div>
         </div>

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { giftOccasions, collections } from "@/lib/data";
-import { ArrowIcon } from "@/components/Icons";
+import { ArrowIcon, SiteIcon } from "@/components/Icons";
 import { wixClient } from "@/lib/wixClient";
 import { HomePhotoGrid } from "@/components/HomePhotoGrid";
 import { HomeVideoShowcase } from "@/components/HomeVideoShowcase";
@@ -393,7 +393,7 @@ function HomeProcess() {
             flexWrap: "wrap",
           }}
         >
-          <span style={{ fontSize: 22 }}>✦</span>
+          <SiteIcon name="info" size={22} />
           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", margin: 0, lineHeight: 1.6, flex: 1 }}>
             <strong style={{ color: "var(--brass-light)" }}>About the $20 design fee:</strong>{" "}
             This non-refundable fee protects Donna&apos;s time and materials if a customer changes their mind

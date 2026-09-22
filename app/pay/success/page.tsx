@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SiteIcon } from "@/components/Icons";
 
 export const metadata = {
   title: "Payment Received - Out of Jersey Creations",
@@ -17,9 +18,9 @@ export default function PaySuccessPage() {
             background: "var(--blush)",
             display: "flex", alignItems: "center", justifyContent: "center",
             margin: "0 auto 32px",
-            fontSize: 32,
+            color: "var(--forest)",
           }}>
-            ✓
+            <SiteIcon name="check" size={32} />
           </div>
 
           <p className="eyebrow" style={{ marginBottom: 16 }}>Payment received</p>

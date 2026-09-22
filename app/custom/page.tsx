@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { SiteIcon } from "@/components/Icons";
 import Link from "next/link";
 import { Suspense } from "react";
 import CustomInquiryForm from "@/components/CustomInquiryForm";
@@ -188,7 +189,7 @@ export default function CustomPage() {
               background: "var(--terracotta)",
               display: "flex", alignItems: "center", justifyContent: "center",
               color: "#fff", fontSize: 16, flexShrink: 0, marginTop: 2,
-            }}>✦</div>
+            }}><SiteIcon name="info" size={19} /></div>
             <div style={{ flex: 1 }}>
               <p style={{ fontSize: 14, fontWeight: 700, margin: "0 0 5px", color: "var(--ink)" }}>
                 About the $20 non-refundable design fee
@@ -226,13 +227,13 @@ export default function CustomPage() {
               {/* Trust signals */}
               <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 40 }}>
                 {[
-                  { icon: "⏱️", text: "Quote within 24 hours" },
-                  { icon: "✏️", text: "2 rounds of revisions included" },
-                  { icon: "📦", text: "Ships gift-ready with hand-written card" },
-                  { icon: "🔒", text: "Nothing engraved until you approve" },
+                  { icon: "clock" as const, text: "Quote within 24 hours" },
+                  { icon: "pencil" as const, text: "2 rounds of revisions included" },
+                  { icon: "box" as const, text: "Ships gift-ready with hand-written card" },
+                  { icon: "lock" as const, text: "Nothing engraved until you approve" },
                 ].map((t) => (
                   <div key={t.text} style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                    <span style={{ fontSize: 16, width: 24, textAlign: "center" }}>{t.icon}</span>
+                    <span style={{ width: 24, color: "var(--terracotta)", lineHeight: 0 }}><SiteIcon name={t.icon} size={18} /></span>
                     <span style={{ fontSize: 13, color: "var(--muted)" }}>{t.text}</span>
                   </div>
                 ))}

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowIcon } from "@/components/Icons";
+import { ArrowIcon, SiteIcon } from "@/components/Icons";
 import type { WixProduct } from "@/components/BuyBox";
 
 interface Props {
@@ -157,7 +157,7 @@ export function ProductInquiryPanel({ product }: Props) {
                 alignItems: "flex-start",
               }}
             >
-              <span style={{ color: "var(--terracotta)", flexShrink: 0, fontWeight: 700 }}>✦</span>
+              <span style={{ color: "var(--terracotta)", flexShrink: 0 }}><SiteIcon name="check" size={15} /></span>
               {step}
             </li>
           ))}

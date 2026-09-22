@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { SiteIcon } from "@/components/Icons";
 import { announcementMessages } from "@/lib/data";
 
 export function AnnouncementBar() {
@@ -69,7 +70,7 @@ export function AnnouncementBar() {
             }}
           >
             {m}
-            <span style={{ opacity: 0.4 }}>✦</span>
+            <span style={{ opacity: 0.4, lineHeight: 0 }}><SiteIcon name="sparkle" size={11} /></span>
           </span>
         ))}
       </div>

@@ -129,7 +129,7 @@ export async function POST(req: Request) {
         from:        FROM_EMAIL,
         to:          DONNA_EMAIL,
         replyTo:     email,
-        subject:     `✦ New Custom Order Inquiry - ${inquiry.category} from ${name}`,
+        subject:     `New Custom Order Inquiry - ${inquiry.category} from ${name}`,
         html:        donnaInquiryEmailHtml(inquiry),
         attachments: attachments.map((a) => ({ filename: a.filename, content: a.content })),
       });

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/lib/cartContext";
-import { PlusIcon } from "@/components/Icons";
+import { PlusIcon, SiteIcon } from "@/components/Icons";
 
 export default function CartPage() {
   const { cartItems, cartCount, cartSubtotal, loading, removeFromCart, updateQty, goToCheckout } =
@@ -147,8 +147,8 @@ export default function CartPage() {
                   color: "var(--muted)",
                 }}
               >
-                {["✦ Ships in 3–5 business days", "✦ Insured shipping", "✦ Free returns on stock items"].map(
-                  (b) => <span key={b}>{b}</span>
+                {["Ships in 3–5 business days", "Insured shipping", "Free returns on stock items"].map(
+                  (b) => <span key={b} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><SiteIcon name="check" size={13} />{b}</span>
                 )}
               </div>
             </div>
@@ -215,7 +215,7 @@ function CartItem({
               color: "var(--muted-soft)",
             }}
           >
-            ✦
+            <SiteIcon name="box" size={28} />
           </div>
         )}
       </div>
@@ -372,7 +372,7 @@ function EmptyCart() {
           color: "var(--muted-soft)",
         }}
       >
-        ✦
+        <SiteIcon name="box" size={32} />
       </div>
       <div>
         <p style={{ fontSize: 16, color: "var(--muted)", margin: "0 0 4px" }}>

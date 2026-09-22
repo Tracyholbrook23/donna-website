@@ -447,7 +447,7 @@ function SearchOverlay({ onClose }: { onClose: () => void }) {
               className="btn btn-ghost"
               style={{ fontSize: 13 }}
             >
-              Close ✕
+              Close <CloseIcon size={14} />
             </button>
           </div>
 

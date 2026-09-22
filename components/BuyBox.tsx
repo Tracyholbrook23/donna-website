@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { engravingPlacements } from "@/lib/data";
-import { StarIcon, PlusIcon } from "@/components/Icons";
+import { StarIcon, PlusIcon, SiteIcon } from "@/components/Icons";
 import { useCart } from "@/lib/cartContext";
 
 // Wix product type (v1 API - some fields can be null)
@@ -510,7 +510,7 @@ export function BuyBox({ product, onColorSelect, colorOverride }: BuyBoxProps) {
             opacity: adding || cartLoading ? 0.7 : 1,
           }}
         >
-          {adding ? "Adding…" : added ? "Added ✓" : "Add to cart"}
+          {adding ? "Adding…" : added ? <>Added <SiteIcon name="check" size={15} /></> : "Add to cart"}
         </button>
       </div>
 
@@ -538,8 +538,8 @@ export function BuyBox({ product, onColorSelect, colorOverride }: BuyBoxProps) {
           flexWrap: "wrap",
         }}
       >
-        {["✦ Ships in 3–5 days", "✦ Free returns (stock)", "✦ Insured shipping"].map((b) => (
-          <span key={b}>{b}</span>
+        {["Ships in 3–5 days", "Free returns (stock)", "Insured shipping"].map((b) => (
+          <span key={b} style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><SiteIcon name="check" size={13} />{b}</span>
         ))}
       </div>
     </div>

@@ -3,23 +3,23 @@
 import { useState, useRef, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowIcon } from "@/components/Icons";
+import { ArrowIcon, SiteIcon } from "@/components/Icons";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const CATEGORIES = [
-  { id: "tumblers",      emoji: "🥤", label: "Tumblers & Drinkware",   desc: "Powder-coated, stainless, sublimation" },
-  { id: "cutting-boards",emoji: "🍳", label: "Cutting Boards",          desc: "Walnut, bamboo, maple" },
-  { id: "kitchen",       emoji: "🍷", label: "Kitchen & Bar",           desc: "Decanters, gourmet knife sets, barware" },
-  { id: "bbq",           emoji: "🔥", label: "BBQ & Grill",             desc: "Grilling tools, outdoor gifts" },
-  { id: "knives",        emoji: "🔪", label: "Pocket Knives",           desc: "Engraved everyday carry" },
-  { id: "wood-boxes",    emoji: "📦", label: "Wood Boxes",              desc: "Keepsake boxes, memory boxes" },
-  { id: "jewelry",       emoji: "📿", label: "Wood Jewelry",            desc: "Pendants, earrings, custom shapes" },
-  { id: "pens",          emoji: "✒️",  label: "Pens & Pencils",          desc: "Engraved writing instruments" },
-  { id: "corporate",     emoji: "💼", label: "Corporate / Business",    desc: "Bulk branded gifts, logo engraving" },
-  { id: "wedding",       emoji: "💍", label: "Wedding & Events",        desc: "Party sets, favors, anniversary" },
-  { id: "gifts",         emoji: "🎁", label: "Gifts & Keepsakes",       desc: "Laserette, acrylic, one-offs" },
-  { id: "other",         emoji: "✦",  label: "Something Else",          desc: "Describe it - we'll figure it out" },
+  { id: "tumblers",      icon: "drinkware", label: "Tumblers & Drinkware",   desc: "Powder-coated, stainless, sublimation" },
+  { id: "cutting-boards",icon: "board", label: "Cutting Boards",          desc: "Walnut, bamboo, maple" },
+  { id: "kitchen",       icon: "wine", label: "Kitchen & Bar",           desc: "Decanters, gourmet knife sets, barware" },
+  { id: "bbq",           icon: "flame", label: "BBQ & Grill",             desc: "Grilling tools, outdoor gifts" },
+  { id: "knives",        icon: "knife", label: "Pocket Knives",           desc: "Engraved everyday carry" },
+  { id: "wood-boxes",    icon: "box", label: "Wood Boxes",              desc: "Keepsake boxes, memory boxes" },
+  { id: "jewelry",       icon: "jewelry", label: "Wood Jewelry",            desc: "Pendants, earrings, custom shapes" },
+  { id: "pens",          icon: "pen",  label: "Pens & Pencils",          desc: "Engraved writing instruments" },
+  { id: "corporate",     icon: "briefcase", label: "Corporate / Business",    desc: "Bulk branded gifts, logo engraving" },
+  { id: "wedding",       icon: "ring", label: "Wedding & Events",        desc: "Party sets, favors, anniversary" },
+  { id: "gifts",         icon: "gift", label: "Gifts & Keepsakes",       desc: "Laserette, acrylic, one-offs" },
+  { id: "other",         icon: "sparkle",  label: "Something Else",          desc: "Describe it - we'll figure it out" },
 ] as const;
 
 // Maps product name keywords → category id
@@ -260,7 +260,7 @@ export default function CustomInquiryForm() {
           </svg>
         </div>
 
-        <p className="eyebrow" style={{ marginBottom: 12 }}>Brief received ✦</p>
+        <p className="eyebrow" style={{ marginBottom: 12 }}>Brief received</p>
         <h3 className="display" style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 400, margin: "0 0 16px" }}>
           Your idea is in{" "}
           <em style={{ fontFamily: "var(--font-display)", fontStyle: "italic", color: "var(--terracotta)" }}>good hands.</em>
@@ -306,7 +306,7 @@ export default function CustomInquiryForm() {
           fontWeight: 600,
           marginBottom: 28,
         }}>
-          <span style={{ color: "var(--terracotta)", fontSize: 10 }}>✦</span>
+          <SiteIcon name="sparkle" size={12} />
           Requesting: {activePiece}
           <button
             type="button"
@@ -382,7 +382,7 @@ export default function CustomInquiryForm() {
                     outline: "none",
                   }}
                 >
-                  <div style={{ fontSize: 22, marginBottom: 6, lineHeight: 1 }}>{cat.emoji}</div>
+                  <div style={{ color: sel ? "var(--terracotta)" : "var(--forest)", marginBottom: 7, lineHeight: 0 }}><SiteIcon name={cat.icon} size={23} /></div>
                   <p style={{ fontSize: 13, fontWeight: 600, margin: "0 0 3px", color: sel ? "var(--terracotta)" : "var(--ink)" }}>
                     {cat.label}
                   </p>
@@ -508,7 +508,7 @@ export default function CustomInquiryForm() {
                         <img src={p.url} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       ) : (
                         <>
-                          <span style={{ fontSize: 22, marginBottom: 4 }}>📄</span>
+                          <span style={{ marginBottom: 4, lineHeight: 0 }}><SiteIcon name="file" size={22} /></span>
                           <span style={{
                             fontSize: 9, color: "var(--muted)", textAlign: "center",
                             padding: "0 6px", wordBreak: "break-all", lineHeight: 1.3
@@ -688,7 +688,7 @@ export default function CustomInquiryForm() {
             gap: 14,
             alignItems: "flex-start",
           }}>
-            <span style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>✦</span>
+            <span style={{ flexShrink: 0, marginTop: 1, color: "var(--terracotta)" }}><SiteIcon name="info" size={19} /></span>
             <div>
               <p style={{ fontSize: 13, fontWeight: 700, margin: "0 0 4px", color: "var(--terracotta)" }}>
                 About the $20 design fee

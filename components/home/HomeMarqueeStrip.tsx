@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { SiteIcon } from "@/components/Icons";
 
 const ITEMS = [
   "Custom laser engraving - woman owned & operated",
@@ -70,7 +71,7 @@ export function HomeMarqueeStrip() {
               fontStyle: "italic",
             }}
           >
-            {it} <span style={{ color: "var(--brass)" }}>✦</span>
+            {it} <span style={{ color: "var(--brass)", lineHeight: 0 }}><SiteIcon name="sparkle" size={12} /></span>
           </span>
         ))}
       </div>

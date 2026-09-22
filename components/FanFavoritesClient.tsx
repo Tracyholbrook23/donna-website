@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowIcon } from "@/components/Icons";
+import { ArrowIcon, SiteIcon } from "@/components/Icons";
 import { useCart } from "@/lib/cartContext";
 import type { WixProduct } from "@/components/ShopClient";
 import type { ProductType } from "@/components/ProductGlyph";
@@ -87,7 +87,7 @@ export function FanFavoritesClient({ products }: Props) {
                 margin: "0 auto",
               }}
             >
-              <p className="display" style={{ fontSize: 56, opacity: 0.15, marginBottom: 20 }}>✦</p>
+              <div style={{ display: "flex", justifyContent: "center", opacity: 0.15, marginBottom: 20 }}><SiteIcon name="sparkle" size={56} /></div>
               <h2 className="display" style={{ fontSize: 32, margin: "0 0 16px", fontWeight: 400 }}>
                 Nothing ready to ship right now.
               </h2>
@@ -268,7 +268,7 @@ function FanFavoriteCard({ product, index }: { product: WixProduct; index: numbe
               transition: "all .2s",
             }}
           >
-            {added ? "Added to cart ✓" : adding ? "Adding…" : "Add to Cart"}
+            {added ? <>Added to cart <SiteIcon name="check" size={15} /></> : adding ? "Adding…" : "Add to Cart"}
           </button>
           <Link
             href={`/product/${product.slug ?? product._id}`}

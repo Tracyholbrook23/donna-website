@@ -4,7 +4,7 @@ import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { collections } from "@/lib/data";
-import { ArrowIcon } from "@/components/Icons";
+import { ArrowIcon, SiteIcon } from "@/components/Icons";
 import type { ProductType } from "@/components/ProductGlyph";
 import { ProductCardMono } from "@/components/ProductCardMono";
 
@@ -261,7 +261,7 @@ export function ShopClient({ initialProducts, initialCollection }: Props) {
         <div className="container">
           {filtered.length === 0 ? (
             <div style={{ textAlign: "center", padding: "80px 0", color: "var(--muted)" }}>
-              <p className="display" style={{ fontSize: 48, opacity: 0.2, marginBottom: 16 }}>✦</p>
+              <div style={{ opacity: 0.2, marginBottom: 16 }}><SiteIcon name="sparkle" size={48} /></div>
               <p style={{ fontSize: 18, fontWeight: 500 }}>No pieces in this category yet.</p>
               <p style={{ fontSize: 14, marginTop: 8 }}>Check back soon, or contact Donna for anything specific.</p>
             </div>

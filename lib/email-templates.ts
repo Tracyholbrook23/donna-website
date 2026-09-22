@@ -108,7 +108,7 @@ export function donnaInquiryEmailHtml(d: InquiryData): string {
     <tr>
       <td style="background:#B9533A;padding:14px 36px;text-align:center;">
         <p style="margin:0;font-size:13px;font-weight:bold;color:#fff;font-family:Arial,sans-serif;letter-spacing:0.04em;">
-          ✦ &nbsp; NEW CUSTOM ORDER INQUIRY
+          NEW CUSTOM ORDER INQUIRY
         </p>
       </td>
     </tr>
@@ -134,9 +134,9 @@ export function donnaInquiryEmailHtml(d: InquiryData): string {
               </p>
               <p style="margin:0 0 6px;font-size:18px;font-family:Georgia,serif;color:#1F1410;">${d.name}</p>
               <p style="margin:0 0 4px;font-size:14px;font-family:Arial,sans-serif;color:#1F1410;">
-                📧 <a href="mailto:${d.email}" style="color:#B9533A;">${d.email}</a>
+                Email: <a href="mailto:${d.email}" style="color:#B9533A;">${d.email}</a>
               </p>
-              ${d.phone !== "Not provided" ? `<p style="margin:0 0 4px;font-size:14px;font-family:Arial,sans-serif;color:#1F1410;">📞 ${d.phone}</p>` : ""}
+              ${d.phone !== "Not provided" ? `<p style="margin:0 0 4px;font-size:14px;font-family:Arial,sans-serif;color:#1F1410;">Phone: ${d.phone}</p>` : ""}
               <p style="margin:6px 0 0;font-size:12px;color:rgba(31,20,16,0.5);font-family:Arial,sans-serif;">
                 Prefers contact by: <strong>${d.contactPref}</strong>
               </p>
@@ -234,7 +234,7 @@ export function contactEmailHtml(d: ContactData): string {
               <p style="margin:0 0 4px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(31,20,16,0.45);font-family:Arial,sans-serif;">Contact</p>
               <p style="margin:0 0 6px;font-size:18px;font-family:Georgia,serif;color:#1F1410;">${d.name}</p>
               <p style="margin:0 0 4px;font-size:14px;font-family:Arial,sans-serif;color:#1F1410;">
-                📧 <a href="mailto:${d.email}" style="color:#B9533A;">${d.email}</a>
+                Email: <a href="mailto:${d.email}" style="color:#B9533A;">${d.email}</a>
               </p>
               <p style="margin:6px 0 0;font-size:12px;color:rgba(31,20,16,0.5);font-family:Arial,sans-serif;">
                 Reason: <strong>${REASON_LABELS[d.reason] ?? d.reason}</strong>
@@ -270,7 +270,7 @@ export function contactConfirmationEmailHtml({ name }: { name: string }): string
   const content = `
     <tr>
       <td style="padding:48px 36px 40px;text-align:center;">
-        <div style="width:56px;height:56px;border-radius:50%;background:#3D5848;margin:0 auto 20px;line-height:56px;font-size:24px;text-align:center;">✓</div>
+        <div style="width:56px;height:56px;border-radius:50%;background:#3D5848;margin:0 auto 20px;line-height:56px;font-size:24px;text-align:center;">OK</div>
         <h1 style="margin:0 0 14px;font-family:Georgia,serif;font-size:28px;font-weight:400;color:#1F1410;">
           Got it, <em style="color:#3D5848;">${firstName}.</em>
         </h1>
@@ -300,7 +300,7 @@ export function customerConfirmationEmailHtml({ name, category }: { name: string
 
         <!-- Check icon -->
         <div style="width:64px;height:64px;border-radius:50%;background:#3D5848;margin:0 auto 24px;display:flex;align-items:center;justify-content:center;">
-          <span style="font-size:28px;line-height:1;">✓</span>
+          <span style="font-size:28px;line-height:1;">OK</span>
         </div>
 
         <h1 style="margin:0 0 16px;font-family:Georgia,serif;font-size:32px;font-weight:400;color:#1F1410;line-height:1.1;">
@@ -322,14 +322,14 @@ export function customerConfirmationEmailHtml({ name, category }: { name: string
             </p>
 
             ${[
-              ["📬", "Donna reviews your brief and reaches out within 24 hours"],
-              ["💬", "She'll share a personalized quote, timeline, and any questions"],
-              ["✦",  "A $20 initiation fee is collected before design work begins - this is credited to your final total"],
-              ["✏️",  "You review and approve a digital proof before anything is engraved"],
-              ["📦", "Your piece is made, photographed, and shipped gift-ready"],
-            ].map(([icon, text]) => `
+              ["1.", "Donna reviews your brief and reaches out within 24 hours"],
+              ["2.", "She'll share a personalized quote, timeline, and any questions"],
+              ["3.",  "A $20 initiation fee is collected before design work begins - this is credited to your final total"],
+              ["4.",  "You review and approve a digital proof before anything is engraved"],
+              ["5.", "Your piece is made, photographed, and shipped gift-ready"],
+            ].map(([step, text]) => `
             <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;">
-              <span style="font-size:18px;flex-shrink:0;width:24px;text-align:center;">${icon}</span>
+              <span style="font-size:18px;flex-shrink:0;width:24px;text-align:center;">${step}</span>
               <p style="margin:0;font-size:14px;color:#1F1410;font-family:Arial,sans-serif;line-height:1.5;">${text}</p>
             </div>
             `).join("")}
